@@ -687,12 +687,7 @@ inpNama.addEventListener('blur', tutupKeyboardLogin);
 inpSandi.addEventListener('focus', bukaKeyboardLogin);
 inpSandi.addEventListener('blur', tutupKeyboardLogin);
 if (window.visualViewport) {
-  window.visualViewport.addEventListener('resize', () => {
-    const a = document.activeElement;
-    if (a === inpNama || a === inpSandi) sesuaikanKeyboard();
-  });
-}
-  window.visualViewport.addEventListener('resize', () => {
+   window.visualViewport.addEventListener('resize', () => {
     if (document.activeElement === inpNama) sesuaikanKeyboard();
   });
 }
