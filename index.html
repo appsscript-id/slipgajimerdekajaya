@@ -55,9 +55,10 @@ button{font-family:inherit;cursor:pointer}
 .login-card h2{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:-.01em}
 .login-card p.lead{color:var(--muted);margin:6px 0 28px;font-size:15px}
 label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink)}
-.field{width:100%;height:54px;border-radius:14px;border:1.5px solid var(--line);background:#fff;padding:0 16px;font:inherit;font-size:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);transition:.18s}
-.field::placeholder{color:#B5B9C1;font-weight:500;letter-spacing:.04em}
+.field{width:100%;height:54px;border-radius:14px;border:1.5px solid var(--line);background:#fff;padding:0 16px;font:inherit;font-size:16px;font-weight:600;color:var(--ink);transition:.18s}
+.field::placeholder{color:#B5B9C1;font-weight:500}
 .field:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,163,91,.18)}
+.field.sm{height:44px;font-size:14.5px;border-radius:12px}
 .pin-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 8px}
 .pin-head .lbl{margin:0}
 .link-btn{background:none;border:0;color:var(--gold-deep);font-size:13px;font-weight:600;padding:2px 0}
@@ -78,19 +79,23 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:rot .7s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
 .help{margin-top:22px;text-align:center;font-size:12.5px;color:var(--muted)}
+.switch{margin-top:14px;text-align:center}
 
-/* ---------- Dashboard ---------- */
+/* ---------- Topbar ---------- */
 .topbar{position:sticky;top:0;z-index:20;background:rgba(245,243,238,.85);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
 .topbar-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .topbar .logo-mark{width:38px;height:38px;font-size:16px}
 .topbar .logo-text{font-size:18px}
-.user{display:flex;align-items:center;gap:12px}
+.user{display:flex;align-items:center;gap:10px}
 .avatar{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-weight:700;font-size:14px}
 .user-info{line-height:1.2;text-align:right}
 .user-info b{display:block;font-size:13.5px}
 .user-info span{font-size:12px;color:var(--muted)}
-.btn-ghost{height:38px;padding:0 14px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:13px;color:var(--ink);transition:.18s;display:inline-flex;align-items:center;gap:7px}
+.badge-admin{padding:5px 12px;border-radius:999px;background:var(--navy);color:var(--gold);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.btn-ghost{height:38px;padding:0 14px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:13px;color:var(--ink);transition:.18s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
 .btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:#fff}
+.btn-ghost.danger:hover{border-color:var(--red);background:var(--red)}
+.btn-ghost.xs{height:32px;padding:0 11px;font-size:12px;border-radius:9px}
 
 .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
 .greet{margin-bottom:22px}
@@ -114,7 +119,7 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .grid{display:grid;grid-template-columns:1fr;gap:24px}
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
 .toolbar h3{font-size:15px;font-weight:700}
-.btn-gold{height:42px;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--gold),#DDBE80);color:var(--navy);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px rgba(201,163,91,.35);transition:.18s}
+.btn-gold{height:42px;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--gold),#DDBE80);color:var(--navy);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px rgba(201,163,91,.35);transition:.18s;white-space:nowrap}
 .btn-gold:hover{transform:translateY(-1px)}
 
 /* ---------- Slip ---------- */
@@ -128,7 +133,7 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .slip-title .n{font-size:11.5px;opacity:.55;margin-top:4px;letter-spacing:.05em}
 .slip-addr{font-size:12px;opacity:.65;margin-top:10px;max-width:26em}
 .slip-body{padding:28px 34px 34px}
-.emp{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-bottom:24px;border-bottom:1px dashed var(--line)}
+.emp{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:24px;border-bottom:1px dashed var(--line)}
 .emp div small{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
 .emp div b{font-size:14.5px;font-weight:600;word-break:break-word}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:26px}
@@ -153,7 +158,7 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .sign{text-align:center;font-size:12.5px;color:var(--muted);min-width:170px}
 .sign .line{margin-top:48px;border-top:1px solid var(--ink);padding-top:6px;color:var(--ink);font-weight:600}
 
-/* ---------- Trend ---------- */
+/* ---------- Kartu, grafik ---------- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow)}
 .card h3{font-size:15px;font-weight:700}
 .card p.s{font-size:13px;color:var(--muted);margin-top:2px}
@@ -167,8 +172,45 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .empty{text-align:center;padding:60px 20px;color:var(--muted)}
 .empty b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px}
 
+/* ---------- Admin ---------- */
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.tools .field{flex:1 1 220px;max-width:340px}
+.tools .sp{flex:1}
+.tbl-wrap{overflow-x:auto;margin:0 -6px}
+table.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+.tbl th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;padding:10px 12px;border-bottom:1.5px solid var(--line);white-space:nowrap}
+.tbl td{padding:12px;border-bottom:1px solid #F0ECE3;vertical-align:middle}
+.tbl tr:hover td{background:#FBFAF6}
+.tbl td.nm{font-weight:600}
+.tbl td.num,.tbl th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl td.act{white-space:nowrap;text-align:right}
+.tbl td.act .btn-ghost{margin-left:6px}
+.pin-chip{font:inherit;font-weight:700;letter-spacing:.18em;background:#F5F3EE;border:1px dashed #D8D2C4;border-radius:8px;padding:4px 10px;color:var(--ink);min-width:92px}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.badge.on{background:var(--green-soft);color:var(--green)}
+.badge.off{background:var(--red-soft);color:var(--red)}
+.muted{color:var(--muted)}
+
+dialog{border:0;border-radius:20px;padding:0;max-width:440px;width:calc(100% - 32px);box-shadow:0 30px 80px rgba(14,26,43,.35);color:var(--ink)}
+dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
+.dlg-in{padding:26px}
+.dlg-in h3{font-family:var(--serif);font-size:22px;font-weight:600;margin-bottom:10px}
+.dlg-in p{font-size:14px;color:#3A4657}
+.dlg-in .field{margin-top:6px}
+.dlg-in label.lbl{margin-top:14px;margin-bottom:0}
+.dlg-act{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.bigpin{font-family:var(--serif);font-size:42px;font-weight:700;letter-spacing:.14em;text-align:center;color:var(--navy);background:var(--gold-soft);border:1px solid #EADBB6;border-radius:14px;padding:14px;margin-top:14px}
+
 .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;transition:.3s;z-index:50;max-width:90vw}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Lembar cetak daftar PIN ---------- */
+#pinSheet{display:none}
+#pinSheet h2{font-family:var(--serif);font-size:22px;margin-bottom:4px}
+#pinSheet p{font-size:12px;color:#555;margin-bottom:14px}
+#pinSheet table{width:100%;border-collapse:collapse;font-size:13px}
+#pinSheet th,#pinSheet td{border:1px solid #999;padding:7px 10px;text-align:left}
+#pinSheet td.pin{font-weight:700;letter-spacing:.2em;font-size:15px}
 
 /* ---------- Responsive ---------- */
 @media (max-width:900px){
@@ -194,8 +236,10 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
   @page{size:A4;margin:12mm}
   body{background:#fff}
   body *{visibility:hidden}
-  #slip,#slip *{visibility:visible}
-  #slip{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none;border-radius:0}
+  body.print-slip #slip, body.print-slip #slip *{visibility:visible}
+  body.print-slip #slip{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none;border-radius:0}
+  body.print-pin #pinSheet, body.print-pin #pinSheet *{visibility:visible}
+  body.print-pin #pinSheet{display:block;position:absolute;left:0;top:0;width:100%}
   .slip-head,.net-band,.col.in .row.total,.col.out .row.total{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -213,7 +257,7 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
       <h1 class="hero-title">Slip gaji Anda, <em>aman</em> dan transparan.</h1>
       <p class="hero-sub">Lihat rincian pendapatan, potongan, dan gaji bersih setiap bulan kapan saja, langsung dari ponsel Anda.</p>
       <div class="feat">
-        <div><i>🔒</i><span>Akses pribadi dengan ID Karyawan dan PIN 6 digit.</span></div>
+        <div><i>🔒</i><span>Akses pribadi dengan nama dan PIN 6 digit.</span></div>
         <div><i>📄</i><span>Rincian lengkap yang mudah dipahami, siap dicetak atau disimpan sebagai PDF.</span></div>
         <div><i>🕘</i><span>Riwayat gaji tiap periode tersimpan rapi dan mudah dibuka.</span></div>
       </div>
@@ -222,32 +266,48 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
   </aside>
 
   <main class="login-main">
-    <form class="login-card" id="formLogin" autocomplete="off" novalidate>
+    <div class="login-card">
       <div class="logo mobile-logo">
         <div class="logo-mark">MJ</div>
         <div class="logo-text">Merdeka Jaya<small>Slip Gaji Digital</small></div>
       </div>
-      <h2>Masuk</h2>
-      <p class="lead">Gunakan ID Karyawan dan PIN yang diberikan oleh administrasi.</p>
 
-      <label class="lbl" for="inpId">ID Karyawan</label>
-      <input class="field" id="inpId" type="text" inputmode="text" placeholder="contoh: MJ-001" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="20">
+      <!-- Login karyawan -->
+      <form id="formLogin" autocomplete="off" novalidate>
+        <h2>Masuk</h2>
+        <p class="lead">Pilih nama Anda dan masukkan PIN dari bagian administrasi.</p>
 
-      <div class="pin-head">
-        <label class="lbl" for="pin0">PIN (6 digit)</label>
-        <button type="button" class="link-btn" id="btnEye">Tampilkan</button>
-      </div>
-      <div class="pin-row" id="pinRow"></div>
+        <label class="lbl" for="inpNama">Nama Karyawan</label>
+        <input class="field" id="inpNama" type="text" list="daftarNama" placeholder="Ketik atau pilih nama Anda" autocomplete="off" spellcheck="false" maxlength="100">
+        <datalist id="daftarNama"></datalist>
 
-      <div class="alert" id="alertBox" role="alert"></div>
+        <div class="pin-head">
+          <label class="lbl" for="pin0">PIN (6 digit)</label>
+          <button type="button" class="link-btn" id="btnEye">Tampilkan</button>
+        </div>
+        <div class="pin-row" id="pinRow"></div>
 
-      <button class="btn-primary" id="btnLogin" type="submit"><span id="btnText">Lihat Slip Gaji</span></button>
-      <p class="help">Lupa PIN? Hubungi bagian administrasi Merdeka Jaya.</p>
-    </form>
+        <div class="alert" id="alertBox" role="alert"></div>
+        <button class="btn-primary" id="btnLogin" type="submit"><span>Lihat Slip Gaji</span></button>
+        <p class="help">Lupa PIN? Hubungi bagian administrasi Merdeka Jaya.</p>
+        <div class="switch"><button type="button" class="link-btn" id="toAdmin">Masuk sebagai Admin</button></div>
+      </form>
+
+      <!-- Login admin -->
+      <form id="formAdmin" class="hidden" autocomplete="off" novalidate>
+        <h2>Admin</h2>
+        <p class="lead">Masukkan sandi admin untuk mengelola karyawan dan PIN.</p>
+        <label class="lbl" for="inpSandi">Sandi Admin</label>
+        <input class="field" id="inpSandi" type="password" placeholder="Sandi admin" autocomplete="off" maxlength="60">
+        <div class="alert" id="alertAdmin" role="alert"></div>
+        <button class="btn-primary" id="btnAdminLogin" type="submit"><span>Masuk Admin</span></button>
+        <div class="switch"><button type="button" class="link-btn" id="toKaryawan">← Kembali ke login karyawan</button></div>
+      </form>
+    </div>
   </main>
 </section>
 
-<!-- ================= DASHBOARD ================= -->
+<!-- ================= SLIP KARYAWAN ================= -->
 <section id="viewApp" class="hidden">
   <header class="topbar">
     <div class="topbar-in">
@@ -258,6 +318,7 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
       <div class="user">
         <div class="user-info"><b id="uName">-</b><span id="uMeta">-</span></div>
         <div class="avatar" id="uAvatar">-</div>
+        <button class="btn-ghost hidden" id="btnBack" type="button">← Panel Admin</button>
         <button class="btn-ghost" id="btnLogout" type="button">Keluar</button>
       </div>
     </div>
@@ -271,7 +332,7 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 
     <div id="emptyState" class="card empty hidden">
       <b>Belum ada slip gaji</b>
-      Data gaji Anda belum tersedia. Silakan hubungi bagian administrasi.
+      Data gaji belum tersedia untuk karyawan ini.
     </div>
 
     <div id="content">
@@ -302,6 +363,79 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
   </main>
 </section>
 
+<!-- ================= PANEL ADMIN ================= -->
+<section id="viewAdmin" class="hidden">
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="logo">
+        <div class="logo-mark">MJ</div>
+        <div class="logo-text">Merdeka Jaya</div>
+      </div>
+      <div class="user">
+        <span class="badge-admin">Admin</span>
+        <button class="btn-ghost" id="btnAdminLogout" type="button">Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="greet">
+      <small>Panel Administrasi</small>
+      <h1>Kelola Karyawan &amp; PIN</h1>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k"><i class="dot" style="background:var(--navy-2)"></i>Total Karyawan</div><div class="v" id="aTotal">-</div></div>
+      <div class="stat"><div class="k"><i class="dot" style="background:var(--green)"></i>Karyawan Aktif</div><div class="v" id="aAktif">-</div></div>
+      <div class="stat net"><div class="k"><i class="dot" style="background:var(--gold)"></i><span id="aGajiLabel">Gaji Bersih</span></div><div class="v" id="aGaji">-</div></div>
+    </div>
+
+    <div class="card">
+      <div class="tools">
+        <input class="field sm" id="aSearch" type="search" placeholder="Cari nama karyawan…" autocomplete="off">
+        <span class="sp"></span>
+        <button class="btn-ghost" id="aTambah" type="button">＋ Tambah</button>
+        <button class="btn-ghost" id="aSinkron" type="button">⟳ Sinkron dari Gaji</button>
+        <button class="btn-ghost" id="aCetak" type="button">🖨 Cetak Daftar PIN</button>
+        <button class="btn-ghost danger" id="aResetAll" type="button">Reset Semua PIN</button>
+      </div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Nama</th><th>Jabatan</th><th>PIN</th><th>Status</th><th>Login Terakhir</th><th></th></tr></thead>
+          <tbody id="aBody"></tbody>
+        </table>
+      </div>
+      <div class="empty hidden" id="aEmpty"><b>Belum ada karyawan</b>Klik "Sinkron dari Gaji" atau "Tambah".</div>
+    </div>
+
+    <div class="card" style="margin-top:24px">
+      <h3>Ringkasan Gaji per Periode</h3>
+      <p class="s">Total dari data pada sheet Gaji.</p>
+      <div class="tbl-wrap" style="margin-top:12px">
+        <table class="tbl">
+          <thead><tr><th>Periode</th><th class="num">Karyawan</th><th class="num">Gaji Kotor</th><th class="num">Potongan</th><th class="num">Gaji Bersih</th></tr></thead>
+          <tbody id="aRingkas"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- Lembar cetak daftar PIN -->
+<div id="pinSheet"></div>
+
+<!-- Dialog umum -->
+<dialog id="dlg">
+  <div class="dlg-in">
+    <h3 id="dlgTitle"></h3>
+    <div id="dlgBody"></div>
+    <div class="dlg-act">
+      <button class="btn-ghost" id="dlgCancel" type="button">Batal</button>
+      <button class="btn-gold" id="dlgOk" type="button">OK</button>
+    </div>
+  </div>
+</dialog>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -310,12 +444,12 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
  *  (Deploy > New deployment > Web app > salin URL berakhiran /exec)
  * ===================================================== */
 const API_URL = 'https://script.google.com/macros/s/AKfycbwQRL4Bf5yEyIz8h15wJ27JJa540umo8zNFQAURiXZjVuMQ9N8rLSXbcGoQYQeoWMg5/exec';
-const IDLE_MS = 5 * 60 * 1000; // logout otomatis bila tidak aktif 5 menit
+const IDLE_MS = 5 * 60 * 1000;        // logout otomatis karyawan: 5 menit tidak aktif
+const IDLE_ADMIN_MS = 10 * 60 * 1000; // logout otomatis admin: 10 menit tidak aktif
 
 /* ---------- Helper ---------- */
 const $ = (s) => document.querySelector(s);
 const nf = new Intl.NumberFormat('id-ID');
-const fmt = (n) => (Number(n) || 0) === 0 ? '-' : nf.format(Math.round(n));
 const rp = (n) => 'Rp ' + nf.format(Math.round(Number(n) || 0));
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 document.querySelectorAll('.yr').forEach((e) => e.textContent = new Date().getFullYear());
@@ -345,6 +479,47 @@ function toast(msg) {
   el.classList.add('show');
   clearTimeout(toast._t);
   toast._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// Kirim permintaan ke Apps Script.
+// Content-Type text/plain agar tidak memicu preflight CORS.
+async function post(body) {
+  if (!API_URL || API_URL.indexOf('PASTE_') === 0) throw new Error('config');
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(body)
+  });
+  return await res.json();
+}
+
+function showAlert(sel, msg, info) {
+  const a = $(sel);
+  a.textContent = msg;
+  a.classList.toggle('info', !!info);
+  a.classList.add('show');
+}
+const hideAlert = (sel) => $(sel).classList.remove('show');
+const errMsg = (err) => err && err.message === 'config'
+  ? 'URL Apps Script belum diatur pada file index.html (variabel API_URL).'
+  : 'Tidak dapat terhubung ke server. Periksa koneksi internet Anda lalu coba lagi.';
+
+/* ---------- Dialog ---------- */
+function dialog(opt) {
+  return new Promise((resolve) => {
+    const d = $('#dlg'), ok = $('#dlgOk'), cancel = $('#dlgCancel');
+    $('#dlgTitle').textContent = opt.title || '';
+    $('#dlgBody').innerHTML = opt.html || '';
+    ok.textContent = opt.ok || 'OK';
+    cancel.textContent = opt.cancel || 'Batal';
+    cancel.classList.toggle('hidden', opt.cancel === null);
+    const done = (v) => { ok.onclick = cancel.onclick = d.oncancel = null; d.close(); resolve(v); };
+    ok.onclick = () => done(true);
+    cancel.onclick = () => done(false);
+    d.oncancel = (e) => { e.preventDefault(); done(false); };
+    d.showModal();
+    const first = d.querySelector('input'); if (first) first.focus();
+  });
 }
 
 /* ---------- Kotak PIN 6 digit ---------- */
@@ -389,73 +564,111 @@ $('#btnEye').addEventListener('click', () => {
   $('#btnEye').textContent = pinVisible ? 'Sembunyikan' : 'Tampilkan';
 });
 
-/* ---------- Login ---------- */
-let session = null;
-let activeIdx = 0;
-
-function showAlert(msg, info) {
-  const a = $('#alertBox');
-  a.textContent = msg;
-  a.classList.toggle('info', !!info);
-  a.classList.add('show');
+// Daftar nama untuk saran otomatis
+async function muatNama() {
+  try {
+    const r = await post({ action: 'daftarNama' });
+    if (r && r.ok) $('#daftarNama').innerHTML = r.nama.map((n) => `<option value="${esc(n)}"></option>`).join('');
+  } catch (e) { /* abaikan: pengguna tetap bisa mengetik nama */ }
 }
-const hideAlert = () => $('#alertBox').classList.remove('show');
+muatNama();
+
+/* ---------- Pindah form login ---------- */
+$('#toAdmin').addEventListener('click', () => {
+  $('#formLogin').classList.add('hidden'); $('#formAdmin').classList.remove('hidden'); $('#inpSandi').focus();
+});
+$('#toKaryawan').addEventListener('click', () => {
+  $('#formAdmin').classList.add('hidden'); $('#formLogin').classList.remove('hidden'); $('#inpNama').focus();
+});
+
+/* ---------- Login karyawan ---------- */
+let session = null;      // data slip yang sedang dilihat
+let activeIdx = 0;
+let adminToken = null;
+let adminState = null;
+let adminPreview = false; // true bila admin sedang melihat slip karyawan
 
 $('#formLogin').addEventListener('submit', async (e) => {
   e.preventDefault();
-  hideAlert();
-  const id = $('#inpId').value.trim();
+  hideAlert('#alertBox');
+  const nama = $('#inpNama').value.trim();
   const pin = getPin();
 
-  if (!id) { showAlert('Masukkan ID Karyawan Anda.'); $('#inpId').focus(); return; }
-  if (pin.length !== 6) { showAlert('PIN harus 6 digit.'); pinBoxes[pin.length].focus(); return; }
-  if (!API_URL || API_URL.indexOf('PASTE_') === 0) { showAlert('URL Apps Script belum diatur pada file index.html (variabel API_URL).'); return; }
+  if (!nama) { showAlert('#alertBox', 'Pilih atau ketik nama Anda.'); $('#inpNama').focus(); return; }
+  if (pin.length !== 6) { showAlert('#alertBox', 'PIN harus 6 digit.'); pinBoxes[pin.length].focus(); return; }
 
   const btn = $('#btnLogin');
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span><span>Memeriksa…</span>';
-
   try {
-    // Content-Type text/plain agar tidak memicu preflight CORS pada Apps Script
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'login', id: id, pin: pin })
-    });
-    const data = await res.json();
+    const data = await post({ action: 'login', nama: nama, pin: pin });
     if (!data.ok) {
-      showAlert(data.message || 'Login gagal.');
+      showAlert('#alertBox', data.message || 'Login gagal.');
       pinRow.classList.remove('shake'); void pinRow.offsetWidth; pinRow.classList.add('shake');
       clearPin(); pinBoxes[0].focus();
     } else {
-      session = data;
-      clearPin();
-      $('#inpId').value = '';
+      session = data; adminPreview = false;
+      clearPin(); $('#inpNama').value = '';
       openApp();
     }
   } catch (err) {
-    showAlert('Tidak dapat terhubung ke server. Periksa koneksi internet Anda lalu coba lagi.');
+    showAlert('#alertBox', errMsg(err));
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span id="btnText">Lihat Slip Gaji</span>';
+    btn.innerHTML = '<span>Lihat Slip Gaji</span>';
   }
 });
 
-/* ---------- Dashboard ---------- */
+/* ---------- Login admin ---------- */
+$('#formAdmin').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideAlert('#alertAdmin');
+  const sandi = $('#inpSandi').value;
+  if (!sandi.trim()) { showAlert('#alertAdmin', 'Masukkan sandi admin.'); return; }
+
+  const btn = $('#btnAdminLogin');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span><span>Memeriksa…</span>';
+  try {
+    const r = await post({ action: 'adminLogin', sandi: sandi });
+    if (!r.ok) {
+      showAlert('#alertAdmin', r.message || 'Login gagal.');
+      $('#inpSandi').value = '';
+    } else {
+      adminToken = r.token;
+      $('#inpSandi').value = '';
+      $('#viewLogin').classList.add('hidden');
+      $('#viewAdmin').classList.remove('hidden');
+      window.scrollTo(0, 0);
+      resetIdle();
+      await muatAdmin();
+    }
+  } catch (err) {
+    showAlert('#alertAdmin', errMsg(err));
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Masuk Admin</span>';
+  }
+});
+
+/* ---------- Tampilan slip ---------- */
 function openApp() {
   $('#viewLogin').classList.add('hidden');
+  $('#viewAdmin').classList.add('hidden');
   $('#viewApp').classList.remove('hidden');
+  $('#btnBack').classList.toggle('hidden', !adminPreview);
   window.scrollTo(0, 0);
 
   const k = session.karyawan;
   const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
   $('#uName').textContent = k.nama;
-  $('#uMeta').textContent = k.id + (k.jabatan ? ' · ' + k.jabatan : '');
+  $('#uMeta').textContent = k.jabatan || 'Karyawan';
   $('#uAvatar').textContent = ini || 'MJ';
   $('#greetName').textContent = k.nama;
 
   const h = new Date().getHours();
-  $('#greetTime').textContent = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
+  $('#greetTime').textContent = adminPreview ? 'Pratinjau slip karyawan'
+    : h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
 
   const ada = session.slips && session.slips.length > 0;
   $('#emptyState').classList.toggle('hidden', ada);
@@ -468,20 +681,21 @@ function render() {
   const slips = session.slips;
   const s = slips[activeIdx];
 
-  // Chip periode
   $('#chips').innerHTML = slips.map((x, i) =>
     `<button class="chip ${i === activeIdx ? 'active' : ''}" data-i="${i}" type="button">${esc(x.bulan)} ${x.tahun}</button>`).join('');
   $('#chips').querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { activeIdx = +b.dataset.i; render(); }));
 
-  // Ringkasan
   $('#sKotor').textContent = rp(s.gajiKotor);
   $('#sPot').textContent = rp(s.totalPotongan);
   $('#sBersih').textContent = rp(s.gajiBersih);
 
-  // Slip
   const k = session.karyawan, p = session.perusahaan;
-  const noDok = `SG/${esc(k.id)}/${s.tahun}/${String(s.bulanKe).padStart(2, '0')}`;
-  const row = (l, v) => `<div class="row"><span>${l}</span><span class="${(Number(v) || 0) === 0 ? 'zero' : ''}">${(Number(v) || 0) === 0 ? '-' : rp(v)}</span></div>`;
+  const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 3).map((w) => w[0].toUpperCase()).join('');
+  const noDok = `SG/${s.tahun}/${String(s.bulanKe).padStart(2, '0')}/${esc(ini)}`;
+  const row = (l, v) => {
+    const z = (Number(v) || 0) === 0;
+    return `<div class="row"><span>${l}</span><span class="${z ? 'zero' : ''}">${z ? '-' : rp(v)}</span></div>`;
+  };
 
   $('#slip').innerHTML = `
     <div class="slip-head">
@@ -498,7 +712,6 @@ function render() {
     <div class="slip-body">
       <div class="emp">
         <div><small>Nama</small><b>${esc(k.nama)}</b></div>
-        <div><small>ID Karyawan</small><b>${esc(k.id)}</b></div>
         <div><small>Jabatan</small><b>${esc(k.jabatan || '-')}</b></div>
         <div><small>Periode</small><b>${esc(s.bulan)} ${s.tahun}</b></div>
       </div>
@@ -537,11 +750,10 @@ function render() {
       </div>
     </div>`;
 
-  // Grafik riwayat (maks 12 periode terakhir, urut lama → baru)
   const trend = $('#trendCard');
   if (slips.length > 1) {
     const list = slips.map((x, i) => ({ x, i })).slice(0, 12).reverse();
-    const max = Math.max.apply(null, list.map((o) => o.x.gajiBersih), 1);
+    const max = Math.max.apply(null, list.map((o) => o.x.gajiBersih).concat([1]));
     $('#bars').innerHTML = list.map((o) => {
       const h = Math.max(4, Math.round((o.x.gajiBersih / max) * 100));
       return `<button class="bar ${o.i === activeIdx ? 'active' : ''}" data-i="${o.i}" type="button" title="${esc(o.x.bulan)} ${o.x.tahun}: ${rp(o.x.gajiBersih)}">
@@ -554,29 +766,210 @@ function render() {
   }
 }
 
-$('#btnPrint').addEventListener('click', () => window.print());
+/* ---------- Cetak ---------- */
+function mulaiCetak(kelas) {
+  document.body.classList.add(kelas);
+  const bersih = () => { document.body.classList.remove(kelas); window.removeEventListener('afterprint', bersih); };
+  window.addEventListener('afterprint', bersih);
+  setTimeout(bersih, 60000);
+  window.print();
+}
+$('#btnPrint').addEventListener('click', () => mulaiCetak('print-slip'));
 
-/* ---------- Logout & sesi ---------- */
+/* ---------- Admin: data & tampilan ---------- */
+async function adminCall(action, extra) {
+  const r = await post(Object.assign({ action: action, token: adminToken }, extra || {}));
+  if (r && r.expired) {
+    logoutAll('Sesi admin berakhir. Silakan masuk kembali.');
+    throw new Error('expired');
+  }
+  return r;
+}
+
+async function muatAdmin() {
+  try {
+    const r = await adminCall('adminData');
+    if (!r.ok) { toast(r.message || 'Gagal memuat data.'); return; }
+    adminState = r;
+    renderAdmin();
+  } catch (err) {
+    if (err.message !== 'expired') toast(errMsg(err));
+  }
+}
+
+function renderAdmin() {
+  const d = adminState;
+  const list = d.karyawan;
+  const aktif = list.filter((k) => k.status === 'Aktif').length;
+  $('#aTotal').textContent = list.length;
+  $('#aAktif').textContent = aktif;
+  if (d.ringkasan.length) {
+    $('#aGajiLabel').textContent = 'Gaji Bersih ' + d.ringkasan[0].bulan + ' ' + d.ringkasan[0].tahun;
+    $('#aGaji').textContent = rp(d.ringkasan[0].bersih);
+  } else {
+    $('#aGajiLabel').textContent = 'Gaji Bersih';
+    $('#aGaji').textContent = '-';
+  }
+
+  const q = $('#aSearch').value.trim().toLowerCase();
+  const rows = [];
+  list.forEach((k, i) => {
+    if (q && k.nama.toLowerCase().indexOf(q) < 0) return;
+    rows.push(`<tr>
+      <td class="nm">${esc(k.nama)}</td>
+      <td class="muted">${esc(k.jabatan || '-')}</td>
+      <td><button class="pin-chip" type="button" data-act="pin" data-i="${i}" title="Ketuk untuk melihat PIN">••••••</button></td>
+      <td><span class="badge ${k.status === 'Aktif' ? 'on' : 'off'}">${k.status}</span></td>
+      <td class="muted">${esc(k.login || '-')}</td>
+      <td class="act">
+        <button class="btn-ghost xs" type="button" data-act="slip" data-i="${i}">Lihat Slip</button>
+        <button class="btn-ghost xs" type="button" data-act="reset" data-i="${i}">Reset PIN</button>
+        <button class="btn-ghost xs ${k.status === 'Aktif' ? 'danger' : ''}" type="button" data-act="status" data-i="${i}">${k.status === 'Aktif' ? 'Nonaktifkan' : 'Aktifkan'}</button>
+      </td></tr>`);
+  });
+  $('#aBody').innerHTML = rows.join('');
+  $('#aEmpty').classList.toggle('hidden', list.length > 0);
+
+  $('#aRingkas').innerHTML = d.ringkasan.length ? d.ringkasan.map((m) => `<tr>
+      <td class="nm">${esc(m.bulan)} ${m.tahun}</td><td class="num">${m.orang}</td>
+      <td class="num">${rp(m.kotor)}</td><td class="num">${rp(m.potongan)}</td><td class="num"><b>${rp(m.bersih)}</b></td></tr>`).join('')
+    : '<tr><td colspan="5" class="muted">Belum ada data gaji.</td></tr>';
+}
+
+$('#aSearch').addEventListener('input', () => { if (adminState) renderAdmin(); });
+
+// Aksi pada baris tabel
+$('#aBody').addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  const k = adminState.karyawan[+b.dataset.i];
+  if (!k) return;
+  const act = b.dataset.act;
+
+  if (act === 'pin') {
+    const tampil = b.dataset.show === '1';
+    b.textContent = tampil ? '••••••' : k.pin;
+    b.dataset.show = tampil ? '0' : '1';
+    return;
+  }
+
+  try {
+    if (act === 'slip') {
+      toast('Membuka slip…');
+      const r = await adminCall('adminSlip', { nama: k.nama });
+      if (!r.ok) { toast(r.message || 'Gagal.'); return; }
+      session = r; adminPreview = true;
+      openApp();
+    } else if (act === 'reset') {
+      const ya = await dialog({ title: 'Reset PIN', html: `<p>Buat PIN baru untuk <b>${esc(k.nama)}</b>? PIN lama tidak akan berlaku lagi.</p>`, ok: 'Reset PIN' });
+      if (!ya) return;
+      const r = await adminCall('adminResetPin', { nama: k.nama });
+      if (!r.ok) { toast(r.message || 'Gagal.'); return; }
+      await dialog({ title: 'PIN baru', html: `<p>PIN baru untuk <b>${esc(k.nama)}</b>:</p><div class="bigpin">${esc(r.pin)}</div>`, ok: 'Selesai', cancel: null });
+      await muatAdmin();
+    } else if (act === 'status') {
+      const baru = k.status === 'Aktif' ? 'Nonaktif' : 'Aktif';
+      const r = await adminCall('adminStatus', { nama: k.nama, status: baru });
+      if (!r.ok) { toast(r.message || 'Gagal.'); return; }
+      toast(k.nama + ' sekarang ' + baru.toLowerCase() + '.');
+      await muatAdmin();
+    }
+  } catch (err) {
+    if (err.message !== 'expired') toast(errMsg(err));
+  }
+});
+
+$('#aTambah').addEventListener('click', async () => {
+  const ya = await dialog({
+    title: 'Tambah Karyawan',
+    html: `<label class="lbl" for="dNama">Nama (harus sama dengan nama di sheet Gaji)</label><input class="field sm" id="dNama" maxlength="80" autocomplete="off">
+           <label class="lbl" for="dJab">Jabatan (opsional)</label><input class="field sm" id="dJab" maxlength="60" autocomplete="off">`,
+    ok: 'Tambah'
+  });
+  if (!ya) return;
+  const nama = $('#dNama').value.trim(), jab = $('#dJab').value.trim();
+  if (!nama) { toast('Nama wajib diisi.'); return; }
+  try {
+    const r = await adminCall('adminTambah', { nama: nama, jabatan: jab });
+    if (!r.ok) { toast(r.message || 'Gagal.'); return; }
+    await dialog({ title: 'Karyawan ditambahkan', html: `<p>PIN untuk <b>${esc(nama)}</b>:</p><div class="bigpin">${esc(r.pin)}</div>`, ok: 'Selesai', cancel: null });
+    await muatAdmin();
+  } catch (err) { if (err.message !== 'expired') toast(errMsg(err)); }
+});
+
+$('#aSinkron').addEventListener('click', async () => {
+  try {
+    toast('Menyinkronkan…');
+    const r = await adminCall('adminSinkron');
+    if (!r.ok) { toast(r.message || 'Gagal.'); return; }
+    toast(r.jumlah > 0 ? r.jumlah + ' karyawan baru ditambahkan.' : 'Tidak ada karyawan baru.');
+    await muatAdmin();
+  } catch (err) { if (err.message !== 'expired') toast(errMsg(err)); }
+});
+
+$('#aResetAll').addEventListener('click', async () => {
+  const ya = await dialog({ title: 'Reset semua PIN', html: '<p>Semua karyawan akan mendapat PIN baru dan PIN lama tidak berlaku lagi. Lanjutkan?</p>', ok: 'Ya, reset semua' });
+  if (!ya) return;
+  try {
+    const r = await adminCall('adminResetSemua');
+    if (!r.ok) { toast(r.message || 'Gagal.'); return; }
+    toast('Semua PIN telah diganti.');
+    await muatAdmin();
+  } catch (err) { if (err.message !== 'expired') toast(errMsg(err)); }
+});
+
+$('#aCetak').addEventListener('click', () => {
+  const list = (adminState ? adminState.karyawan : []).filter((k) => k.status === 'Aktif');
+  if (!list.length) { toast('Belum ada karyawan aktif.'); return; }
+  const tgl = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  $('#pinSheet').innerHTML = `<h2>Daftar PIN Karyawan — Merdeka Jaya</h2>
+    <p>Dicetak ${esc(tgl)}. RAHASIA: potong per baris dan berikan kepada masing-masing karyawan.</p>
+    <table><thead><tr><th>No</th><th>Nama</th><th>Jabatan</th><th>PIN</th></tr></thead><tbody>
+    ${list.map((k, i) => `<tr><td>${i + 1}</td><td>${esc(k.nama)}</td><td>${esc(k.jabatan || '-')}</td><td class="pin">${esc(k.pin)}</td></tr>`).join('')}
+    </tbody></table>`;
+  mulaiCetak('print-pin');
+});
+
+/* ---------- Keluar & sesi ---------- */
 let idleTimer;
 function resetIdle() {
   clearTimeout(idleTimer);
-  if (!session) return;
-  idleTimer = setTimeout(() => logout('Sesi berakhir karena tidak ada aktivitas. Silakan masuk kembali.'), IDLE_MS);
+  if (!session && !adminToken) return;
+  const ms = adminToken ? IDLE_ADMIN_MS : IDLE_MS;
+  idleTimer = setTimeout(() => logoutAll('Sesi berakhir karena tidak ada aktivitas. Silakan masuk kembali.'), ms);
 }
 ['click', 'keydown', 'touchstart', 'scroll', 'mousemove'].forEach((ev) =>
   window.addEventListener(ev, resetIdle, { passive: true }));
 
-function logout(pesan) {
-  session = null;
+function logoutAll(pesan) {
+  session = null; adminState = null; adminPreview = false;
+  const tokenLama = adminToken; adminToken = null;
+  if (tokenLama) post({ action: 'adminLogout', token: tokenLama }).catch(() => {});
   clearTimeout(idleTimer);
   $('#slip').innerHTML = '';
+  $('#aBody').innerHTML = '';
+  $('#pinSheet').innerHTML = '';
   $('#viewApp').classList.add('hidden');
+  $('#viewAdmin').classList.add('hidden');
   $('#viewLogin').classList.remove('hidden');
-  hideAlert();
-  if (pesan) showAlert(pesan, true);
-  $('#inpId').focus();
+  $('#formAdmin').classList.add('hidden');
+  $('#formLogin').classList.remove('hidden');
+  hideAlert('#alertBox'); hideAlert('#alertAdmin');
+  if (pesan) showAlert('#alertBox', pesan, true);
+  $('#inpNama').focus();
+  muatNama();
 }
-$('#btnLogout').addEventListener('click', () => { logout(); toast('Anda telah keluar.'); });
+
+$('#btnLogout').addEventListener('click', () => { logoutAll(); toast('Anda telah keluar.'); });
+$('#btnAdminLogout').addEventListener('click', () => { logoutAll(); toast('Anda telah keluar.'); });
+$('#btnBack').addEventListener('click', () => {
+  session = null; adminPreview = false;
+  $('#viewApp').classList.add('hidden');
+  $('#viewAdmin').classList.remove('hidden');
+  window.scrollTo(0, 0);
+  resetIdle();
+  muatAdmin();
+});
 </script>
 </body>
 </html>
