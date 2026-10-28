@@ -3,7 +3,7 @@
  * - Permintaan ke server data (Apps Script) TIDAK PERNAH disimpan: data gaji selalu diambil langsung.
  * - Halaman memakai strategi "jaringan dulu": pembaruan index.html langsung terpakai bila online.
  */
-const VERSI = 'mj-slipgaji-v3';
+const VERSI = 'mj-slipgaji-v4';
 const CANGKANG = [
   './',
   './index.html',
