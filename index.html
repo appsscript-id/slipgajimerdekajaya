@@ -59,6 +59,20 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .field::placeholder{color:#B5B9C1;font-weight:500}
 .field:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,163,91,.18)}
 .field.sm{height:44px;font-size:14.5px;border-radius:12px}
+
+/* ---------- Daftar pilih nama (latar putih) ---------- */
+.combo{position:relative}
+.combo .field{padding-right:44px;background:#fff;color:var(--ink)}
+.combo-arrow{position:absolute;right:16px;top:0;height:54px;display:flex;align-items:center;color:var(--muted);font-size:13px;pointer-events:none;transition:.2s}
+.combo.open .combo-arrow{transform:rotate(180deg)}
+.combo-list{display:none;position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:40;list-style:none;
+  background:#FFFFFF;color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:6px;max-height:268px;overflow-y:auto;
+  box-shadow:0 22px 48px rgba(14,26,43,.18)}
+.combo.open .combo-list{display:block}
+.combo-list li{padding:11px 14px;border-radius:10px;font-size:14.5px;font-weight:500;cursor:pointer;background:#FFFFFF;color:var(--ink)}
+.combo-list li:hover,.combo-list li.hl{background:var(--gold-soft)}
+.combo-list li.info{color:var(--muted);cursor:default;background:#fff;font-weight:400}
+.combo-list li.info:hover{background:#fff}
 .pin-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 8px}
 .pin-head .lbl{margin:0}
 .link-btn{background:none;border:0;color:var(--gold-deep);font-size:13px;font-weight:600;padding:2px 0}
@@ -278,8 +292,11 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
         <p class="lead">Pilih nama Anda dan masukkan PIN dari bagian administrasi.</p>
 
         <label class="lbl" for="inpNama">Nama Karyawan</label>
-        <input class="field" id="inpNama" type="text" list="daftarNama" placeholder="Ketik atau pilih nama Anda" autocomplete="off" spellcheck="false" maxlength="100">
-        <datalist id="daftarNama"></datalist>
+        <div class="combo" id="combo">
+          <input class="field" id="inpNama" type="text" role="combobox" aria-expanded="false" aria-controls="comboList" placeholder="Pilih nama Anda dari daftar" autocomplete="off" spellcheck="false" maxlength="100">
+          <span class="combo-arrow">▼</span>
+          <ul class="combo-list" id="comboList" role="listbox"></ul>
+        </div>
 
         <div class="pin-head">
           <label class="lbl" for="pin0">PIN (6 digit)</label>
@@ -564,12 +581,58 @@ $('#btnEye').addEventListener('click', () => {
   $('#btnEye').textContent = pinVisible ? 'Sembunyikan' : 'Tampilkan';
 });
 
-// Daftar nama untuk saran otomatis
+/* ---------- Daftar pilih nama karyawan ---------- */
+let namaList = [];
+let namaStatus = 'loading'; // loading | ok | error
+let comboHl = -1;
+const combo = $('#combo'), comboList = $('#comboList'), inpNama = $('#inpNama');
+
+function comboItems() {
+  const q = inpNama.value.trim().toLowerCase();
+  return namaList.filter((n) => !q || n.toLowerCase().indexOf(q) >= 0);
+}
+
+function renderCombo() {
+  const items = comboItems();
+  if (namaStatus === 'loading') {
+    comboList.innerHTML = '<li class="info">Memuat daftar karyawan…</li>';
+  } else if (namaStatus === 'error') {
+    comboList.innerHTML = '<li class="info">Daftar tidak dapat dimuat. Ketik nama Anda secara lengkap.</li>';
+  } else if (!items.length) {
+    comboList.innerHTML = '<li class="info">Nama tidak ditemukan.</li>';
+  } else {
+    comboList.innerHTML = items.map((n, i) =>
+      `<li role="option" data-n="${esc(n)}" class="${i === comboHl ? 'hl' : ''}">${esc(n)}</li>`).join('');
+  }
+}
+function bukaCombo() { renderCombo(); combo.classList.add('open'); inpNama.setAttribute('aria-expanded', 'true'); }
+function tutupCombo() { combo.classList.remove('open'); inpNama.setAttribute('aria-expanded', 'false'); comboHl = -1; }
+function pilihNama(n) { inpNama.value = n; tutupCombo(); pinBoxes[0].focus(); }
+
+inpNama.addEventListener('focus', bukaCombo);
+inpNama.addEventListener('click', bukaCombo);
+inpNama.addEventListener('input', () => { comboHl = -1; bukaCombo(); });
+inpNama.addEventListener('keydown', (e) => {
+  const items = comboItems();
+  if (e.key === 'ArrowDown') { e.preventDefault(); bukaCombo(); comboHl = Math.min(items.length - 1, comboHl + 1); renderCombo(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); comboHl = Math.max(0, comboHl - 1); renderCombo(); }
+  else if (e.key === 'Enter' && combo.classList.contains('open') && comboHl >= 0 && items[comboHl]) { e.preventDefault(); pilihNama(items[comboHl]); }
+  else if (e.key === 'Escape' || e.key === 'Tab') tutupCombo();
+});
+// mousedown agar terpilih sebelum input kehilangan fokus
+comboList.addEventListener('mousedown', (e) => {
+  const li = e.target.closest('li[data-n]');
+  if (li) { e.preventDefault(); pilihNama(li.dataset.n); }
+});
+document.addEventListener('click', (e) => { if (!combo.contains(e.target)) tutupCombo(); });
+
 async function muatNama() {
+  namaStatus = 'loading';
   try {
     const r = await post({ action: 'daftarNama' });
-    if (r && r.ok) $('#daftarNama').innerHTML = r.nama.map((n) => `<option value="${esc(n)}"></option>`).join('');
-  } catch (e) { /* abaikan: pengguna tetap bisa mengetik nama */ }
+    if (r && r.ok) { namaList = r.nama; namaStatus = 'ok'; } else { namaStatus = 'error'; }
+  } catch (e) { namaStatus = 'error'; }
+  if (combo.classList.contains('open')) renderCombo();
 }
 muatNama();
 
@@ -956,7 +1019,6 @@ function logoutAll(pesan) {
   $('#formLogin').classList.remove('hidden');
   hideAlert('#alertBox'); hideAlert('#alertAdmin');
   if (pesan) showAlert('#alertBox', pesan, true);
-  $('#inpNama').focus();
   muatNama();
 }
 
