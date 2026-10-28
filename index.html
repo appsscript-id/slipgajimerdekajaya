@@ -262,7 +262,22 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
   .pin-row{gap:8px}
   .pin-row input{height:54px;font-size:20px}
 }
-
+/* ---------- Ikon mata sandi & bar atas di HP ---------- */
+body{overflow-x:hidden}
+.topbar-in>*{min-width:0}
+.pw{position:relative}
+.pw .field{padding-right:54px}
+.pw-eye{position:absolute;right:4px;top:0;width:48px;height:54px;border:0;background:none;color:var(--muted);display:grid;place-items:center;padding:0}
+.pw-eye:hover{color:var(--navy)}
+@media (max-width:480px){
+  .topbar-in{padding:10px 14px}
+  .topbar .logo-text{display:none}
+  .user{gap:8px}
+  .btn-ghost{padding:0 12px}
+}
+@media (max-width:380px){
+  .avatar{display:none}
+}
 /* ---------- Cetak / PDF ---------- */
 @media print{
   @page{size:A4;margin:12mm}
@@ -337,7 +352,10 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
         <h2>Admin</h2>
         <p class="lead">Masukkan sandi admin untuk mengelola karyawan dan PIN.</p>
         <label class="lbl" for="inpSandi">Sandi Admin</label>
-        <input class="field" id="inpSandi" type="password" placeholder="Sandi admin" autocomplete="off" maxlength="60">
+        <div class="pw">
+  <input class="field" id="inpSandi" type="password" placeholder="Sandi admin" autocomplete="off" maxlength="60">
+  <button type="button" class="pw-eye" id="btnEyeSandi" aria-label="Tampilkan sandi" title="Tampilkan sandi"></button>
+</div>
         <div class="alert" id="alertAdmin" role="alert"></div>
         <button class="btn-primary" id="btnAdminLogin" type="submit"><span>Masuk Admin</span></button>
         <div class="switch"><button type="button" class="link-btn" id="toKaryawan">← Kembali ke login karyawan</button></div>
@@ -638,27 +656,42 @@ function tutupCombo() { combo.classList.remove('open'); inpNama.setAttribute('ar
 function pilihNama(n) { inpNama.value = n; comboSemua = true; tutupCombo(); pinBoxes[0].focus(); }
 
 const loginMain = document.querySelector('.login-main');
+const inpSandi = $('#inpSandi'), formAdminEl = $('#formAdmin');
+
+function geserKeAtas(el, jarak) {
+  const vv = window.visualViewport;
+  const atas = el.getBoundingClientRect().top;
+  const target = (vv ? vv.offsetTop : 0) + jarak;
+  window.scrollBy({ top: atas - target, behavior: 'smooth' });
+}
 function sesuaikanKeyboard() {
   const vv = window.visualViewport;
   const tinggi = vv ? vv.height : window.innerHeight;
-  // daftar nama dibatasi agar muat di area yang tidak tertutup keyboard
   comboList.style.maxHeight = Math.min(268, Math.max(120, tinggi - 54 - 40)) + 'px';
-  // geser halaman supaya kolom nama berada di bagian atas layar
-  const atas = combo.getBoundingClientRect().top;
-  const target = (vv ? vv.offsetTop : 0) + 12;
-  window.scrollBy({ top: atas - target, behavior: 'smooth' });
+  if (document.activeElement === inpSandi) geserKeAtas(formAdminEl, 24); // form admin naik di atas keyboard
+  else if (document.activeElement === inpNama) geserKeAtas(combo, 12);   // kolom nama naik di atas keyboard
 }
-function fokusNama() {
+function bukaKeyboardLogin() {
   loginMain.classList.add('kb'); // beri ruang gulir agar bisa naik
-  bukaCombo();
   setTimeout(sesuaikanKeyboard, 80);
   setTimeout(sesuaikanKeyboard, 350); // setelah keyboard terbuka penuh
 }
-inpNama.addEventListener('focus', fokusNama);
-inpNama.addEventListener('blur', () => setTimeout(() => {
-  if (document.activeElement !== inpNama) loginMain.classList.remove('kb');
-}, 200));
+function tutupKeyboardLogin() {
+  setTimeout(() => {
+    const a = document.activeElement;
+    if (a !== inpNama && a !== inpSandi) loginMain.classList.remove('kb');
+  }, 200);
+}
+inpNama.addEventListener('focus', () => { bukaCombo(); bukaKeyboardLogin(); });
+inpNama.addEventListener('blur', tutupKeyboardLogin);
+inpSandi.addEventListener('focus', bukaKeyboardLogin);
+inpSandi.addEventListener('blur', tutupKeyboardLogin);
 if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    const a = document.activeElement;
+    if (a === inpNama || a === inpSandi) sesuaikanKeyboard();
+  });
+}
   window.visualViewport.addEventListener('resize', () => {
     if (document.activeElement === inpNama) sesuaikanKeyboard();
   });
@@ -689,12 +722,32 @@ async function muatNama() {
 }
 muatNama();
 
+/* ---------- Ikon mata sandi admin ---------- */
+const SVG_MATA = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const SVG_MATA_CORET = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a19.77 19.77 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 5c7 0 11 7 11 7a19.86 19.86 0 0 1-3.17 4.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+function setSandiTampil(tampil) {
+  inpSandi.type = tampil ? 'text' : 'password';
+  const b = $('#btnEyeSandi');
+  b.innerHTML = tampil ? SVG_MATA_CORET : SVG_MATA;
+  b.title = b.ariaLabel = tampil ? 'Sembunyikan sandi' : 'Tampilkan sandi';
+}
+setSandiTampil(false);
+// mousedown dicegah agar keyboard tidak tertutup saat ikon diketuk
+$('#btnEyeSandi').addEventListener('mousedown', (e) => e.preventDefault());
+$('#btnEyeSandi').addEventListener('click', () => setSandiTampil(inpSandi.type === 'password'));
+$('#formAdmin').addEventListener('submit', () => setSandiTampil(false));
+
 /* ---------- Pindah form login ---------- */
 $('#toAdmin').addEventListener('click', () => {
-  $('#formLogin').classList.add('hidden'); $('#formAdmin').classList.remove('hidden'); $('#inpSandi').focus();
+  $('#formLogin').classList.add('hidden'); $('#formAdmin').classList.remove('hidden');
+  setSandiTampil(false);
+  inpSandi.focus();
 });
 $('#toKaryawan').addEventListener('click', () => {
-  $('#formAdmin').classList.add('hidden'); $('#formLogin').classList.remove('hidden'); $('#inpNama').focus();
+  $('#formAdmin').classList.add('hidden'); $('#formLogin').classList.remove('hidden');
+  setSandiTampil(false);
+  loginMain.classList.remove('kb');
+  window.scrollTo(0, 0); // kembali ke posisi awal, tanpa fokus otomatis ke kolom nama
 });
 
 /* ---------- Login karyawan ---------- */
