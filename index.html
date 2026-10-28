@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#12243D">
+<meta name="application-name" content="Slip Gaji">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Slip Gaji">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Merdeka Jaya · Slip Gaji</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,6 +223,20 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
 .dlg-act{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
 .bigpin{font-family:var(--serif);font-size:42px;font-weight:700;letter-spacing:.14em;text-align:center;color:var(--navy);background:var(--gold-soft);border:1px solid #EADBB6;border-radius:14px;padding:14px;margin-top:14px}
 
+/* ---------- Tombol musik & pasang aplikasi ---------- */
+.music-btn{position:fixed;right:18px;bottom:18px;z-index:45;width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,163,91,.55);
+  background:var(--navy);color:var(--gold);font-size:20px;display:grid;place-items:center;box-shadow:0 10px 26px rgba(14,26,43,.28);transition:.2s;padding:0}
+.music-btn:hover{transform:scale(1.06)}
+.music-btn.hint::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--gold);opacity:.7;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.9);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+.install-box{margin-top:18px;padding:14px 16px;border-radius:14px;background:var(--gold-soft);border:1px solid #EADBB6;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.install-box span{font-size:13px;color:#6B5420;font-weight:500;flex:1 1 180px}
+.install-box .btn-gold{height:38px;font-size:13px;padding:0 14px}
+.toolbar-act{display:flex;gap:10px;flex-wrap:wrap}
+.btn-outline{height:42px;padding:0 18px;border-radius:12px;border:1.5px solid var(--navy);background:#fff;color:var(--navy);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;transition:.18s;white-space:nowrap}
+.btn-outline:hover{background:var(--navy);color:#fff}
+.btn-outline:disabled{opacity:.6;cursor:wait}
+
 .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;transition:.3s;z-index:50;max-width:90vw}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
@@ -307,6 +329,10 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
         <div class="alert" id="alertBox" role="alert"></div>
         <button class="btn-primary" id="btnLogin" type="submit"><span>Lihat Slip Gaji</span></button>
         <p class="help">Lupa PIN? Hubungi bagian administrasi Merdeka Jaya.</p>
+        <div class="install-box hidden" id="installBox">
+          <span id="installTeks">Pasang aplikasi ini di perangkat Anda agar mudah dibuka.</span>
+          <button class="btn-gold" id="btnInstall" type="button">⬇ Pasang Aplikasi</button>
+        </div>
         <div class="switch"><button type="button" class="link-btn" id="toAdmin">Masuk sebagai Admin</button></div>
       </form>
 
@@ -365,7 +391,10 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
         <div>
           <div class="toolbar">
             <h3>Rincian Slip Gaji</h3>
-            <button class="btn-gold" id="btnPrint" type="button">⬇ Cetak / Simpan PDF</button>
+            <div class="toolbar-act">
+              <button class="btn-gold" id="btnGambar" type="button">🖼 Simpan Gambar</button>
+              <button class="btn-outline" id="btnPrint" type="button">🖨 Cetak / PDF</button>
+            </div>
           </div>
           <article class="slip" id="slip"></article>
         </div>
@@ -453,6 +482,8 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
   </div>
 </dialog>
 
+<button class="music-btn" id="btnMusik" type="button" aria-label="Musik" title="Musik">🎵</button>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -460,7 +491,7 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
  *  PENGATURAN — ganti dengan URL Web App Apps Script Anda
  *  (Deploy > New deployment > Web app > salin URL berakhiran /exec)
  * ===================================================== */
-const API_URL = 'https://script.google.com/macros/s/AKfycbwQRL4Bf5yEyIz8h15wJ27JJa540umo8zNFQAURiXZjVuMQ9N8rLSXbcGoQYQeoWMg5/exec';
+const API_URL = 'PASTE_URL_WEB_APP_ANDA_DI_SINI';
 const IDLE_MS = 5 * 60 * 1000;        // logout otomatis karyawan: 5 menit tidak aktif
 const IDLE_ADMIN_MS = 10 * 60 * 1000; // logout otomatis admin: 10 menit tidak aktif
 
@@ -839,6 +870,367 @@ function mulaiCetak(kelas) {
   window.print();
 }
 $('#btnPrint').addEventListener('click', () => mulaiCetak('print-slip'));
+
+/* ---------- Perangkat ---------- */
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+
+/* ---------- Simpan slip sebagai gambar (PNG) ---------- */
+const FS = '"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+const FF = '"Fraunces", Georgia, "Times New Roman", serif';
+
+function jalurKotak(c, x, y, w, h, r) {
+  c.beginPath();
+  c.moveTo(x + r, y);
+  c.arcTo(x + w, y, x + w, y + h, r);
+  c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r);
+  c.arcTo(x, y, x + w, y, r);
+  c.closePath();
+}
+function spasi(c, px) { if ('letterSpacing' in c) c.letterSpacing = px + 'px'; }
+function bungkus(c, teks, maks) {
+  const kata = String(teks).split(/\s+/).filter(Boolean);
+  const baris = []; let cur = '';
+  kata.forEach((w) => {
+    const t = cur ? cur + ' ' + w : w;
+    if (c.measureText(t).width > maks && cur) { baris.push(cur); cur = w; } else cur = t;
+  });
+  if (cur) baris.push(cur);
+  return baris;
+}
+// Kecilkan huruf bila teks terlalu lebar; font terakhir tetap terpasang di kanvas
+function muatTeks(c, teks, maks, berat, mulai, minim, fam) {
+  let sz = mulai;
+  c.font = `${berat} ${sz}px ${fam}`;
+  while (c.measureText(teks).width > maks && sz > minim) { sz--; c.font = `${berat} ${sz}px ${fam}`; }
+  return sz;
+}
+
+// Menggambar slip pada kanvas (lebar logis 1080). Mengembalikan tinggi total.
+function lukisSlip(c, s, k, p) {
+  const W = 1080, M = 56, CW = 460, GAP = 48;
+  const ink = '#0E1A2B', navy = '#12243D', gold = '#C9A35B', goldDeep = '#A9833B', muted = '#6B7686';
+  const green = '#1E7B5A', red = '#B4403A';
+  const rp2 = (v) => 'Rp ' + nf.format(Math.round(Number(v) || 0));
+  c.textBaseline = 'alphabetic';
+  c.textAlign = 'left';
+  spasi(c, 0);
+
+  c.fillStyle = '#FFFFFF';
+  c.fillRect(0, 0, W, 6000);
+
+  // ---- Kepala ----
+  c.font = `500 15px ${FS}`;
+  const alamat = p.alamat ? bungkus(c, p.alamat, 560).slice(0, 3) : [];
+  const hH = Math.max(176, alamat.length ? 138 + alamat.length * 21 + 26 : 0);
+  let g = c.createLinearGradient(0, 0, W, hH);
+  g.addColorStop(0, '#0F2038'); g.addColorStop(1, '#1B3557');
+  c.fillStyle = g; c.fillRect(0, 0, W, hH);
+  g = c.createRadialGradient(W, 0, 0, W, 0, 460);
+  g.addColorStop(0, 'rgba(201,163,91,0.32)'); g.addColorStop(1, 'rgba(201,163,91,0)');
+  c.fillStyle = g; c.fillRect(0, 0, W, hH);
+
+  g = c.createLinearGradient(M, 44, M + 68, 112);
+  g.addColorStop(0, gold); g.addColorStop(1, '#E6CB92');
+  jalurKotak(c, M, 44, 68, 68, 18); c.fillStyle = g; c.fill();
+  c.fillStyle = navy; c.font = `700 28px ${FF}`; c.textAlign = 'center'; c.fillText('MJ', M + 34, 90);
+  c.textAlign = 'left';
+
+  c.fillStyle = '#FFFFFF';
+  muatTeks(c, p.nama, 380, 600, 34, 20, FF);
+  c.fillText(p.nama, M + 88, 80);
+  c.fillStyle = 'rgba(255,255,255,0.65)'; c.font = `600 12px ${FS}`; spasi(c, 2);
+  c.fillText('SLIP GAJI KARYAWAN', M + 88, 104); spasi(c, 0);
+  c.fillStyle = 'rgba(255,255,255,0.68)'; c.font = `500 15px ${FS}`;
+  alamat.forEach((l, i) => c.fillText(l, M, 142 + i * 21));
+
+  c.textAlign = 'right';
+  c.fillStyle = gold; c.font = `600 36px ${FF}`; c.fillText('SLIP GAJI', W - M, 84);
+  c.fillStyle = 'rgba(255,255,255,0.88)'; c.font = `500 18px ${FS}`; c.fillText('Periode ' + s.bulan + ' ' + s.tahun, W - M, 116);
+  const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 3).map((w) => w[0].toUpperCase()).join('');
+  c.fillStyle = 'rgba(255,255,255,0.58)'; c.font = `500 13px ${FS}`;
+  c.fillText('No. SG/' + s.tahun + '/' + String(s.bulanKe).padStart(2, '0') + '/' + ini, W - M, 142);
+  c.textAlign = 'left';
+
+  // ---- Data karyawan ----
+  let y = hH + 56;
+  [[M, 380, 'NAMA', k.nama], [M + 420, 250, 'JABATAN', k.jabatan || '-'], [M + 690, 240, 'PERIODE', s.bulan + ' ' + s.tahun]]
+    .forEach((it) => {
+      c.fillStyle = muted; c.font = `600 12px ${FS}`; spasi(c, 1.5); c.fillText(it[2], it[0], y); spasi(c, 0);
+      c.fillStyle = ink; muatTeks(c, it[3], it[1], 600, 21, 13, FS); c.fillText(it[3], it[0], y + 30);
+    });
+  y += 62;
+  c.strokeStyle = '#E8E3D8'; c.lineWidth = 2; c.setLineDash([8, 8]);
+  c.beginPath(); c.moveTo(M, y); c.lineTo(W - M, y); c.stroke(); c.setLineDash([]);
+  y += 44;
+
+  // ---- Pendapatan & potongan ----
+  const pd = s.pendapatan, pt = s.potongan;
+  const kiri = [['Gaji Pokok', pd.gajiPokok], ['Premi', pd.premi], ['Pendapatan Lembur Biasa', pd.lembur],
+    ['Pendapatan Lembur Minggu', pd.lemburMinggu], ['Uang Makan', pd.uangMakan], ['BPJS', pd.bpjs]];
+  const kanan = [['Potongan 50%', pt.potongan50], ['Ijin', pt.ijin], ['Hutang', pt.hutang], ['Lain-lain', pt.lain]];
+  const nBaris = Math.max(kiri.length, kanan.length);
+  const totY = y + 17 + nBaris * 52 + 14;
+
+  const kolomGambar = (x, judul, warna, lembut, baris, totalLabel, totalNilai) => {
+    c.fillStyle = warna; c.font = `700 14px ${FS}`; spasi(c, 2); c.fillText(judul, x, y); spasi(c, 0);
+    c.fillRect(x, y + 14, CW, 3);
+    let ry = y + 17;
+    baris.forEach((b) => {
+      const nol = (Number(b[1]) || 0) === 0;
+      c.textAlign = 'left'; c.fillStyle = '#3A4657'; c.font = `500 19px ${FS}`; c.fillText(b[0], x, ry + 34);
+      c.textAlign = 'right'; c.fillStyle = nol ? '#B5B9C1' : ink; c.font = `${nol ? 500 : 700} 19px ${FS}`;
+      c.fillText(nol ? '-' : rp2(b[1]), x + CW, ry + 34);
+      c.fillStyle = '#F0ECE3'; c.fillRect(x, ry + 51, CW, 1.5);
+      ry += 52;
+    });
+    jalurKotak(c, x, totY, CW, 60, 14); c.fillStyle = lembut; c.fill();
+    c.fillStyle = warna; c.font = `700 19px ${FS}`;
+    c.textAlign = 'left'; c.fillText(totalLabel, x + 18, totY + 38);
+    c.textAlign = 'right'; c.fillText(rp2(totalNilai), x + CW - 18, totY + 38);
+    c.textAlign = 'left';
+  };
+  kolomGambar(M, 'PENDAPATAN', green, '#E3F3EC', kiri, 'Gaji Kotor', s.gajiKotor);
+  kolomGambar(M + CW + GAP, 'POTONGAN', red, '#FBEAE8', kanan, 'Total Potongan', s.totalPotongan);
+  y = totY + 60 + 44;
+
+  // ---- Gaji bersih ----
+  g = c.createLinearGradient(M, y, W - M, y + 150);
+  g.addColorStop(0, '#F6EEDC'); g.addColorStop(1, '#FBF6EA');
+  jalurKotak(c, M, y, W - 2 * M, 150, 22); c.fillStyle = g; c.fill();
+  c.strokeStyle = '#EADBB6'; c.lineWidth = 2; c.stroke();
+  c.fillStyle = goldDeep; c.font = `700 14px ${FS}`; spasi(c, 2);
+  c.fillText('GAJI BERSIH (DITERIMA)', M + 36, y + 46); spasi(c, 0);
+  c.fillStyle = navy; muatTeks(c, rp2(s.gajiBersih), W - 2 * M - 72, 700, 64, 30, FF);
+  c.fillText(rp2(s.gajiBersih), M + 36, y + 114);
+  y += 150 + 42;
+
+  c.fillStyle = '#5A5440'; c.font = `italic 500 18px ${FS}`;
+  const tb = bungkus(c, 'Terbilang: ' + terbilang(s.gajiBersih), W - 2 * M);
+  tb.forEach((l, i) => c.fillText(l, M, y + i * 28));
+  y += tb.length * 28 + 30;
+
+  // ---- Catatan & tanda tangan ----
+  c.font = `400 14px ${FS}`; c.fillStyle = muted;
+  const cat = p.catatan ? bungkus(c, p.catatan, 560) : [];
+  cat.forEach((l, i) => c.fillText(l, M, y + 14 + i * 22));
+  const sx = W - M - 240;
+  c.textAlign = 'center';
+  c.fillStyle = muted; c.font = `500 15px ${FS}`; c.fillText(p.penandatangan || 'Bagian Keuangan', sx + 120, y + 14);
+  c.fillStyle = ink; c.fillRect(sx, y + 102, 240, 1.5);
+  c.font = `700 16px ${FS}`; muatTeks(c, p.nama, 240, 700, 16, 11, FS); c.fillText(p.nama, sx + 120, y + 128);
+  c.textAlign = 'left';
+  y += Math.max(cat.length * 22 + 14, 140) + 40;
+
+  const tgl = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  c.textAlign = 'center'; c.fillStyle = '#9AA0AA'; c.font = `400 12px ${FS}`;
+  c.fillText('Dokumen digital ' + p.nama + ' · dibuat ' + tgl, W / 2, y);
+  c.textAlign = 'left';
+  return y + 44;
+}
+
+async function simpanGambar() {
+  if (!session || !session.slips || !session.slips.length) return;
+  const btn = $('#btnGambar');
+  btn.disabled = true;
+  try {
+    try {
+      await Promise.all(['500 18px', '600 18px', '700 18px'].map((f) => document.fonts.load(f + ' "Plus Jakarta Sans"'))
+        .concat(['600 30px', '700 30px'].map((f) => document.fonts.load(f + ' Fraunces'))));
+    } catch (e) { /* lanjut dengan font cadangan */ }
+
+    const s = session.slips[activeIdx], k = session.karyawan, p = session.perusahaan;
+    const W = 1080, SK = 2; // 2x agar tajam di layar HP
+    const ukur = document.createElement('canvas');
+    ukur.width = W; ukur.height = 10;
+    const H = lukisSlip(ukur.getContext('2d'), s, k, p);
+
+    const cv = document.createElement('canvas');
+    cv.width = W * SK; cv.height = Math.ceil(H * SK);
+    const c = cv.getContext('2d');
+    c.scale(SK, SK);
+    lukisSlip(c, s, k, p);
+
+    const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
+    if (!blob) throw new Error('gagal-gambar');
+    const nama = ('Slip-Gaji_' + k.nama + '_' + s.bulan + '-' + s.tahun).replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+/g, '-') + '.png';
+
+    // iPhone/iPad: lembar bagikan agar bisa "Simpan Gambar" ke Foto
+    if (isIOS && navigator.canShare) {
+      const berkas = new File([blob], nama, { type: 'image/png' });
+      if (navigator.canShare({ files: [berkas] })) {
+        try { await navigator.share({ files: [berkas], title: 'Slip Gaji ' + s.bulan + ' ' + s.tahun }); return; }
+        catch (e) { if (e && e.name === 'AbortError') return; }
+      }
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = nama;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    toast('Gambar slip gaji tersimpan.');
+  } catch (err) {
+    toast('Gagal membuat gambar. Silakan coba lagi.');
+  } finally {
+    btn.disabled = false;
+  }
+}
+$('#btnGambar').addEventListener('click', simpanGambar);
+
+/* ---------- Musik pembuka (±10 detik, dibuat langsung oleh browser) ---------- */
+const MUSIK_DETIK = 10.5;
+let audioCtx = null, musikMaster = null, musikTimer = null;
+let musikState = 'tunggu'; // tunggu | play | idle
+let musikMati = false;
+try { musikMati = localStorage.getItem('mj_musik') === 'off'; } catch (e) { /* abaikan */ }
+const btnMusik = $('#btnMusik');
+
+function ikonMusik() {
+  btnMusik.textContent = musikState === 'play' ? '🔊' : (musikMati ? '🔇' : '🎵');
+  btnMusik.title = musikState === 'play' ? 'Matikan musik'
+    : (musikState === 'tunggu' && !musikMati ? 'Ketuk untuk memutar musik' : 'Putar musik');
+  btnMusik.setAttribute('aria-label', btnMusik.title);
+  btnMusik.classList.toggle('hint', musikState === 'tunggu' && !musikMati);
+}
+
+function susunMusik() {
+  const c = audioCtx, t0 = c.currentTime + 0.12, D = MUSIK_DETIK;
+
+  const master = c.createGain();
+  master.gain.setValueAtTime(0.0001, t0);
+  master.gain.linearRampToValueAtTime(0.75, t0 + 2.2);
+  master.gain.setValueAtTime(0.75, t0 + D - 3.4);
+  master.gain.linearRampToValueAtTime(0.0001, t0 + D);
+  master.connect(c.destination);
+  musikMaster = master;
+
+  // gema ruangan buatan agar terdengar lembut
+  const n = Math.floor(c.sampleRate * 2.8), buf = c.createBuffer(2, n, c.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = buf.getChannelData(ch);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2.4);
+  }
+  const conv = c.createConvolver(); conv.buffer = buf;
+  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
+  const kering = c.createGain(); kering.gain.value = 0.75;
+  const basah = c.createGain(); basah.gain.value = 0.5;
+  lp.connect(kering); kering.connect(master);
+  lp.connect(conv); conv.connect(basah); basah.connect(master);
+
+  const nada = (f, mulai, dur, puncak, jenis, att) => {
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = jenis; o.frequency.setValueAtTime(f, mulai);
+    g.gain.setValueAtTime(0.0001, mulai);
+    g.gain.linearRampToValueAtTime(puncak, mulai + att);
+    g.gain.exponentialRampToValueAtTime(0.0001, mulai + dur);
+    o.connect(g); g.connect(lp);
+    o.start(mulai); o.stop(mulai + dur + 0.1);
+  };
+
+  // alas akor yang tenang: Cmaj7 - Am7 - Fmaj7 - C
+  const akor = [
+    [130.81, 196.00, 246.94, 329.63],
+    [110.00, 164.81, 196.00, 261.63],
+    [87.31, 130.81, 220.00, 329.63],
+    [130.81, 196.00, 329.63, 523.25]
+  ];
+  akor.forEach((a, i) => {
+    const w = t0 + i * 2.55;
+    a.forEach((f, j) => {
+      nada(f, w + j * 0.07, 3.9, 0.05, 'sine', 1.1);
+      nada(f * 1.004, w + j * 0.07, 3.9, 0.03, 'triangle', 1.3);
+    });
+  });
+
+  // melodi lonceng lembut (nada pentatonik)
+  [[0.9, 659.25], [1.7, 783.99], [2.8, 880.00], [3.7, 783.99], [4.5, 659.25],
+   [5.5, 587.33], [6.4, 659.25], [7.3, 783.99], [8.2, 659.25], [9.0, 523.25]].forEach((m) => {
+    nada(m[1], t0 + m[0], 2.4, 0.11, 'sine', 0.03);
+    nada(m[1] * 2, t0 + m[0], 1.4, 0.02, 'sine', 0.03);
+  });
+}
+
+function pemicuMusik(e) {
+  if (e && e.target && e.target.closest && e.target.closest('#btnMusik')) return;
+  mulaiMusik();
+}
+function pasangPemicu() { ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => window.addEventListener(ev, pemicuMusik, { passive: true })); }
+function lepasPemicu() { ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => window.removeEventListener(ev, pemicuMusik)); }
+
+function mulaiMusik() {
+  if (musikMati || musikState === 'play') return;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) { musikState = 'idle'; ikonMusik(); return; }
+  try { if (!audioCtx) audioCtx = new AC(); } catch (e) { return; }
+  const jalan = () => {
+    if (musikMati || musikState === 'play') return;
+    musikState = 'play';
+    lepasPemicu();
+    susunMusik();
+    ikonMusik();
+    clearTimeout(musikTimer);
+    musikTimer = setTimeout(() => { musikState = 'idle'; ikonMusik(); }, MUSIK_DETIK * 1000 + 300);
+  };
+  if (audioCtx.state === 'running') jalan();
+  else audioCtx.resume().then(() => { if (audioCtx.state === 'running') jalan(); }).catch(() => {});
+}
+
+function hentikanMusik() {
+  musikMati = true;
+  try { localStorage.setItem('mj_musik', 'off'); } catch (e) { /* abaikan */ }
+  clearTimeout(musikTimer);
+  if (musikMaster && audioCtx) {
+    const t = audioCtx.currentTime;
+    musikMaster.gain.cancelScheduledValues(t);
+    musikMaster.gain.setTargetAtTime(0.0001, t, 0.12);
+  }
+  musikState = 'idle';
+  ikonMusik();
+}
+
+btnMusik.addEventListener('click', () => {
+  if (musikState === 'play') { hentikanMusik(); return; }
+  musikMati = false;
+  try { localStorage.setItem('mj_musik', 'on'); } catch (e) { /* abaikan */ }
+  musikState = 'idle';
+  mulaiMusik();
+  ikonMusik();
+});
+
+if (!musikMati) { pasangPemicu(); mulaiMusik(); }
+ikonMusik();
+
+/* ---------- Pasang aplikasi (PWA) ---------- */
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+let promptPasang = null;
+function tampilPasang(teks) {
+  if (isStandalone) return;
+  if (teks) $('#installTeks').textContent = teks;
+  $('#installBox').classList.remove('hidden');
+}
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); promptPasang = e; tampilPasang(); });
+window.addEventListener('appinstalled', () => { $('#installBox').classList.add('hidden'); promptPasang = null; toast('Aplikasi berhasil dipasang.'); });
+if (isIOS) tampilPasang('Di iPhone/iPad, pasang aplikasi ini ke Layar Utama agar mudah dibuka.');
+
+$('#btnInstall').addEventListener('click', async () => {
+  if (promptPasang) {
+    promptPasang.prompt();
+    try { await promptPasang.userChoice; } catch (e) { /* abaikan */ }
+    promptPasang = null;
+    $('#installBox').classList.add('hidden');
+    return;
+  }
+  await dialog({
+    title: 'Pasang Aplikasi',
+    html: isIOS
+      ? '<p>1. Buka halaman ini di <b>Safari</b>.<br>2. Ketuk tombol <b>Bagikan</b> (ikon kotak dengan panah ke atas).<br>3. Pilih <b>Tambahkan ke Layar Utama</b>, lalu ketuk <b>Tambah</b>.</p>'
+      : '<p>Buka menu browser (⋮), lalu pilih <b>Instal aplikasi</b> atau <b>Tambahkan ke layar utama</b>. Di laptop, klik ikon pasang di sebelah kolom alamat.</p>',
+    ok: 'Mengerti', cancel: null
+  });
+});
 
 /* ---------- Admin: data & tampilan ---------- */
 async function adminCall(action, extra) {
