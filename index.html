@@ -4,33 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#EEF1FD">
+<meta name="theme-color" content="#12243D">
 <meta name="application-name" content="Slip Gaji">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Slip Gaji">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Merdeka Jaya · Slip Gaji</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0E1A2B; --navy:#12243D; --navy-2:#1B3557; --gold:#C9A35B; --gold-deep:#A9833B;
-  --gold-soft:#F6EEDC; --bg:#EEF1FD; --card:#FFFFFF; --line:#E8E3D8; --muted:#6B7686;
+  --gold-soft:#F6EEDC; --bg:#F5F3EE; --card:#FFFFFF; --line:#E8E3D8; --muted:#6B7686;
   --green:#1E7B5A; --green-soft:#E3F3EC; --red:#B4403A; --red-soft:#FBEAE8;
-  --blue:#3B50E8; --blue-soft:#E6EAFD; --peach:#FFC9C0;
   --radius:18px; --shadow:0 1px 2px rgba(14,26,43,.04),0 8px 30px rgba(14,26,43,.07);
   --font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --serif:'Fraunces',Georgia,'Times New Roman',serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
-body{font-family:var(--font);background:#F5F3EE;color:var(--ink);line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body.app-bg{background:linear-gradient(180deg,#E9EDFD 0%,#F2F4FC 45%,#F5F6FB 100%) fixed}
+html{-webkit-text-size-adjust:100%;overscroll-behavior-y:none} 
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
 .hidden{display:none!important}
 
@@ -71,6 +69,7 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .field:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,163,91,.18)}
 .field.sm{height:44px;font-size:14.5px;border-radius:12px}
 
+/* ---------- Daftar pilih nama (latar putih) ---------- */
 .combo{position:relative}
 .combo .field{padding-right:44px;background:#fff;color:var(--ink)}
 .combo-arrow{position:absolute;right:16px;top:0;height:54px;display:flex;align-items:center;color:var(--muted);font-size:13px;pointer-events:none;transition:.2s}
@@ -105,12 +104,16 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .help{margin-top:22px;text-align:center;font-size:12.5px;color:var(--muted)}
 .switch{margin-top:14px;text-align:center}
 
-/* ---------- Topbar admin ---------- */
+/* ---------- Topbar ---------- */
 .topbar{position:sticky;top:0;z-index:20;background:rgba(245,243,238,.85);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
 .topbar-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .topbar .logo-mark{width:38px;height:38px;font-size:16px}
 .topbar .logo-text{font-size:18px}
 .user{display:flex;align-items:center;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-weight:700;font-size:14px}
+.user-info{line-height:1.2;text-align:right}
+.user-info b{display:block;font-size:13.5px}
+.user-info span{font-size:12px;color:var(--muted)}
 .badge-admin{padding:5px 12px;border-radius:999px;background:var(--navy);color:var(--gold);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
 .btn-ghost{height:38px;padding:0 14px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:13px;color:var(--ink);transition:.18s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
 .btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:#fff}
@@ -121,6 +124,12 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .greet{margin-bottom:22px}
 .greet small{color:var(--muted);font-size:14px;font-weight:500}
 .greet h1{font-family:var(--serif);font-size:clamp(24px,3.2vw,34px);font-weight:600;letter-spacing:-.01em;margin-top:2px}
+
+.chips{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;margin:0 -2px;scrollbar-width:thin}
+.chip{flex:none;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:13.5px;color:var(--ink);transition:.18s;white-space:nowrap}
+.chip:hover{border-color:var(--gold)}
+.chip.active{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 6px 16px rgba(18,36,61,.2)}
+
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:10px 0 24px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow)}
 .stat .k{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
@@ -129,11 +138,60 @@ label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:v
 .stat.net{background:linear-gradient(135deg,#0F2038 0%,#1B3557 100%);border-color:transparent;color:#fff}
 .stat.net .k{color:rgba(255,255,255,.65)}
 .stat.net .v{color:var(--gold)}
+
+.grid{display:grid;grid-template-columns:1fr;gap:24px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.toolbar h3{font-size:15px;font-weight:700}
+.btn-gold{height:42px;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--gold),#DDBE80);color:var(--navy);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px rgba(201,163,91,.35);transition:.18s;white-space:nowrap}
+.btn-gold:hover{transform:translateY(-1px)}
+
+/* ---------- Slip ---------- */
+.slip{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.slip-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:28px 34px;color:#fff;
+  background:radial-gradient(500px 220px at 100% 0%,rgba(201,163,91,.3),transparent 70%),linear-gradient(135deg,#0F2038,#1B3557)}
+.slip-head .logo-text small{opacity:.6}
+.slip-title{text-align:right}
+.slip-title .t{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:.04em;color:var(--gold)}
+.slip-title .p{font-size:13.5px;opacity:.85;margin-top:2px}
+.slip-title .n{font-size:11.5px;opacity:.55;margin-top:4px;letter-spacing:.05em}
+.slip-addr{font-size:12px;opacity:.65;margin-top:10px;max-width:26em}
+.slip-body{padding:28px 34px 34px}
+.emp{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:24px;border-bottom:1px dashed var(--line)}
+.emp div small{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.emp div b{font-size:14.5px;font-weight:600;word-break:break-word}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:26px}
+.col h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;padding-bottom:10px;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:8px}
+.col.in h4{border-color:var(--green);color:var(--green)}
+.col.out h4{border-color:var(--red);color:var(--red)}
+.row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #F0ECE3;font-size:14.5px}
+.row span:first-child{color:#3A4657}
+.row span:last-child{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .zero{color:#B5B9C1;font-weight:500}
+.row.total{border-bottom:0;margin-top:6px;padding:13px 14px;border-radius:12px;font-weight:700}
+.col.in .row.total{background:var(--green-soft);color:var(--green)}
+.col.out .row.total{background:var(--red-soft);color:var(--red)}
+.row.total span:first-child{color:inherit}
+.net-band{margin-top:28px;border-radius:18px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  background:linear-gradient(135deg,var(--gold-soft),#FBF6EA);border:1px solid #EADBB6}
+.net-band small{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--gold-deep)}
+.net-band .amt{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.terbilang{margin-top:12px;font-size:13px;color:#5A5440;font-style:italic}
+.slip-foot{margin-top:30px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.note{font-size:12px;color:var(--muted);max-width:34em}
+.sign{text-align:center;font-size:12.5px;color:var(--muted);min-width:170px}
+.sign .line{margin-top:48px;border-top:1px solid var(--ink);padding-top:6px;color:var(--ink);font-weight:600}
+
+/* ---------- Kartu, grafik ---------- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow)}
 .card h3{font-size:15px;font-weight:700}
 .card p.s{font-size:13px;color:var(--muted);margin-top:2px}
-.btn-gold{height:42px;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--gold),#DDBE80);color:var(--navy);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px rgba(201,163,91,.35);transition:.18s;white-space:nowrap}
-.btn-gold:hover{transform:translateY(-1px)}
+.bars{display:flex;align-items:flex-end;gap:12px;height:170px;margin-top:18px;overflow-x:auto;padding-bottom:2px}
+.bar{flex:1 0 54px;max-width:96px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;background:none;border:0;padding:0}
+.bar .col-fill{width:100%;border-radius:10px 10px 4px 4px;background:linear-gradient(180deg,#D9BE86,var(--gold));min-height:6px;transition:.25s}
+.bar:hover .col-fill{filter:brightness(.95)}
+.bar.active .col-fill{background:linear-gradient(180deg,var(--navy-2),var(--navy))}
+.bar span{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.bar.active span{color:var(--navy)}
 .empty{text-align:center;padding:60px 20px;color:var(--muted)}
 .empty b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px}
 
@@ -166,173 +224,25 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
 .dlg-act{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
 .bigpin{font-family:var(--serif);font-size:42px;font-weight:700;letter-spacing:.14em;text-align:center;color:var(--navy);background:var(--gold-soft);border:1px solid #EADBB6;border-radius:14px;padding:14px;margin-top:14px}
 
+/* ---------- Tombol musik & pasang aplikasi ---------- */
 .install-box{margin-top:18px;padding:14px 16px;border-radius:14px;background:var(--gold-soft);border:1px solid #EADBB6;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
 .install-box span{font-size:13px;color:#6B5420;font-weight:500;flex:1 1 180px}
 .install-box .btn-gold{height:38px;font-size:13px;padding:0 14px}
+.toolbar-act{display:flex;gap:10px;flex-wrap:wrap}
+.btn-outline{height:42px;padding:0 18px;border-radius:12px;border:1.5px solid var(--navy);background:#fff;color:var(--navy);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;transition:.18s;white-space:nowrap}
+.btn-outline:hover{background:var(--navy);color:#fff}
+.btn-outline:disabled{opacity:.6;cursor:wait}
 
-.toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;transition:.3s;z-index:60;max-width:90vw}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;transition:.3s;z-index:50;max-width:90vw}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+/* ---------- Lembar cetak daftar PIN ---------- */
 #pinSheet{display:none}
 #pinSheet h2{font-family:var(--serif);font-size:22px;margin-bottom:4px}
 #pinSheet p{font-size:12px;color:#555;margin-bottom:14px}
 #pinSheet table{width:100%;border-collapse:collapse;font-size:13px}
 #pinSheet th,#pinSheet td{border:1px solid #999;padding:7px 10px;text-align:left}
 #pinSheet td.pin{font-weight:700;letter-spacing:.2em;font-size:15px}
-
-.pw{position:relative}
-.pw .field{padding-right:54px}
-.pw-eye{position:absolute;right:4px;top:0;width:48px;height:54px;border:0;background:none;color:var(--muted);display:grid;place-items:center;padding:0}
-.pw-eye:hover{color:var(--navy)}
-
-/* =====================================================
-   TAMPILAN KARYAWAN (gaya aplikasi mobile)
-   ===================================================== */
-#viewApp{max-width:560px;margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 16px 140px;position:relative}
-.ap-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.ap-ava{position:relative;flex:none}
-.ap-ava .box{width:68px;height:68px;border-radius:22px;background:#fff;border:3px solid #fff;box-shadow:0 6px 18px rgba(59,80,232,.18);display:grid;place-items:center;font-weight:800;font-size:22px;color:var(--blue);overflow:hidden;background-color:var(--blue-soft)}
-.ap-ava .cam{position:absolute;right:-7px;bottom:-7px;width:30px;height:30px;border-radius:50%;background:var(--blue);border:3px solid #EEF1FD;display:grid;place-items:center;color:#fff;padding:0}
-.ap-hi{flex:1;min-width:0}
-.ap-hi small{display:block;font-size:15px;color:#7C8497;font-weight:500}
-.ap-hi h1{font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ap-role{flex:none;padding:10px 16px;border-radius:16px;background:rgba(255,255,255,.55);color:var(--blue);font-weight:700;font-size:14.5px;max-width:42%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ap-back{margin-bottom:12px}
-
-.hero{position:relative;overflow:hidden;border-radius:30px;padding:22px 22px;color:#fff;display:flex;align-items:center;gap:22px;
-  background:radial-gradient(circle at 78% 6%,rgba(129,146,255,.75) 0,rgba(129,146,255,0) 46%),linear-gradient(135deg,#3346C4 0%,#2A3AAE 40%,#18246B 78%,#272F59 100%);
-  box-shadow:0 18px 40px rgba(51,70,196,.32)}
-.hero::before{content:"";position:absolute;left:-60px;top:70px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.05)}
-.hero::after{content:"";position:absolute;right:-90px;top:-40px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.07)}
-.hero>*{position:relative;z-index:1}
-.ring{flex:none;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;
-  background:conic-gradient(#fff var(--p,0%),rgba(255,255,255,.28) 0);box-shadow:0 0 0 1px rgba(255,255,255,.1)}
-.ring-in{width:80px;height:80px;border-radius:50%;background:#1E2C8A;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}
-.ring-in b{font-size:23px;font-weight:800;letter-spacing:-.02em}
-.ring-in span{font-size:11.5px;opacity:.85;margin-top:3px;font-weight:500}
-.hero-txt{min-width:0}
-.hero-txt .a{font-size:15px;font-weight:600;color:rgba(255,255,255,.85)}
-.hero-txt .b{font-size:clamp(26px,8.2vw,36px);font-weight:800;letter-spacing:-.03em;color:var(--peach);margin:4px 0 6px;line-height:1.1;white-space:nowrap}
-.hero-txt .c{font-size:13px;color:rgba(255,255,255,.75);font-weight:500}
-
-.chips{display:flex;gap:10px;overflow-x:auto;padding:16px 2px 4px;margin:0 -2px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;padding:10px 18px;border-radius:999px;border:0;background:#fff;font-weight:700;font-size:13.5px;color:#7C8497;transition:.18s;white-space:nowrap;box-shadow:0 2px 8px rgba(40,52,120,.06)}
-.chip small{font-size:12px;font-weight:600;margin-left:4px;opacity:.8}
-.chip.active{background:var(--blue);color:#fff;box-shadow:0 8px 18px rgba(59,80,232,.32)}
-.chips.flat .chip{background:#F0F2FB;box-shadow:none}
-.chips.flat .chip.active{background:var(--blue);color:#fff;box-shadow:0 8px 18px rgba(59,80,232,.32)}
-
-.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
-.sc{background:#fff;border-radius:26px;padding:16px 16px 18px;box-shadow:0 8px 24px rgba(40,52,120,.08);border:1px solid rgba(255,255,255,.8);min-width:0}
-.sc .ic{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;margin-bottom:14px}
-.sc .ic svg{width:22px;height:22px}
-.sc .v{font-size:clamp(16px,5vw,21px);font-weight:800;letter-spacing:-.02em;white-space:nowrap}
-.sc .l{font-size:14px;color:#7C8497;font-weight:500;margin-top:2px}
-.ic.o{background:#FFF0DD;color:#F7931E}
-.ic.b{background:#E8ECFE;color:var(--blue)}
-.ic.p{background:#FFE6EC;color:#F0527A}
-.ic.v{background:#EFE9FD;color:#7B4FE0}
-
-.hcard{background:#fff;border-radius:30px;padding:22px 20px 14px;box-shadow:0 8px 24px rgba(40,52,120,.08);margin-top:16px}
-.hcard-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:0 4px}
-.hcard-h h2{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
-.hcard-h p{font-size:14px;color:#7C8497;margin-top:3px}
-.pill{flex:none;padding:9px 14px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-weight:700;font-size:13.5px;white-space:nowrap}
-.htbl{width:100%;border-collapse:collapse;margin-top:6px}
-.htbl th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A92A6;font-weight:700;padding:10px 6px}
-.htbl th.num,.htbl td.num{text-align:right}
-.htbl td{padding:14px 6px;border-top:1px solid #EEF0F8;font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums}
-.htbl tr{cursor:pointer}
-.htbl tr.act td{background:#F4F6FF}
-.htbl td.per{font-weight:700}
-.htbl td.pot{color:var(--red)}
-.htbl td.bsh{color:var(--green);font-weight:800}
-.hwrap{overflow-x:auto;margin:0 -4px}
-
-.tcard{background:#fff;border-radius:30px;padding:22px 20px;box-shadow:0 8px 24px rgba(40,52,120,.08);margin-top:16px}
-.tcard h3{font-size:18px;font-weight:800}
-.tcard p.s{font-size:13px;color:#7C8497;margin-top:2px}
-.bars{display:flex;align-items:flex-end;gap:12px;height:170px;margin-top:18px;overflow-x:auto;padding-bottom:2px}
-.bar{flex:1 0 54px;max-width:96px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;background:none;border:0;padding:0}
-.bar .col-fill{width:100%;border-radius:12px 12px 5px 5px;background:linear-gradient(180deg,#B6C0FA,#7C8DF2);min-height:6px;transition:.25s}
-.bar.active .col-fill{background:linear-gradient(180deg,#4A5FEA,#2A3AAE)}
-.bar span{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap}
-.bar.active span{color:var(--blue)}
-
-.tools-row{display:flex;gap:10px;margin:16px 0 14px}
-.btn-blue{flex:1;height:46px;border:0;border-radius:16px;background:var(--blue);color:#fff;font-weight:700;font-size:14px;box-shadow:0 8px 18px rgba(59,80,232,.28)}
-.btn-blue.alt{background:#fff;color:var(--blue);box-shadow:0 4px 12px rgba(40,52,120,.08)}
-.btn-blue:disabled{opacity:.6}
-
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:6px 4px 0}
-.page-sub{font-size:14px;color:#7C8497;margin:2px 4px 0}
-
-/* ---------- Slip ---------- */
-.slip{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:0 8px 24px rgba(40,52,120,.08);overflow:hidden}
-.slip-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:26px 28px;color:#fff;
-  background:radial-gradient(500px 220px at 100% 0%,rgba(201,163,91,.3),transparent 70%),linear-gradient(135deg,#0F2038,#1B3557)}
-.slip-head .logo-text small{opacity:.6}
-.slip-title{text-align:right}
-.slip-title .t{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:.04em;color:var(--gold)}
-.slip-title .p{font-size:13.5px;opacity:.85;margin-top:2px}
-.slip-title .n{font-size:11.5px;opacity:.55;margin-top:4px;letter-spacing:.05em}
-.slip-addr{font-size:12px;opacity:.65;margin-top:10px;max-width:26em}
-.slip-body{padding:26px 28px 30px}
-.emp{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:24px;border-bottom:1px dashed var(--line)}
-.emp div small{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
-.emp div b{font-size:14.5px;font-weight:600;word-break:break-word}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:26px}
-.col h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;padding-bottom:10px;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:8px}
-.col.in h4{border-color:var(--green);color:var(--green)}
-.col.out h4{border-color:var(--red);color:var(--red)}
-.row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #F0ECE3;font-size:14.5px}
-.row span:first-child{color:#3A4657}
-.row span:last-child{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.row .zero{color:#B5B9C1;font-weight:500}
-.row.total{border-bottom:0;margin-top:6px;padding:13px 14px;border-radius:12px;font-weight:700}
-.col.in .row.total{background:var(--green-soft);color:var(--green)}
-.col.out .row.total{background:var(--red-soft);color:var(--red)}
-.row.total span:first-child{color:inherit}
-.net-band{margin-top:28px;border-radius:18px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
-  background:linear-gradient(135deg,var(--gold-soft),#FBF6EA);border:1px solid #EADBB6}
-.net-band small{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--gold-deep)}
-.net-band .amt{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--navy);letter-spacing:-.01em}
-.terbilang{margin-top:12px;font-size:13px;color:#5A5440;font-style:italic}
-.slip-foot{margin-top:30px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
-.note{font-size:12px;color:var(--muted);max-width:34em}
-.sign{text-align:center;font-size:12.5px;color:var(--muted);min-width:170px}
-.sign .line{margin-top:48px;border-top:1px solid var(--ink);padding-top:6px;color:var(--ink);font-weight:600}
-
-/* ---------- Pengaturan ---------- */
-.set-card{background:#fff;border-radius:26px;padding:20px;box-shadow:0 8px 24px rgba(40,52,120,.08);margin-top:16px}
-.set-card h3{font-size:17px;font-weight:800}
-.set-card p.s{font-size:13px;color:#7C8497;margin-top:2px}
-.foto{width:150px;height:150px;border-radius:50%;background:var(--blue-soft);border:3px solid var(--blue);display:grid;place-items:center;font-size:40px;font-weight:800;color:var(--blue);margin:14px auto}
-.seg{display:flex;gap:8px;margin-top:8px}
-input[type=range]{width:100%;accent-color:var(--blue)}
-.sw{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #EEF0F8;font-size:14px}
-.set-card .btn-gold{background:var(--blue);color:#fff;box-shadow:0 8px 18px rgba(59,80,232,.28)}
-.set-card .btn-ghost:hover{background:var(--blue);border-color:var(--blue)}
-
-/* ---------- Dock ---------- */
-.dock{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;display:flex;gap:2px;padding:8px;border-radius:32px;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);box-shadow:0 14px 40px rgba(40,52,120,.2);width:min(528px,calc(100% - 24px));border:1px solid #fff}
-.dock>button{flex:1;border:0;background:none;color:#7C8497;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px 9px;border-radius:24px;font-size:12px;font-weight:600;min-width:0;white-space:nowrap}
-.dock>button svg{width:26px;height:26px}
-.dock>button.on{background:var(--blue-soft);color:var(--blue)}
-.dock>#btnLogout:active{background:var(--red-soft);color:var(--red)}
-
-/* ---------- Cetak / PDF ---------- */
-@media print{
-  @page{size:A4;margin:12mm}
-  body{background:#fff!important}
-  body *{visibility:hidden}
-  body.print-slip #slip, body.print-slip #slip *{visibility:visible}
-  body.print-slip #slip{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none;border-radius:0}
-  body.print-pin #pinSheet, body.print-pin #pinSheet *{visibility:visible}
-  body.print-pin #pinSheet{display:block;position:absolute;left:0;top:0;width:100%}
-  .slip-head,.net-band,.col.in .row.total,.col.out .row.total{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
 
 /* ---------- Responsive ---------- */
 @media (max-width:900px){
@@ -347,352 +257,291 @@ input[type=range]{width:100%;accent-color:var(--blue)}
   .slip-head{flex-direction:column;padding:24px 22px}
   .slip-title{text-align:left}
   .slip-body{padding:22px}
+  .user-info{display:none}
   .slip-foot{flex-direction:column;align-items:flex-start}
   .pin-row{gap:8px}
   .pin-row input{height:54px;font-size:20px}
 }
+/* ---------- Ikon mata sandi & bar atas di HP ---------- */
+body{overflow-x:hidden}
+.topbar-in>*{min-width:0}
+.pw{position:relative}
+.pw .field{padding-right:54px}
+.pw-eye{position:absolute;right:4px;top:0;width:48px;height:54px;border:0;background:none;color:var(--muted);display:grid;place-items:center;padding:0}
+.pw-eye:hover{color:var(--navy)}
 @media (max-width:480px){
   .topbar-in{padding:10px 14px}
   .topbar .logo-text{display:none}
   .user{gap:8px}
   .btn-ghost{padding:0 12px}
-  .hero{gap:16px;padding:20px 18px}
-  .ring{width:92px;height:92px}
-  .ring-in{width:70px;height:70px}
-  .ring-in b{font-size:20px}
 }
-
-/* ===== Login & Admin gaya baru ===== */
-body{background:linear-gradient(180deg,#E9EDFD 0%,#F1F3FC 50%,#F4F5FB 100%) fixed}
-.login{display:block;min-height:100svh}
-.login-side{display:none}
-.login-main{display:block;padding:max(22px,env(safe-area-inset-top)) 16px 40px}
-.login-main.kb{padding-bottom:55vh}
-.login-card{max-width:560px;margin:0 auto}
-.brand{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:0 4px}
-.brand-ic{flex:none;width:60px;height:60px;border-radius:20px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#6B7FF5,#3B50E8);box-shadow:0 10px 24px rgba(59,80,232,.35)}
-.brand-tx b{display:block;font-size:24px;font-weight:800;letter-spacing:.02em;color:#141B4D;line-height:1.1}
-.brand-tx span{display:block;font-size:13.5px;letter-spacing:.12em;color:#7C8497;font-weight:600;margin-top:3px}
-.lcard{background:#fff;border-radius:34px;padding:22px 22px 26px;box-shadow:0 14px 40px rgba(40,52,120,.1);border:1px solid #fff}
-.illu{border-radius:26px;overflow:hidden;margin-bottom:20px;line-height:0}
-.illu svg{width:100%;height:auto;display:block}
-.login-card h2{font-family:var(--font);font-size:28px;font-weight:800;letter-spacing:-.02em;color:#141B4D}
-.login-card p.lead{color:#8A92A6;margin:6px 0 20px;font-size:15.5px}
-.lcard label.lbl{font-weight:700;color:#2B3358;font-size:14.5px}
-.lcard .field{background:#F5F6FD;border:1.5px solid #E6E9F7;border-radius:20px;height:58px;font-size:17px;font-weight:500;color:#141B4D}
-.lcard .field:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(59,80,232,.15)}
-.lcard .field::placeholder{color:#141B4D;font-weight:500;opacity:.85}
-.lcard .pw .field::placeholder{color:#B5B9C1}
-.combo-arrow{color:var(--blue);height:58px;right:20px}
-.combo-list li:hover,.combo-list li.hl{background:var(--blue-soft)}
-.pw-eye{height:58px}
-.link-btn{color:var(--blue);font-weight:700}
-.pin-head{margin:18px 0 8px}
-.pin-row{display:flex;justify-content:center;align-items:center;gap:14px;background:#F5F6FD;border:1.5px solid #E6E9F7;border-radius:20px;height:58px;padding:0 12px}
-.pin-row:focus-within{border-color:var(--blue);box-shadow:0 0 0 4px rgba(59,80,232,.15)}
-.pin-row input{width:26px;height:38px;border:0;background:transparent;font-size:20px;padding:0;flex:none;border-radius:8px;box-shadow:none;color:#141B4D}
-.pin-row input::placeholder{color:#C3C8DA;font-size:15px}
-.pin-row input:focus{box-shadow:none;transform:none;border:0;background:rgba(59,80,232,.1)}
-.pin-row input.filled{border:0;background:transparent}
-.lcard .btn-primary{height:60px;margin-top:24px;border-radius:22px;font-size:18px;background:linear-gradient(135deg,#5A6FFA,#3B50E8);box-shadow:0 12px 26px rgba(59,80,232,.35)}
-.lcard .help{margin-top:14px;font-size:12.5px}
-.or{display:flex;align-items:center;gap:14px;margin:24px 0 18px;color:#B3B8CC;font-weight:700;letter-spacing:.18em;font-size:14px}
-.or::before,.or::after{content:"";flex:1;height:1.5px;background:#E6E9F7}
-.btn-out{width:100%;height:60px;border-radius:22px;border:1.5px solid #DADFF3;background:#fff;color:var(--blue);font-weight:800;font-size:17px;box-shadow:0 4px 14px rgba(40,52,120,.05)}
-.btn-out:active{background:var(--blue-soft)}
-.privacy{display:flex;justify-content:center;align-items:center;gap:10px;color:#8A92A6;font-size:14.5px;margin-top:18px}
-.lcard .alert{border-radius:16px}
-
-/* Admin */
-#viewAdmin{padding:max(22px,env(safe-area-inset-top)) 16px 40px}
-.adm{max-width:560px;margin:0 auto}
-.ahero{border-radius:30px;padding:22px 24px 24px;color:#fff;box-shadow:0 18px 40px rgba(51,70,196,.32);
-  background:radial-gradient(circle at 80% 0%,rgba(129,146,255,.7) 0,rgba(129,146,255,0) 50%),linear-gradient(160deg,#3346C4 0%,#2433A8 45%,#131D55 100%)}
-.ahero small{display:block;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.88)}
-.ahero .big{font-size:clamp(34px,11vw,50px);font-weight:800;letter-spacing:-.03em;color:var(--peach);line-height:1.15;margin-top:6px;white-space:nowrap}
-.ahero .asub{margin-top:6px;font-size:13.5px;color:rgba(255,255,255,.75)}
-.seg3{display:flex;gap:4px;padding:6px;border-radius:26px;background:#E3E6F8;margin:18px 0 16px}
-.seg3 button{flex:1;border:0;background:none;height:50px;border-radius:20px;font-weight:700;font-size:16px;color:#7C8497}
-.seg3 button.on{background:#fff;color:var(--blue);box-shadow:0 4px 12px rgba(40,52,120,.12)}
-.lcard2{background:#fff;border-radius:32px;padding:18px 20px;box-shadow:0 8px 24px rgba(40,52,120,.08)}
-.lcard2 .field{background:#F5F6FD;border:1.5px solid #E6E9F7;border-radius:18px;margin-bottom:8px}
-.lscroll{max-height:calc(100svh - 470px);min-height:300px;overflow-y:auto}
-.lrow{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;padding:14px 0;border-bottom:1.5px solid #EEF0F8}
-.lrow:last-child{border-bottom:0}
-.lava{flex:none;width:58px;height:58px;border-radius:19px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;box-shadow:0 8px 16px rgba(40,52,120,.18)}
-.ltx{flex:1;min-width:0}
-.ltx b{display:block;font-size:17px;font-weight:800;color:#141B4D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ltx b i{font-style:normal;color:var(--blue);margin-left:4px}
-.ltx span{display:block;font-size:13.5px;color:#8A92A6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lamt{flex:none;font-size:17px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums}
-.lact{flex-basis:100%;display:flex;gap:8px;flex-wrap:wrap;padding-left:72px}
-.mini{height:34px;padding:0 14px;border-radius:12px;border:0;background:var(--blue-soft);color:var(--blue);font-weight:700;font-size:12.5px}
-.mini.red{background:var(--red-soft);color:var(--red)}
-.lrow .pin-chip{flex:none;min-width:0;padding:6px 12px;border-radius:12px;border:0;background:#F0F2FB;color:#141B4D}
-.bigact{width:100%;display:flex;align-items:center;gap:14px;text-align:left;border:0;background:#F5F6FD;border-radius:22px;padding:14px 16px;margin-bottom:10px}
-.bigact i{flex:none;width:48px;height:48px;border-radius:16px;background:var(--blue);color:#fff;display:grid;place-items:center;font-style:normal;font-size:20px;font-weight:700}
-.bigact b{display:block;font-size:16px;color:#141B4D}
-.bigact small{display:block;font-size:13px;color:#8A92A6;margin-top:1px}
-.bigact.danger i{background:var(--red)}
-.bigact.danger b{color:var(--red)}
-.lcard2 .empty{padding:40px 10px}
+@media (max-width:380px){
+  .avatar{display:none}
+}
+/* ---------- Dock bawah, pengaturan ---------- */
+#viewApp .wrap{padding-bottom:130px}
+.toast{bottom:110px}
+.dock{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;display:flex;gap:4px;padding:8px;border-radius:22px;background:rgba(18,36,61,.95);backdrop-filter:blur(12px);box-shadow:0 14px 40px rgba(14,26,43,.4);width:min(420px,calc(100% - 28px))}
+.dock>button{flex:1;border:0;background:none;color:rgba(255,255,255,.72);display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:15px;font-size:11.5px;font-weight:600}
+.dock>button i{font-style:normal;font-size:20px}
+.dock>button.on{background:rgba(201,163,91,.2);color:var(--gold)}
+.dock>#btnLogout:hover{background:var(--red);color:#fff}
+.dock-menu{position:absolute;bottom:calc(100% + 10px);left:0;right:0;background:#fff;border-radius:18px;padding:8px;display:grid;gap:6px;box-shadow:0 18px 44px rgba(14,26,43,.28)}
+.dock-menu button{height:46px;border:0;border-radius:12px;background:var(--gold-soft);font-weight:700;font-size:14px;color:var(--navy)}
+.set-card{margin-bottom:18px}
+.foto{width:150px;height:150px;border-radius:50%;background:var(--gold-soft);border:3px solid var(--gold);display:grid;place-items:center;font-family:var(--serif);font-size:40px;color:var(--gold-deep);margin:14px auto}
+.seg{display:flex;gap:8px;margin-top:8px}
+input[type=range]{width:100%;accent-color:#C9A35B}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0ECE3;font-size:14px}
+/* ---------- Cetak / PDF ---------- */
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff}
+  body *{visibility:hidden}
+  body.print-slip #slip, body.print-slip #slip *{visibility:visible}
+  body.print-slip #slip{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none;border-radius:0}
+  body.print-pin #pinSheet, body.print-pin #pinSheet *{visibility:visible}
+  body.print-pin #pinSheet{display:block;position:absolute;left:0;top:0;width:100%}
+  .slip-head,.net-band,.col.in .row.total,.col.out .row.total{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
 
 <!-- ================= LOGIN ================= -->
 <section class="login" id="viewLogin">
-  <aside class="login-side"></aside>
+  <aside class="login-side">
+    <div class="logo">
+      <div class="logo-mark">MJ</div>
+      <div class="logo-text">Merdeka Jaya<small>Slip Gaji Digital</small></div>
+    </div>
+    <div>
+      <h1 class="hero-title">Slip gaji Anda, <em>aman</em> dan transparan.</h1>
+      <p class="hero-sub">Lihat rincian pendapatan, potongan, dan gaji bersih setiap bulan kapan saja, langsung dari ponsel Anda.</p>
+      <div class="feat">
+        <div><i>🔒</i><span>Akses pribadi dengan nama dan PIN 6 digit.</span></div>
+        <div><i>📄</i><span>Rincian lengkap yang mudah dipahami, siap dicetak atau disimpan sebagai PDF.</span></div>
+        <div><i>🕘</i><span>Riwayat gaji tiap periode tersimpan rapi dan mudah dibuka.</span></div>
+      </div>
+    </div>
+    <div class="login-foot">© <span class="yr"></span> Merdeka Jaya. Seluruh data bersifat rahasia.</div>
+  </aside>
+
   <main class="login-main">
     <div class="login-card">
-      <div class="brand">
-        <div class="brand-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg></div>
-        <div class="brand-tx"><b>MERDEKA JAYA</b><span>SLIP GAJI KARYAWAN</span></div>
+      <div class="logo mobile-logo">
+        <div class="logo-mark">MJ</div>
+        <div class="logo-text">Merdeka Jaya<small>Slip Gaji Digital</small></div>
       </div>
-      <div class="lcard">
-        <div class="illu"><svg viewBox="0 0 440 262" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-<defs>
-<linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7B8DFB"/><stop offset="1" stop-color="#3B50F0"/></linearGradient>
-<linearGradient id="gB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F43C8"/><stop offset="1" stop-color="#101A55"/></linearGradient>
-</defs>
-<rect width="440" height="262" fill="#EEF0FD"/>
-<circle cx="40" cy="50" r="62" fill="#F6F7FE"/>
-<circle cx="420" cy="250" r="80" fill="#F6F2FD"/>
-<g transform="rotate(8 330 170)"><rect x="235" y="90" width="190" height="120" rx="26" fill="url(#gB)"/>
-<circle cx="290" cy="150" r="22" fill="none" stroke="#4B5BC0" stroke-width="9"/>
-<path d="M290 128 A22 22 0 0 1 311 143" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/>
-<rect x="330" y="142" width="64" height="9" rx="4.5" fill="#9AA3D8"/><rect x="330" y="162" width="46" height="9" rx="4.5" fill="#6B76B8"/></g>
-<g transform="rotate(-7 170 170)"><rect x="60" y="95" width="190" height="120" rx="26" fill="url(#gA)"/>
-<rect x="82" y="118" width="32" height="26" rx="8" fill="#FFD98A"/>
-<rect x="82" y="168" width="84" height="9" rx="4.5" fill="#CBD3FB"/><rect x="82" y="188" width="52" height="9" rx="4.5" fill="#97A6F8"/>
-<circle cx="206" cy="180" r="15" fill="#F0508A"/><circle cx="223" cy="180" r="15" fill="#F5A25D" opacity=".9"/></g>
-<circle cx="205" cy="52" r="7" fill="#FF6F91"/><circle cx="75" cy="205" r="12" fill="#A06BEF"/>
-<circle cx="333" cy="52" r="17" fill="#F7A23A"/><circle cx="333" cy="52" r="8" fill="none" stroke="#FFD08A" stroke-width="4"/>
-</svg></div>
 
-        <form id="formLogin" autocomplete="off" novalidate>
-          <h2>Selamat datang 👋</h2>
-          <p class="lead">Pilih nama Anda dan masukkan PIN untuk melihat slip gaji.</p>
+      <!-- Login karyawan -->
+      <form id="formLogin" autocomplete="off" novalidate>
+        <h2>Masuk</h2>
+        <p class="lead">Pilih nama Anda dan masukkan PIN dari bagian administrasi.</p>
 
-          <label class="lbl" for="inpNama">Nama Anda</label>
-          <div class="combo" id="combo">
-            <input class="field" id="inpNama" type="text" role="combobox" aria-expanded="false" aria-controls="comboList" placeholder="— pilih nama —" autocomplete="off" spellcheck="false" maxlength="100">
-            <span class="combo-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-            <ul class="combo-list" id="comboList" role="listbox"></ul>
-          </div>
+        <label class="lbl" for="inpNama">Nama Karyawan</label>
+        <div class="combo" id="combo">
+          <input class="field" id="inpNama" type="text" role="combobox" aria-expanded="false" aria-controls="comboList" placeholder="Pilih nama Anda dari daftar" autocomplete="off" spellcheck="false" maxlength="100">
+          <span class="combo-arrow">▼</span>
+          <ul class="combo-list" id="comboList" role="listbox"></ul>
+        </div>
 
-          <div class="pin-head">
-            <label class="lbl" for="pin0">PIN (6 angka dari admin)</label>
-            <button type="button" class="link-btn" id="btnEye">Tampilkan</button>
-          </div>
-          <div class="pin-row" id="pinRow"></div>
+        <div class="pin-head">
+          <label class="lbl" for="pin0">PIN (6 digit)</label>
+          <button type="button" class="link-btn" id="btnEye">Tampilkan</button>
+        </div>
+        <div class="pin-row" id="pinRow"></div>
 
-          <div class="alert" id="alertBox" role="alert"></div>
-          <button class="btn-primary" id="btnLogin" type="submit"><span>Lihat Slip Gaji</span></button>
-          <p class="help">Lupa PIN? Hubungi bagian administrasi Merdeka Jaya.</p>
-          <div class="install-box hidden" id="installBox">
-            <span id="installTeks">Pasang aplikasi ini di perangkat Anda agar mudah dibuka.</span>
-            <button class="btn-gold" id="btnInstall" type="button">⬇ Pasang Aplikasi</button>
-          </div>
-          <div class="or"><span>ATAU</span></div>
-          <button type="button" class="btn-out" id="toAdmin">Masuk Admin</button>
-        </form>
+        <div class="alert" id="alertBox" role="alert"></div>
+        <button class="btn-primary" id="btnLogin" type="submit"><span>Lihat Slip Gaji</span></button>
+        <p class="help">Lupa PIN? Hubungi bagian administrasi Merdeka Jaya.</p>
+        <div class="install-box hidden" id="installBox">
+          <span id="installTeks">Pasang aplikasi ini di perangkat Anda agar mudah dibuka.</span>
+          <button class="btn-gold" id="btnInstall" type="button">⬇ Pasang Aplikasi</button>
+        </div>
+        <div class="switch"><button type="button" class="link-btn" id="toAdmin">Masuk sebagai Admin</button></div>
+      </form>
 
-        <form id="formAdmin" class="hidden" autocomplete="off" novalidate>
-          <h2>Admin 🔐</h2>
-          <p class="lead">Masukkan sandi admin untuk mengelola karyawan dan PIN.</p>
-          <label class="lbl" for="inpSandi">Sandi Admin</label>
-          <div class="pw">
-            <input class="field" id="inpSandi" type="password" placeholder="Sandi admin" autocomplete="off" maxlength="60">
-            <button type="button" class="pw-eye" id="btnEyeSandi" aria-label="Tampilkan sandi" title="Tampilkan sandi"></button>
-          </div>
-          <div class="alert" id="alertAdmin" role="alert"></div>
-          <button class="btn-primary" id="btnAdminLogin" type="submit"><span>Masuk Admin</span></button>
-          <div class="or"><span>ATAU</span></div>
-          <button type="button" class="btn-out" id="toKaryawan">← Kembali ke login karyawan</button>
-        </form>
-      </div>
-      <p class="privacy"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Data bersifat pribadi, jangan bagikan PIN Anda.</span></p>
+      <!-- Login admin -->
+      <form id="formAdmin" class="hidden" autocomplete="off" novalidate>
+        <h2>Admin</h2>
+        <p class="lead">Masukkan sandi admin untuk mengelola karyawan dan PIN.</p>
+        <label class="lbl" for="inpSandi">Sandi Admin</label>
+        <div class="pw">
+  <input class="field" id="inpSandi" type="password" placeholder="Sandi admin" autocomplete="off" maxlength="60">
+  <button type="button" class="pw-eye" id="btnEyeSandi" aria-label="Tampilkan sandi" title="Tampilkan sandi"></button>
+</div>
+        <div class="alert" id="alertAdmin" role="alert"></div>
+        <button class="btn-primary" id="btnAdminLogin" type="submit"><span>Masuk Admin</span></button>
+        <div class="switch"><button type="button" class="link-btn" id="toKaryawan">← Kembali ke login karyawan</button></div>
+      </form>
     </div>
   </main>
 </section>
 
-<!-- ================= TAMPILAN KARYAWAN ================= -->
+<!-- ================= SLIP KARYAWAN ================= -->
 <section id="viewApp" class="hidden">
-  <button class="btn-ghost ap-back hidden" id="btnBack" type="button">← Panel Admin</button>
-
-  <div class="ap-head">
-    <div class="ap-ava">
-      <div class="box" id="uAvatar">-</div>
-      <button class="cam" id="btnCam" type="button" aria-label="Ganti foto">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      </button>
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="logo">
+        <div class="logo-mark">MJ</div>
+        <div class="logo-text">Merdeka Jaya</div>
+      </div>
+      <div class="user">
+        <div class="user-info"><b id="uName">-</b><span id="uMeta">-</span></div>
+        <div class="avatar" id="uAvatar">-</div>
+        <button class="btn-ghost hidden" id="btnBack" type="button">← Panel Admin</button>
+      </div>
     </div>
-    <div class="ap-hi"><small id="greetTime">Halo 👋</small><h1 id="greetName">-</h1></div>
-    <div class="ap-role" id="uMeta">Karyawan</div>
-  </div>
+  </header>
 
-  <div id="emptyState" class="card empty hidden">
-    <b>Belum ada slip gaji</b>
-    Data gaji belum tersedia untuk karyawan ini.
-  </div>
+  <main class="wrap">
+    <div class="greet">
+      <small id="greetTime">Selamat datang</small>
+      <h1 id="greetName">-</h1>
+    </div>
 
-  <!-- Ringkasan -->
-  <div id="tabRingkasan" class="tab">
-    <div id="ringkasanBody">
-      <div class="hero">
-        <div class="ring" id="ring"><div class="ring-in"><b id="rPct">0%</b><span>diterima</span></div></div>
-        <div class="hero-txt">
-          <div class="a">Gaji bersih diterima</div>
-          <div class="b" id="sBersih">-</div>
-          <div class="c" id="sPeriode">-</div>
+    <div id="emptyState" class="card empty hidden">
+      <b>Belum ada slip gaji</b>
+      Data gaji belum tersedia untuk karyawan ini.
+    </div>
+
+        <div id="panelSet" class="hidden">
+      <div class="card set-card">
+        <h3>Foto Profil</h3>
+        <p class="s">Foto tersimpan di perangkat ini.</p>
+        <div class="foto" id="fotoBox"></div>
+        <input type="file" id="fotoFile" accept="image/*" hidden>
+        <div class="seg" style="justify-content:center">
+          <button class="btn-gold" id="fotoPilih" type="button">⬆ Upload Foto</button>
+          <button class="btn-ghost" id="fotoHapus" type="button">Hapus</button>
+        </div>
+        <label class="lbl" style="margin-top:18px">Perbesar</label>
+        <input type="range" id="fZoom" min="100" max="300" value="100">
+        <label class="lbl" style="margin-top:12px">Geser kiri – kanan</label>
+        <input type="range" id="fX" min="0" max="100" value="50">
+        <label class="lbl" style="margin-top:12px">Geser atas – bawah</label>
+        <input type="range" id="fY" min="0" max="100" value="50">
+        <label class="lbl" style="margin-top:12px">Bentuk foto</label>
+        <div class="seg">
+          <button class="btn-ghost" data-bentuk="bulat" type="button">● Bulat</button>
+          <button class="btn-ghost" data-bentuk="kotak" type="button">■ Kotak</button>
         </div>
       </div>
-
-      <div class="chips" id="chipsA" aria-label="Pilih periode"></div>
-
-      <div class="sgrid">
-        <div class="sc"><div class="ic o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div><div class="v" id="sKotor">-</div><div class="l">Gaji Kotor</div></div>
-        <div class="sc"><div class="ic b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div><div class="v" id="sPot">-</div><div class="l">Total Potongan</div></div>
-        <div class="sc"><div class="ic p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="v" id="sPokok">-</div><div class="l">Gaji Pokok</div></div>
-        <div class="sc"><div class="ic v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div><div class="v" id="sTambah">-</div><div class="l">Premi &amp; Tunjangan</div></div>
+      <div class="card set-card">
+        <h3>Ubah PIN</h3>
+        <label class="lbl" for="pLama" style="margin-top:12px">PIN lama</label>
+        <input class="field sm" id="pLama" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
+        <label class="lbl" for="pBaru" style="margin-top:12px">PIN baru (6 digit)</label>
+        <input class="field sm" id="pBaru" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
+        <label class="lbl" for="pUlang" style="margin-top:12px">Ulangi PIN baru</label>
+        <input class="field sm" id="pUlang" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
+        <button class="btn-gold" id="btnUbahPin" type="button" style="margin-top:16px">Simpan PIN Baru</button>
       </div>
-
-      <div class="tcard hidden" id="trendCard">
-        <h3>Riwayat Gaji Bersih</h3>
-        <p class="s">Ketuk batang untuk membuka slip periode tersebut.</p>
-        <div class="bars" id="bars"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Riwayat -->
-  <div id="tabRiwayat" class="tab hidden">
-    <div class="hcard">
-      <div class="hcard-h">
-        <div><h2>Riwayat Gaji</h2><p id="hSejak">-</p></div>
-        <div class="pill" id="hJumlah">0 periode</div>
-      </div>
-      <div class="chips flat" id="chipsTahun"></div>
-      <div class="hwrap">
-        <table class="htbl">
-          <thead><tr><th>Periode</th><th class="num">Kotor</th><th class="num">Potongan</th><th class="num">Bersih</th></tr></thead>
-          <tbody id="hBody"></tbody>
-        </table>
+      <div class="card set-card">
+        <h3>Lainnya</h3>
+        <label class="sw"><span>Bunyi lucu saat mengetik PIN</span><input type="checkbox" id="swBunyi"></label>
+        <label class="sw"><span>Musik latar setelah masuk</span><input type="checkbox" id="swMusik"></label>
       </div>
     </div>
-  </div>
+    <div id="content">
+      <div class="chips" id="chips" aria-label="Pilih periode"></div>
 
-  <!-- Slip -->
-  <div id="tabSlip" class="tab hidden">
-    <div class="chips" id="chipsB" aria-label="Pilih periode"></div>
-    <div class="tools-row">
-      <button class="btn-blue" id="btnGambar" type="button">🖼 Simpan Gambar</button>
-      <button class="btn-blue alt" id="btnPrint" type="button">📄 Simpan PDF</button>
-    </div>
-    <article class="slip" id="slip"></article>
-  </div>
-
-  <!-- Pengaturan / Ganti PIN -->
-  <div id="tabPin" class="tab hidden">
-    <div class="page-title">Ganti PIN</div>
-    <div class="page-sub">Ubah PIN, foto profil, dan preferensi Anda.</div>
-
-    <div class="set-card">
-      <h3>Ubah PIN</h3>
-      <label class="lbl" for="pLama" style="margin-top:12px">PIN lama</label>
-      <input class="field sm" id="pLama" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
-      <label class="lbl" for="pBaru" style="margin-top:12px">PIN baru (6 digit)</label>
-      <input class="field sm" id="pBaru" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
-      <label class="lbl" for="pUlang" style="margin-top:12px">Ulangi PIN baru</label>
-      <input class="field sm" id="pUlang" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
-      <button class="btn-gold" id="btnUbahPin" type="button" style="margin-top:16px">Simpan PIN Baru</button>
-    </div>
-
-    <div class="set-card">
-      <h3>Foto Profil</h3>
-      <p class="s">Foto tersimpan di perangkat ini.</p>
-      <div class="foto" id="fotoBox"></div>
-      <input type="file" id="fotoFile" accept="image/*" hidden>
-      <div class="seg" style="justify-content:center">
-        <button class="btn-gold" id="fotoPilih" type="button">⬆ Upload Foto</button>
-        <button class="btn-ghost" id="fotoHapus" type="button">Hapus</button>
+      <div class="stats">
+        <div class="stat"><div class="k"><i class="dot" style="background:var(--green)"></i>Gaji Kotor</div><div class="v" id="sKotor">-</div></div>
+        <div class="stat"><div class="k"><i class="dot" style="background:var(--red)"></i>Total Potongan</div><div class="v" id="sPot">-</div></div>
+        <div class="stat net"><div class="k"><i class="dot" style="background:var(--gold)"></i>Gaji Bersih</div><div class="v" id="sBersih">-</div></div>
       </div>
-      <label class="lbl" style="margin-top:18px">Perbesar</label>
-      <input type="range" id="fZoom" min="100" max="300" value="100">
-      <label class="lbl" style="margin-top:12px">Geser kiri – kanan</label>
-      <input type="range" id="fX" min="0" max="100" value="50">
-      <label class="lbl" style="margin-top:12px">Geser atas – bawah</label>
-      <input type="range" id="fY" min="0" max="100" value="50">
-      <label class="lbl" style="margin-top:12px">Bentuk foto</label>
-      <div class="seg">
-        <button class="btn-ghost" data-bentuk="bulat" type="button">● Bulat</button>
-        <button class="btn-ghost" data-bentuk="kotak" type="button">■ Kotak</button>
+
+      <div class="grid">
+        <div>
+          <div class="toolbar">
+            <h3>Rincian Slip Gaji</h3>
+            </div>
+          <article class="slip" id="slip"></article>
+        </div>
+
+        <div class="card hidden" id="trendCard">
+          <h3>Riwayat Gaji Bersih</h3>
+          <p class="s">Ketuk batang untuk membuka slip periode tersebut.</p>
+          <div class="bars" id="bars"></div>
+        </div>
       </div>
     </div>
-
-    <div class="set-card">
-      <h3>Lainnya</h3>
-      <label class="sw"><span>Bunyi lucu saat mengetik PIN</span><input type="checkbox" id="swBunyi"></label>
-      <label class="sw"><span>Musik latar setelah masuk</span><input type="checkbox" id="swMusik"></label>
+  </main>
+    <nav class="dock" id="dock">
+    <div class="dock-menu hidden" id="menuSlip">
+      <button id="btnGambar" type="button">🖼 Simpan Gambar</button>
+      <button id="btnPrint" type="button">📄 Simpan PDF</button>
     </div>
-  </div>
-
-  <nav class="dock" id="dock">
-    <button id="navRingkasan" data-tab="Ringkasan" class="on" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Ringkasan</span></button>
-    <button id="navRiwayat" data-tab="Riwayat" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="18" r="1.2"/></svg><span>Riwayat</span></button>
-    <button id="navSlip" data-tab="Slip" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-3-2-3 2-3-2-3 2V4a1 1 0 0 1 1-1z" transform="translate(-0.5 0)"/><path d="M9 8h6M9 12h6"/></svg><span>Slip Gaji</span></button>
-    <button id="navPin" data-tab="Pin" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4"/><path d="m10.5 13.5 9-9M16 8l3 3M14 10l2.5 2.5"/></svg><span>Ganti PIN</span></button>
-    <button id="btnLogout" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
+    <button id="navSlip" class="on" type="button"><i>📄</i><span>Slip Gaji</span></button>
+    <button id="navSet" type="button"><i>⚙️</i><span>Pengaturan</span></button>
+    <button id="btnLogout" type="button"><i>🚪</i><span>Exit</span></button>
   </nav>
 </section>
 
 <!-- ================= PANEL ADMIN ================= -->
 <section id="viewAdmin" class="hidden">
-  <div class="adm">
-    <div class="brand">
-        <div class="brand-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg></div>
-        <div class="brand-tx"><b>MERDEKA JAYA</b><span>SLIP GAJI KARYAWAN</span></div>
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="logo">
+        <div class="logo-mark">MJ</div>
+        <div class="logo-text">Merdeka Jaya</div>
       </div>
-    <div class="ahero">
-      <small id="aGajiLabel">Total gaji bersih</small>
-      <div class="big" id="aGaji">-</div>
-      <div class="asub">Karyawan <b id="aTotal">-</b> · Aktif <b id="aAktif">-</b></div>
+      <div class="user">
+        <span class="badge-admin">Admin</span>
+        <button class="btn-ghost" id="btnAdminLogout" type="button">Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="greet">
+      <small>Panel Administrasi</small>
+      <h1>Kelola Karyawan &amp; PIN</h1>
     </div>
 
-    <div class="seg3" id="aTabs">
-      <button type="button" class="on" data-atab="Rekap">Rekap</button>
-      <button type="button" data-atab="Karyawan">Nama &amp; PIN</button>
-      <button type="button" data-atab="Kelola">Kelola</button>
+    <div class="stats">
+      <div class="stat"><div class="k"><i class="dot" style="background:var(--navy-2)"></i>Total Karyawan</div><div class="v" id="aTotal">-</div></div>
+      <div class="stat"><div class="k"><i class="dot" style="background:var(--green)"></i>Karyawan Aktif</div><div class="v" id="aAktif">-</div></div>
+      <div class="stat net"><div class="k"><i class="dot" style="background:var(--gold)"></i><span id="aGajiLabel">Gaji Bersih</span></div><div class="v" id="aGaji">-</div></div>
     </div>
 
-    <div class="lcard2" id="aTabRekap"><div class="lscroll" id="aRingkas"></div></div>
-
-    <div class="lcard2 hidden" id="aTabKaryawan">
-      <input class="field sm" id="aSearch" type="search" placeholder="Cari nama karyawan…" autocomplete="off">
-      <div class="lscroll" id="aBody"></div>
-      <div class="empty hidden" id="aEmpty"><b>Belum ada karyawan</b>Buka tab Kelola lalu pilih "Sinkron dari Gaji" atau "Tambah".</div>
+    <div class="card">
+      <div class="tools">
+        <input class="field sm" id="aSearch" type="search" placeholder="Cari nama karyawan…" autocomplete="off">
+        <span class="sp"></span>
+        <button class="btn-ghost" id="aTambah" type="button">＋ Tambah</button>
+        <button class="btn-ghost" id="aSinkron" type="button">⟳ Sinkron dari Gaji</button>
+        <button class="btn-ghost" id="aCetak" type="button">🖨 Cetak Daftar PIN</button>
+        <button class="btn-ghost danger" id="aResetAll" type="button">Reset Semua PIN</button>
+      </div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Nama</th><th>Jabatan</th><th>PIN</th><th>Status</th><th>Login Terakhir</th><th></th></tr></thead>
+          <tbody id="aBody"></tbody>
+        </table>
+      </div>
+      <div class="empty hidden" id="aEmpty"><b>Belum ada karyawan</b>Klik "Sinkron dari Gaji" atau "Tambah".</div>
     </div>
 
-    <div class="lcard2 hidden" id="aTabKelola">
-      <button class="bigact" id="aTambah" type="button"><i>＋</i><span><b>Tambah Karyawan</b><small>Daftarkan nama baru dan buat PIN-nya</small></span></button>
-      <button class="bigact" id="aSinkron" type="button"><i>⟳</i><span><b>Sinkron dari Gaji</b><small>Ambil nama baru dari sheet Gaji</small></span></button>
-      <button class="bigact" id="aCetak" type="button"><i>🖨</i><span><b>Cetak Daftar PIN</b><small>Lembar PIN untuk dibagikan ke karyawan</small></span></button>
-      <button class="bigact danger" id="aResetAll" type="button"><i>↺</i><span><b>Reset Semua PIN</b><small>Semua karyawan mendapat PIN baru</small></span></button>
+    <div class="card" style="margin-top:24px">
+      <h3>Ringkasan Gaji per Periode</h3>
+      <p class="s">Total dari data pada sheet Gaji.</p>
+      <div class="tbl-wrap" style="margin-top:12px">
+        <table class="tbl">
+          <thead><tr><th>Periode</th><th class="num">Karyawan</th><th class="num">Gaji Kotor</th><th class="num">Potongan</th><th class="num">Gaji Bersih</th></tr></thead>
+          <tbody id="aRingkas"></tbody>
+        </table>
+      </div>
     </div>
-
-    <button class="btn-out" id="btnAdminLogout" type="button" style="margin-top:16px">Keluar Admin</button>
-    <p class="privacy"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Data bersifat pribadi, jangan bagikan PIN Anda.</span></p>
-  </div>
+  </main>
 </section>
 
+<!-- Lembar cetak daftar PIN -->
 <div id="pinSheet"></div>
 
+<!-- Dialog umum -->
 <dialog id="dlg">
   <div class="dlg-in">
     <h3 id="dlgTitle"></h3>
@@ -710,11 +559,12 @@ body{background:linear-gradient(180deg,#E9EDFD 0%,#F1F3FC 50%,#F4F5FB 100%) fixe
 
 <script>
 /* =====================================================
- *  PENGATURAN — URL Web App Apps Script
+ *  PENGATURAN — ganti dengan URL Web App Apps Script Anda
+ *  (Deploy > New deployment > Web app > salin URL berakhiran /exec)
  * ===================================================== */
 const API_URL = 'https://script.google.com/macros/s/AKfycbwQRL4Bf5yEyIz8h15wJ27JJa540umo8zNFQAURiXZjVuMQ9N8rLSXbcGoQYQeoWMg5/exec';
-const IDLE_MS = 5 * 60 * 1000;
-const IDLE_ADMIN_MS = 10 * 60 * 1000;
+const IDLE_MS = 5 * 60 * 1000;        // logout otomatis karyawan: 5 menit tidak aktif
+const IDLE_ADMIN_MS = 10 * 60 * 1000; // logout otomatis admin: 10 menit tidak aktif
 
 /* ---------- Helper ---------- */
 const $ = (s) => document.querySelector(s);
@@ -750,6 +600,8 @@ function toast(msg) {
   toast._t = setTimeout(() => el.classList.remove('show'), 2800);
 }
 
+// Kirim permintaan ke Apps Script.
+// Content-Type text/plain agar tidak memicu preflight CORS.
 async function post(body) {
   if (!API_URL || API_URL.indexOf('PASTE_') === 0) throw new Error('config');
   const res = await fetch(API_URL, {
@@ -798,7 +650,6 @@ for (let i = 0; i < 6; i++) {
   inp.inputMode = 'numeric';
   inp.maxLength = 1;
   inp.autocomplete = 'off';
-  inp.placeholder = '●';
   inp.id = 'pin' + i;
   inp.setAttribute('aria-label', 'Digit PIN ' + (i + 1));
   inp.addEventListener('input', () => {
@@ -835,11 +686,11 @@ $('#btnEye').addEventListener('click', () => {
 
 /* ---------- Daftar pilih nama karyawan ---------- */
 let namaList = [];
-let namaStatus = 'loading';
+let namaStatus = 'loading'; // loading | ok | error
 let comboHl = -1;
 const combo = $('#combo'), comboList = $('#comboList'), inpNama = $('#inpNama');
 
-let comboSemua = false;
+let comboSemua = false; // true = tampilkan semua nama (setelah memilih nama)
 function comboItems() {
   const q = inpNama.value.trim().toLowerCase();
   return namaList.filter((n) => comboSemua || !q || n.toLowerCase().indexOf(q) >= 0);
@@ -875,13 +726,13 @@ function sesuaikanKeyboard() {
   const vv = window.visualViewport;
   const tinggi = vv ? vv.height : window.innerHeight;
   comboList.style.maxHeight = Math.min(268, Math.max(120, tinggi - 54 - 40)) + 'px';
-  if (document.activeElement === inpSandi) geserKeAtas(formAdminEl, 24);
-  else if (document.activeElement === inpNama) geserKeAtas(combo, 12);
+  if (document.activeElement === inpSandi) geserKeAtas(formAdminEl, 24); // form admin naik di atas keyboard
+  else if (document.activeElement === inpNama) geserKeAtas(combo, 12);   // kolom nama naik di atas keyboard
 }
 function bukaKeyboardLogin() {
-  loginMain.classList.add('kb');
+  loginMain.classList.add('kb'); // beri ruang gulir agar bisa naik
   setTimeout(sesuaikanKeyboard, 80);
-  setTimeout(sesuaikanKeyboard, 350);
+  setTimeout(sesuaikanKeyboard, 350); // setelah keyboard terbuka penuh
 }
 function tutupKeyboardLogin() {
   setTimeout(() => {
@@ -894,7 +745,7 @@ inpNama.addEventListener('blur', tutupKeyboardLogin);
 inpSandi.addEventListener('focus', bukaKeyboardLogin);
 inpSandi.addEventListener('blur', tutupKeyboardLogin);
 if (window.visualViewport) {
-  window.visualViewport.addEventListener('resize', () => {
+   window.visualViewport.addEventListener('resize', () => {
     if (document.activeElement === inpNama) sesuaikanKeyboard();
   });
 }
@@ -907,6 +758,7 @@ inpNama.addEventListener('keydown', (e) => {
   else if (e.key === 'Enter' && combo.classList.contains('open') && comboHl >= 0 && items[comboHl]) { e.preventDefault(); pilihNama(items[comboHl]); }
   else if (e.key === 'Escape' || e.key === 'Tab') tutupCombo();
 });
+// mousedown agar terpilih sebelum input kehilangan fokus
 comboList.addEventListener('mousedown', (e) => {
   const li = e.target.closest('li[data-n]');
   if (li) { e.preventDefault(); pilihNama(li.dataset.n); }
@@ -933,6 +785,7 @@ function setSandiTampil(tampil) {
   b.title = b.ariaLabel = tampil ? 'Sembunyikan sandi' : 'Tampilkan sandi';
 }
 setSandiTampil(false);
+// mousedown dicegah agar keyboard tidak tertutup saat ikon diketuk
 $('#btnEyeSandi').addEventListener('mousedown', (e) => e.preventDefault());
 $('#btnEyeSandi').addEventListener('click', () => setSandiTampil(inpSandi.type === 'password'));
 $('#formAdmin').addEventListener('submit', () => setSandiTampil(false));
@@ -947,16 +800,15 @@ $('#toKaryawan').addEventListener('click', () => {
   $('#formAdmin').classList.add('hidden'); $('#formLogin').classList.remove('hidden');
   setSandiTampil(false);
   loginMain.classList.remove('kb');
-  window.scrollTo(0, 0);
+  window.scrollTo(0, 0); // kembali ke posisi awal, tanpa fokus otomatis ke kolom nama
 });
 
 /* ---------- Login karyawan ---------- */
-let session = null;
+let session = null;      // data slip yang sedang dilihat
 let activeIdx = 0;
-let tahunFilter = 'semua';
 let adminToken = null;
 let adminState = null;
-let adminPreview = false;
+let adminPreview = false; // true bila admin sedang melihat slip karyawan
 
 $('#formLogin').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -971,14 +823,14 @@ $('#formLogin').addEventListener('submit', async (e) => {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span><span>Memeriksa…</span>';
   try {
-    siapkanMusik();
+     siapkanMusik();
     const data = await post({ action: 'login', nama: nama, pin: pin });
     if (!data.ok) {
       showAlert('#alertBox', data.message || 'Login gagal.');
       pinRow.classList.remove('shake'); void pinRow.offsetWidth; pinRow.classList.add('shake');
       clearPin(); pinBoxes[0].focus();
     } else {
-      session = data; adminPreview = false;
+       session = data; adminPreview = false;
       mainkanMusik();
       clearPin(); $('#inpNama').value = '';
       openApp();
@@ -1002,17 +854,16 @@ $('#formAdmin').addEventListener('submit', async (e) => {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span><span>Memeriksa…</span>';
   try {
-    siapkanMusik();
+     siapkanMusik();
     const r = await post({ action: 'adminLogin', sandi: sandi });
     if (!r.ok) {
       showAlert('#alertAdmin', r.message || 'Login gagal.');
       $('#inpSandi').value = '';
     } else {
-      adminToken = r.token;
+       adminToken = r.token;
       mainkanMusik();
       $('#inpSandi').value = '';
       $('#viewLogin').classList.add('hidden');
-      document.body.classList.remove('app-bg');
       $('#viewAdmin').classList.remove('hidden');
       window.scrollTo(0, 0);
       resetIdle();
@@ -1026,84 +877,45 @@ $('#formAdmin').addEventListener('submit', async (e) => {
   }
 });
 
-/* ---------- Tab karyawan ---------- */
-const TABS = ['Ringkasan', 'Riwayat', 'Slip', 'Pin'];
-function showTab(nama) {
-  if (nama === 'Pin' && adminPreview) { toast('Pengaturan tidak tersedia pada pratinjau admin.'); return; }
-  const ada = session && session.slips && session.slips.length > 0;
-  TABS.forEach((t) => {
-    const el = $('#tab' + t);
-    const isData = t !== 'Pin';
-    el.classList.toggle('hidden', t !== nama || (isData && !ada));
-    $('#nav' + t).classList.toggle('on', t === nama);
-  });
-  $('#emptyState').classList.toggle('hidden', !(nama !== 'Pin' && !ada));
-  window.scrollTo(0, 0);
-}
-$('#dock').addEventListener('click', (e) => {
-  const b = e.target.closest('button[data-tab]');
-  if (b) showTab(b.dataset.tab);
-});
-
-/* ---------- Tampilan karyawan ---------- */
+/* ---------- Tampilan slip ---------- */
 function openApp() {
   $('#viewLogin').classList.add('hidden');
   $('#viewAdmin').classList.add('hidden');
   $('#viewApp').classList.remove('hidden');
-  document.body.classList.add('app-bg');
   $('#btnBack').classList.toggle('hidden', !adminPreview);
   window.scrollTo(0, 0);
 
   const k = session.karyawan;
   const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
+  $('#uName').textContent = k.nama;
   $('#uMeta').textContent = k.jabatan || 'Karyawan';
   $('#uAvatar').textContent = ini || 'MJ';
-  $('#greetName').textContent = k.nama.split(/\s+/)[0] || k.nama;
-  $('#greetTime').textContent = adminPreview ? 'Pratinjau 👀' : 'Halo 👋';
+  $('#greetName').textContent = k.nama;
+  siapkanBeranda();
 
-  $('#swBunyi').checked = pref('mj_bunyi'); $('#swMusik').checked = pref('mj_musik');
-  muatFoto();
+  const h = new Date().getHours();
+  $('#greetTime').textContent = adminPreview ? 'Pratinjau slip karyawan'
+    : h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
 
-  tahunFilter = 'semua';
-  activeIdx = 0;
   const ada = session.slips && session.slips.length > 0;
-  if (ada) render();
-  showTab('Ringkasan');
+  $('#emptyState').classList.toggle('hidden', ada);
+  $('#content').classList.toggle('hidden', !ada);
+  if (ada) { activeIdx = 0; render(); }
   resetIdle();
-}
-
-function chipsHtml() {
-  return session.slips.map((x, i) =>
-    `<button class="chip ${i === activeIdx ? 'active' : ''}" data-i="${i}" type="button">${esc(x.bulan)} ${x.tahun}</button>`).join('');
-}
-function bindChips(sel) {
-  $(sel).querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { activeIdx = +b.dataset.i; render(); }));
 }
 
 function render() {
   const slips = session.slips;
   const s = slips[activeIdx];
 
-  // chips periode
-  ['#chipsA', '#chipsB'].forEach((id) => { $(id).innerHTML = chipsHtml(); bindChips(id); });
-  const aktifChip = $('#chipsA .chip.active'); if (aktifChip && aktifChip.scrollIntoView) { /* biarkan posisi */ }
+  $('#chips').innerHTML = slips.map((x, i) =>
+    `<button class="chip ${i === activeIdx ? 'active' : ''}" data-i="${i}" type="button">${esc(x.bulan)} ${x.tahun}</button>`).join('');
+  $('#chips').querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { activeIdx = +b.dataset.i; render(); }));
 
-  // hero
-  const pct = s.gajiKotor > 0 ? Math.max(0, Math.min(100, Math.round((s.gajiBersih / s.gajiKotor) * 100))) : 0;
-  $('#ring').style.setProperty('--p', pct + '%');
-  $('#rPct').textContent = pct + '%';
-  $('#sBersih').textContent = rp(s.gajiBersih);
-  $('#sPeriode').textContent = 'Periode ' + s.bulan + ' ' + s.tahun;
-
-  // kartu statistik
-  const pd = s.pendapatan;
-  const tambah = (Number(pd.premi) || 0) + (Number(pd.lembur) || 0) + (Number(pd.lemburMinggu) || 0) + (Number(pd.uangMakan) || 0) + (Number(pd.bpjs) || 0);
   $('#sKotor').textContent = rp(s.gajiKotor);
   $('#sPot').textContent = rp(s.totalPotongan);
-  $('#sPokok').textContent = rp(pd.gajiPokok);
-  $('#sTambah').textContent = rp(tambah);
+  $('#sBersih').textContent = rp(s.gajiBersih);
 
-  // slip detail
   const k = session.karyawan, p = session.perusahaan;
   const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 3).map((w) => w[0].toUpperCase()).join('');
   const noDok = `SG/${s.tahun}/${String(s.bulanKe).padStart(2, '0')}/${esc(ini)}`;
@@ -1166,7 +978,6 @@ function render() {
       </div>
     </div>`;
 
-  // grafik batang
   const trend = $('#trendCard');
   if (slips.length > 1) {
     const list = slips.map((x, i) => ({ x, i })).slice(0, 12).reverse();
@@ -1176,42 +987,11 @@ function render() {
       return `<button class="bar ${o.i === activeIdx ? 'active' : ''}" data-i="${o.i}" type="button" title="${esc(o.x.bulan)} ${o.x.tahun}: ${rp(o.x.gajiBersih)}">
         <div class="col-fill" style="height:${h}%"></div><span>${esc(o.x.bulan.slice(0, 3))} ${String(o.x.tahun).slice(2)}</span></button>`;
     }).join('');
-    $('#bars').querySelectorAll('.bar').forEach((b) => b.addEventListener('click', () => { activeIdx = +b.dataset.i; render(); }));
+    $('#bars').querySelectorAll('.bar').forEach((b) => b.addEventListener('click', () => { activeIdx = +b.dataset.i; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
     trend.classList.remove('hidden');
   } else {
     trend.classList.add('hidden');
   }
-
-  renderRiwayat();
-}
-
-function renderRiwayat() {
-  const slips = session.slips;
-  const tahunList = Array.from(new Set(slips.map((x) => x.tahun))).sort((a, b) => b - a);
-  const hitung = (t) => slips.filter((x) => t === 'semua' || x.tahun === t).length;
-
-  $('#chipsTahun').innerHTML =
-    `<button class="chip ${tahunFilter === 'semua' ? 'active' : ''}" data-t="semua" type="button">Semua <small>${slips.length}</small></button>` +
-    tahunList.map((t) => `<button class="chip ${tahunFilter === t ? 'active' : ''}" data-t="${t}" type="button">${t} <small>${hitung(t)}</small></button>`).join('');
-  $('#chipsTahun').querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => {
-    tahunFilter = b.dataset.t === 'semua' ? 'semua' : +b.dataset.t;
-    renderRiwayat();
-  }));
-
-  const terlama = slips[slips.length - 1];
-  $('#hSejak').textContent = 'Sejak ' + terlama.bulan.slice(0, 3) + ' ' + terlama.tahun;
-  $('#hJumlah').textContent = slips.length + ' periode';
-
-  $('#hBody').innerHTML = slips.map((x, i) => ({ x, i }))
-    .filter((o) => tahunFilter === 'semua' || o.x.tahun === tahunFilter)
-    .map((o) => `<tr class="${o.i === activeIdx ? 'act' : ''}" data-i="${o.i}">
-      <td class="per">${esc(o.x.bulan.slice(0, 3))} ${String(o.x.tahun).slice(2)}</td>
-      <td class="num">${nf.format(Math.round(o.x.gajiKotor))}</td>
-      <td class="num pot">${o.x.totalPotongan ? nf.format(Math.round(o.x.totalPotongan)) : '-'}</td>
-      <td class="num bsh">${nf.format(Math.round(o.x.gajiBersih))}</td></tr>`).join('');
-  $('#hBody').querySelectorAll('tr').forEach((tr) => tr.addEventListener('click', () => {
-    activeIdx = +tr.dataset.i; render(); showTab('Slip');
-  }));
 }
 
 /* ---------- Cetak ---------- */
@@ -1252,6 +1032,7 @@ function bungkus(c, teks, maks) {
   if (cur) baris.push(cur);
   return baris;
 }
+// Kecilkan huruf bila teks terlalu lebar; font terakhir tetap terpasang di kanvas
 function muatTeks(c, teks, maks, berat, mulai, minim, fam) {
   let sz = mulai;
   c.font = `${berat} ${sz}px ${fam}`;
@@ -1259,6 +1040,7 @@ function muatTeks(c, teks, maks, berat, mulai, minim, fam) {
   return sz;
 }
 
+// Menggambar slip pada kanvas (lebar logis 1080). Mengembalikan tinggi total.
 function lukisSlip(c, s, k, p) {
   const W = 1080, M = 56, CW = 460, GAP = 48;
   const ink = '#0E1A2B', navy = '#12243D', gold = '#C9A35B', goldDeep = '#A9833B', muted = '#6B7686';
@@ -1271,6 +1053,7 @@ function lukisSlip(c, s, k, p) {
   c.fillStyle = '#FFFFFF';
   c.fillRect(0, 0, W, 6000);
 
+  // ---- Kepala ----
   c.font = `500 15px ${FS}`;
   const alamat = p.alamat ? bungkus(c, p.alamat, 560).slice(0, 3) : [];
   const hH = Math.max(176, alamat.length ? 138 + alamat.length * 21 + 26 : 0);
@@ -1303,6 +1086,7 @@ function lukisSlip(c, s, k, p) {
   c.fillText('No. SG/' + s.tahun + '/' + String(s.bulanKe).padStart(2, '0') + '/' + ini, W - M, 142);
   c.textAlign = 'left';
 
+  // ---- Data karyawan ----
   let y = hH + 56;
   [[M, 380, 'NAMA', k.nama], [M + 420, 250, 'JABATAN', k.jabatan || '-'], [M + 690, 240, 'PERIODE', s.bulan + ' ' + s.tahun]]
     .forEach((it) => {
@@ -1314,6 +1098,7 @@ function lukisSlip(c, s, k, p) {
   c.beginPath(); c.moveTo(M, y); c.lineTo(W - M, y); c.stroke(); c.setLineDash([]);
   y += 44;
 
+  // ---- Pendapatan & potongan ----
   const pd = s.pendapatan, pt = s.potongan;
   const kiri = [['Gaji Pokok', pd.gajiPokok], ['Premi', pd.premi], ['Pendapatan Lembur Biasa', pd.lembur],
     ['Pendapatan Lembur Minggu', pd.lemburMinggu], ['Uang Makan', pd.uangMakan], ['BPJS', pd.bpjs]];
@@ -1343,6 +1128,7 @@ function lukisSlip(c, s, k, p) {
   kolomGambar(M + CW + GAP, 'POTONGAN', red, '#FBEAE8', kanan, 'Total Potongan', s.totalPotongan);
   y = totY + 60 + 44;
 
+  // ---- Gaji bersih ----
   g = c.createLinearGradient(M, y, W - M, y + 150);
   g.addColorStop(0, '#F6EEDC'); g.addColorStop(1, '#FBF6EA');
   jalurKotak(c, M, y, W - 2 * M, 150, 22); c.fillStyle = g; c.fill();
@@ -1358,6 +1144,7 @@ function lukisSlip(c, s, k, p) {
   tb.forEach((l, i) => c.fillText(l, M, y + i * 28));
   y += tb.length * 28 + 30;
 
+  // ---- Catatan & tanda tangan ----
   c.font = `400 14px ${FS}`; c.fillStyle = muted;
   const cat = p.catatan ? bungkus(c, p.catatan, 560) : [];
   cat.forEach((l, i) => c.fillText(l, M, y + 14 + i * 22));
@@ -1387,7 +1174,7 @@ async function simpanGambar() {
     } catch (e) { /* lanjut dengan font cadangan */ }
 
     const s = session.slips[activeIdx], k = session.karyawan, p = session.perusahaan;
-    const W = 1080, SK = 2;
+    const W = 1080, SK = 2; // 2x agar tajam di layar HP
     const ukur = document.createElement('canvas');
     ukur.width = W; ukur.height = 10;
     const H = lukisSlip(ukur.getContext('2d'), s, k, p);
@@ -1402,6 +1189,7 @@ async function simpanGambar() {
     if (!blob) throw new Error('gagal-gambar');
     const nama = ('Slip-Gaji_' + k.nama + '_' + s.bulan + '-' + s.tahun).replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+/g, '-') + '.png';
 
+    // iPhone/iPad: lembar bagikan agar bisa "Simpan Gambar" ke Foto
     if (isIOS && navigator.canShare) {
       const berkas = new File([blob], nama, { type: 'image/png' });
       if (navigator.canShare({ files: [berkas] })) {
@@ -1428,6 +1216,7 @@ const bgm = $('#bgm');
 bgm.volume = 0.8;
 let bgmSiap = Promise.resolve();
 
+// Dipanggil saat tombol login ditekan agar browser (terutama iPhone) mengizinkan suara
 function siapkanMusik() {
   try {
     bgm.muted = true;
@@ -1438,7 +1227,7 @@ function siapkanMusik() {
   } catch (e) { bgmSiap = Promise.resolve(); }
 }
 function mainkanMusik() {
-  if (!pref('mj_musik')) return;
+    if (!pref('mj_musik')) return;
   bgmSiap.then(() => {
     bgm.muted = false;
     bgm.currentTime = 0;
@@ -1504,9 +1293,6 @@ async function muatAdmin() {
   }
 }
 
-const AVA = ['#7B8DFB,#3B50E8', '#FFC15E,#F7791E', '#FF8FB0,#F0527A', '#C6A0FB,#8B5CF0', '#6EE0F2,#1DB0CC', '#5FDDB0,#1E9E74'];
-const ava = (i) => 'linear-gradient(135deg,' + AVA[i % AVA.length] + ')';
-
 function renderAdmin() {
   const d = adminState;
   const list = d.karyawan;
@@ -1514,43 +1300,41 @@ function renderAdmin() {
   $('#aTotal').textContent = list.length;
   $('#aAktif').textContent = aktif;
   if (d.ringkasan.length) {
-    $('#aGajiLabel').textContent = 'Total gaji bersih ' + d.ringkasan[0].bulan + ' ' + d.ringkasan[0].tahun;
+    $('#aGajiLabel').textContent = 'Gaji Bersih ' + d.ringkasan[0].bulan + ' ' + d.ringkasan[0].tahun;
     $('#aGaji').textContent = rp(d.ringkasan[0].bersih);
   } else {
-    $('#aGajiLabel').textContent = 'Total gaji bersih';
+    $('#aGajiLabel').textContent = 'Gaji Bersih';
     $('#aGaji').textContent = '-';
   }
 
   const q = $('#aSearch').value.trim().toLowerCase();
-  $('#aBody').innerHTML = list.map((k, i) => ({ k: k, i: i })).filter((o) => !q || o.k.nama.toLowerCase().indexOf(q) >= 0).map((o) => {
-    const k = o.k, i = o.i;
-    return `<div class="lrow">
-      <div class="lava" style="background:${ava(i)}">${esc(k.nama.charAt(0).toUpperCase())}</div>
-      <div class="ltx"><b>${esc(k.nama)}<i>›</i></b><span>${esc(k.jabatan || '-')} · ${k.status} · ${esc(k.login || 'belum login')}</span></div>
-      <button class="pin-chip" type="button" data-act="pin" data-i="${i}" title="Ketuk untuk melihat PIN">••••••</button>
-      <div class="lact">
-        <button class="mini" type="button" data-act="slip" data-i="${i}">Lihat Slip</button>
-        <button class="mini" type="button" data-act="reset" data-i="${i}">Reset PIN</button>
-        <button class="mini ${k.status === 'Aktif' ? 'red' : ''}" type="button" data-act="status" data-i="${i}">${k.status === 'Aktif' ? 'Nonaktifkan' : 'Aktifkan'}</button>
-      </div></div>`;
-  }).join('');
+  const rows = [];
+  list.forEach((k, i) => {
+    if (q && k.nama.toLowerCase().indexOf(q) < 0) return;
+    rows.push(`<tr>
+      <td class="nm">${esc(k.nama)}</td>
+      <td class="muted">${esc(k.jabatan || '-')}</td>
+      <td><button class="pin-chip" type="button" data-act="pin" data-i="${i}" title="Ketuk untuk melihat PIN">••••••</button></td>
+      <td><span class="badge ${k.status === 'Aktif' ? 'on' : 'off'}">${k.status}</span></td>
+      <td class="muted">${esc(k.login || '-')}</td>
+      <td class="act">
+        <button class="btn-ghost xs" type="button" data-act="slip" data-i="${i}">Lihat Slip</button>
+        <button class="btn-ghost xs" type="button" data-act="reset" data-i="${i}">Reset PIN</button>
+        <button class="btn-ghost xs ${k.status === 'Aktif' ? 'danger' : ''}" type="button" data-act="status" data-i="${i}">${k.status === 'Aktif' ? 'Nonaktifkan' : 'Aktifkan'}</button>
+      </td></tr>`);
+  });
+  $('#aBody').innerHTML = rows.join('');
   $('#aEmpty').classList.toggle('hidden', list.length > 0);
 
-  $('#aRingkas').innerHTML = d.ringkasan.length ? d.ringkasan.map((m, i) => `<div class="lrow">
-      <div class="lava" style="background:${ava(i)}">${esc(m.bulan.slice(0, 3))}</div>
-      <div class="ltx"><b>${esc(m.bulan)} ${m.tahun}<i>›</i></b><span>${m.orang} karyawan · Kotor ${nf.format(Math.round(m.kotor))} · Pot. ${nf.format(Math.round(m.potongan))}</span></div>
-      <div class="lamt">${nf.format(Math.round(m.bersih))}</div></div>`).join('')
-    : '<div class="empty"><b>Belum ada data gaji</b>Isi sheet Gaji terlebih dahulu.</div>';
+  $('#aRingkas').innerHTML = d.ringkasan.length ? d.ringkasan.map((m) => `<tr>
+      <td class="nm">${esc(m.bulan)} ${m.tahun}</td><td class="num">${m.orang}</td>
+      <td class="num">${rp(m.kotor)}</td><td class="num">${rp(m.potongan)}</td><td class="num"><b>${rp(m.bersih)}</b></td></tr>`).join('')
+    : '<tr><td colspan="5" class="muted">Belum ada data gaji.</td></tr>';
 }
-
-function aTabPilih(nama) {
-  ['Rekap', 'Karyawan', 'Kelola'].forEach((t) => $('#aTab' + t).classList.toggle('hidden', t !== nama));
-  document.querySelectorAll('[data-atab]').forEach((b) => b.classList.toggle('on', b.dataset.atab === nama));
-}
-document.querySelectorAll('[data-atab]').forEach((b) => b.addEventListener('click', () => aTabPilih(b.dataset.atab)));
 
 $('#aSearch').addEventListener('input', () => { if (adminState) renderAdmin(); });
 
+// Aksi pada baris tabel
 $('#aBody').addEventListener('click', async (e) => {
   const b = e.target.closest('[data-act]');
   if (!b) return;
@@ -1654,16 +1438,40 @@ function bunyiLucu() {
     const t = _ac.currentTime, o = _ac.createOscillator(), g = _ac.createGain();
     const m = Math.floor(Math.random() * 4), f = 300 + Math.random() * 400, fr = o.frequency;
     o.type = ['sine', 'square', 'triangle', 'sawtooth'][m];
-    if (m === 0) { fr.setValueAtTime(f, t); fr.exponentialRampToValueAtTime(f * 3, t + .12); fr.exponentialRampToValueAtTime(f * .7, t + .3); }
-    else if (m === 1) { fr.setValueAtTime(f, t); fr.setValueAtTime(f * 1.5, t + .08); fr.setValueAtTime(f * 2, t + .16); }
-    else if (m === 2) { fr.setValueAtTime(f * 2, t); fr.exponentialRampToValueAtTime(f * .4, t + .2); }
-    else { fr.setValueAtTime(f, t); fr.linearRampToValueAtTime(f * .5, t + .1); fr.linearRampToValueAtTime(f * 1.3, t + .26); }
-    const vol = (m === 1 || m === 3) ? 0.45 : 0.9;
+    if (m === 0) { fr.setValueAtTime(f, t); fr.exponentialRampToValueAtTime(f * 3, t + .12); fr.exponentialRampToValueAtTime(f * .7, t + .3); }      // boing
+    else if (m === 1) { fr.setValueAtTime(f, t); fr.setValueAtTime(f * 1.5, t + .08); fr.setValueAtTime(f * 2, t + .16); }                          // toet-toet
+    else if (m === 2) { fr.setValueAtTime(f * 2, t); fr.exponentialRampToValueAtTime(f * .4, t + .2); }                                              // plung jatuh
+    else { fr.setValueAtTime(f, t); fr.linearRampToValueAtTime(f * .5, t + .1); fr.linearRampToValueAtTime(f * 1.3, t + .26); }                      // wuaa
+    const vol = (m === 1 || m === 3) ? 0.45 : 0.9; // ubah angka ini untuk mengatur kerasnya bunyi (maks 1)
     g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .34);
     o.connect(g); g.connect(_ac.destination); o.start(t); o.stop(t + .36);
   } catch (e) {}
 }
 
+/* ---------- Sidebar bawah & Pengaturan ---------- */
+function siapkanBeranda() {
+  $('#panelSet').classList.add('hidden');
+  $('#menuSlip').classList.add('hidden');
+  $('#navSlip').classList.add('on'); $('#navSet').classList.remove('on');
+  $('#swBunyi').checked = pref('mj_bunyi'); $('#swMusik').checked = pref('mj_musik');
+  muatFoto();
+}
+$('#navSlip').addEventListener('click', () => {
+  $('#panelSet').classList.add('hidden');
+  const ada = session && session.slips && session.slips.length > 0;
+  $('#emptyState').classList.toggle('hidden', ada); $('#content').classList.toggle('hidden', !ada);
+  $('#navSlip').classList.add('on'); $('#navSet').classList.remove('on');
+  $('#menuSlip').classList.toggle('hidden');
+});
+$('#navSet').addEventListener('click', () => {
+  if (adminPreview) { toast('Pengaturan tidak tersedia pada pratinjau admin.'); return; }
+  $('#menuSlip').classList.add('hidden');
+  $('#emptyState').classList.add('hidden'); $('#content').classList.add('hidden');
+  $('#panelSet').classList.remove('hidden');
+  $('#navSet').classList.add('on'); $('#navSlip').classList.remove('on');
+  window.scrollTo(0, 0);
+});
+$('#menuSlip').addEventListener('click', () => $('#menuSlip').classList.add('hidden'));
 $('#swBunyi').addEventListener('change', (e) => setPref('mj_bunyi', e.target.checked));
 $('#swMusik').addEventListener('change', (e) => { setPref('mj_musik', e.target.checked); e.target.checked ? mainkanMusik() : hentikanMusik(); });
 
@@ -1671,16 +1479,16 @@ $('#swMusik').addEventListener('change', (e) => { setPref('mj_musik', e.target.c
 let foto = null;
 const kFoto = () => 'mj_foto_' + session.karyawan.nama.toLowerCase().replace(/\s+/g, '_');
 function simpanFoto() { try { localStorage.setItem(kFoto(), JSON.stringify(foto)); } catch (e) { toast('Foto tidak dapat disimpan di perangkat ini.'); } }
-function gayaFoto(el, f, rad) {
+function gayaFoto(el, f) {
   if (!f || !f.src) { el.style.backgroundImage = el.style.backgroundSize = el.style.backgroundPosition = el.style.borderRadius = ''; return false; }
   el.style.backgroundImage = 'url(' + f.src + ')'; el.style.backgroundRepeat = 'no-repeat';
   el.style.backgroundSize = f.z + '%'; el.style.backgroundPosition = f.x + '% ' + f.y + '%';
-  el.style.borderRadius = f.b === 'bulat' ? '50%' : (rad || '22%');
+  el.style.borderRadius = f.b === 'kotak' ? '22%' : '50%';
   return true;
 }
 function terapkanFoto() {
-  const ada = gayaFoto($('#uAvatar'), foto, '22px');
-  gayaFoto($('#fotoBox'), foto, '22%');
+  const ada = gayaFoto($('#uAvatar'), foto);
+  gayaFoto($('#fotoBox'), foto);
   $('#uAvatar').style.color = ada ? 'transparent' : '';
   $('#fotoBox').textContent = ada ? '' : $('#uAvatar').textContent;
 }
@@ -1689,10 +1497,6 @@ function muatFoto() {
   $('#fZoom').value = foto ? foto.z : 100; $('#fX').value = foto ? foto.x : 50; $('#fY').value = foto ? foto.y : 50;
   terapkanFoto();
 }
-$('#btnCam').addEventListener('click', () => {
-  if (adminPreview) { toast('Foto tidak dapat diubah pada pratinjau admin.'); return; }
-  $('#fotoFile').click();
-});
 $('#fotoPilih').addEventListener('click', () => $('#fotoFile').click());
 $('#fotoFile').addEventListener('change', (e) => {
   const file = e.target.files[0]; if (!file) return;
@@ -1702,11 +1506,11 @@ $('#fotoFile').addEventListener('change', (e) => {
     cv.width = cv.height = 400;
     cv.getContext('2d').drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 400, 400);
     URL.revokeObjectURL(u);
-    foto = { src: cv.toDataURL('image/jpeg', .85), z: 100, x: 50, y: 50, b: (foto && foto.b) || 'kotak' };
+    foto = { src: cv.toDataURL('image/jpeg', .85), z: 100, x: 50, y: 50, b: (foto && foto.b) || 'bulat' };
     simpanFoto();
     $('#fZoom').value = 100; $('#fX').value = 50; $('#fY').value = 50;
     terapkanFoto();
-    toast('Foto diperbarui. Atur tata letaknya di menu Ganti PIN.');
+    toast('Foto diunggah. Atur tata letaknya di bawah.');
   };
   img.onerror = () => toast('File bukan gambar yang valid.');
   img.src = u; e.target.value = '';
@@ -1737,7 +1541,6 @@ $('#btnUbahPin').addEventListener('click', async () => {
   } catch (err) { toast(errMsg(err)); }
   finally { btn.disabled = false; }
 });
-
 /* ---------- Keluar & sesi ---------- */
 let idleTimer;
 function resetIdle() {
@@ -1751,19 +1554,16 @@ function resetIdle() {
 
 function logoutAll(pesan) {
   hentikanMusik();
-  aTabPilih('Rekap');
   session = null; adminState = null; adminPreview = false;
   const tokenLama = adminToken; adminToken = null;
   if (tokenLama) post({ action: 'adminLogout', token: tokenLama }).catch(() => {});
   clearTimeout(idleTimer);
   $('#slip').innerHTML = '';
-  $('#hBody').innerHTML = '';
   $('#aBody').innerHTML = '';
   $('#pinSheet').innerHTML = '';
   $('#viewApp').classList.add('hidden');
   $('#viewAdmin').classList.add('hidden');
   $('#viewLogin').classList.remove('hidden');
-  document.body.classList.remove('app-bg');
   $('#formAdmin').classList.add('hidden');
   $('#formLogin').classList.remove('hidden');
   hideAlert('#alertBox'); hideAlert('#alertAdmin');
@@ -1776,7 +1576,6 @@ $('#btnAdminLogout').addEventListener('click', () => { logoutAll(); toast('Anda 
 $('#btnBack').addEventListener('click', () => {
   session = null; adminPreview = false;
   $('#viewApp').classList.add('hidden');
-  document.body.classList.remove('app-bg');
   $('#viewAdmin').classList.remove('hidden');
   window.scrollTo(0, 0);
   resetIdle();
