@@ -27,7 +27,7 @@
   --serif:'Fraunces',Georgia,'Times New Roman',serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;overscroll-behavior-y:none} 
 body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
 .hidden{display:none!important}
@@ -41,7 +41,7 @@ button{font-family:inherit;cursor:pointer}
 .logo-text small{display:block;font-family:var(--font);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.65;margin-top:3px}
 
 /* ---------- Login ---------- */
-.login{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr}
+.login{min-height:100vh;min-height:100svh;display:grid;grid-template-columns:1.05fr 1fr}
 .login-side{position:relative;overflow:hidden;color:#fff;padding:48px 56px;display:flex;flex-direction:column;justify-content:space-between;
   background:radial-gradient(900px 500px at 85% -10%,rgba(201,163,91,.28),transparent 60%),
              radial-gradient(700px 500px at -10% 110%,rgba(46,92,150,.55),transparent 60%),
@@ -57,7 +57,8 @@ button{font-family:inherit;cursor:pointer}
 .feat i{flex:none;width:30px;height:30px;border-radius:9px;background:rgba(201,163,91,.16);border:1px solid rgba(201,163,91,.35);display:grid;place-items:center;color:var(--gold);font-style:normal;font-size:14px}
 .login-foot{font-size:12px;color:rgba(255,255,255,.5)}
 
-.login-main{display:grid;place-items:center;padding:40px 24px}
+.login-main{display:grid;place-items:start center;padding:80px 24px 40px;padding:clamp(24px,12svh,110px) 24px 40px}
+.login-main.kb{padding-bottom:55vh}
 .login-card{width:100%;max-width:420px}
 .login-card .mobile-logo{display:none;margin-bottom:28px;color:var(--navy)}
 .login-card h2{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:-.01em}
@@ -224,11 +225,6 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
 .bigpin{font-family:var(--serif);font-size:42px;font-weight:700;letter-spacing:.14em;text-align:center;color:var(--navy);background:var(--gold-soft);border:1px solid #EADBB6;border-radius:14px;padding:14px;margin-top:14px}
 
 /* ---------- Tombol musik & pasang aplikasi ---------- */
-.music-btn{position:fixed;right:18px;bottom:18px;z-index:45;width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,163,91,.55);
-  background:var(--navy);color:var(--gold);font-size:20px;display:grid;place-items:center;box-shadow:0 10px 26px rgba(14,26,43,.28);transition:.2s;padding:0}
-.music-btn:hover{transform:scale(1.06)}
-.music-btn.hint::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--gold);opacity:.7;animation:pulse 1.6s ease-out infinite}
-@keyframes pulse{0%{transform:scale(.9);opacity:.8}100%{transform:scale(1.35);opacity:0}}
 .install-box{margin-top:18px;padding:14px 16px;border-radius:14px;background:var(--gold-soft);border:1px solid #EADBB6;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
 .install-box span{font-size:13px;color:#6B5420;font-weight:500;flex:1 1 180px}
 .install-box .btn-gold{height:38px;font-size:13px;padding:0 14px}
@@ -482,7 +478,7 @@ dialog::backdrop{background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
   </div>
 </dialog>
 
-<button class="music-btn" id="btnMusik" type="button" aria-label="Musik" title="Musik">🎵</button>
+<audio id="bgm" src="musik.mp3" preload="auto"></audio>
 
 <div class="toast" id="toast"></div>
 
@@ -640,7 +636,32 @@ function bukaCombo() { renderCombo(); combo.classList.add('open'); inpNama.setAt
 function tutupCombo() { combo.classList.remove('open'); inpNama.setAttribute('aria-expanded', 'false'); comboHl = -1; }
 function pilihNama(n) { inpNama.value = n; tutupCombo(); pinBoxes[0].focus(); }
 
-inpNama.addEventListener('focus', bukaCombo);
+const loginMain = document.querySelector('.login-main');
+function sesuaikanKeyboard() {
+  const vv = window.visualViewport;
+  const tinggi = vv ? vv.height : window.innerHeight;
+  // daftar nama dibatasi agar muat di area yang tidak tertutup keyboard
+  comboList.style.maxHeight = Math.min(268, Math.max(120, tinggi - 54 - 40)) + 'px';
+  // geser halaman supaya kolom nama berada di bagian atas layar
+  const atas = combo.getBoundingClientRect().top;
+  const target = (vv ? vv.offsetTop : 0) + 12;
+  window.scrollBy({ top: atas - target, behavior: 'smooth' });
+}
+function fokusNama() {
+  loginMain.classList.add('kb'); // beri ruang gulir agar bisa naik
+  bukaCombo();
+  setTimeout(sesuaikanKeyboard, 80);
+  setTimeout(sesuaikanKeyboard, 350); // setelah keyboard terbuka penuh
+}
+inpNama.addEventListener('focus', fokusNama);
+inpNama.addEventListener('blur', () => setTimeout(() => {
+  if (document.activeElement !== inpNama) loginMain.classList.remove('kb');
+}, 200));
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    if (document.activeElement === inpNama) sesuaikanKeyboard();
+  });
+}
 inpNama.addEventListener('click', bukaCombo);
 inpNama.addEventListener('input', () => { comboHl = -1; bukaCombo(); });
 inpNama.addEventListener('keydown', (e) => {
@@ -695,13 +716,15 @@ $('#formLogin').addEventListener('submit', async (e) => {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span><span>Memeriksa…</span>';
   try {
+     siapkanMusik();
     const data = await post({ action: 'login', nama: nama, pin: pin });
     if (!data.ok) {
       showAlert('#alertBox', data.message || 'Login gagal.');
       pinRow.classList.remove('shake'); void pinRow.offsetWidth; pinRow.classList.add('shake');
       clearPin(); pinBoxes[0].focus();
     } else {
-      session = data; adminPreview = false;
+       session = data; adminPreview = false;
+      mainkanMusik();
       clearPin(); $('#inpNama').value = '';
       openApp();
     }
@@ -724,12 +747,14 @@ $('#formAdmin').addEventListener('submit', async (e) => {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span><span>Memeriksa…</span>';
   try {
+     siapkanMusik();
     const r = await post({ action: 'adminLogin', sandi: sandi });
     if (!r.ok) {
       showAlert('#alertAdmin', r.message || 'Login gagal.');
       $('#inpSandi').value = '';
     } else {
-      adminToken = r.token;
+       adminToken = r.token;
+      mainkanMusik();
       $('#inpSandi').value = '';
       $('#viewLogin').classList.add('hidden');
       $('#viewAdmin').classList.remove('hidden');
@@ -1078,128 +1103,34 @@ async function simpanGambar() {
 }
 $('#btnGambar').addEventListener('click', simpanGambar);
 
-/* ---------- Musik pembuka (±10 detik, dibuat langsung oleh browser) ---------- */
-const MUSIK_DETIK = 10.5;
-let audioCtx = null, musikMaster = null, musikTimer = null;
-let musikState = 'tunggu'; // tunggu | play | idle
-let musikMati = false;
-try { musikMati = localStorage.getItem('mj_musik') === 'off'; } catch (e) { /* abaikan */ }
-const btnMusik = $('#btnMusik');
+/* ---------- Musik mp3 setelah login berhasil ---------- */
+const bgm = $('#bgm');
+bgm.volume = 0.8;
+let bgmSiap = Promise.resolve();
 
-function ikonMusik() {
-  btnMusik.textContent = musikState === 'play' ? '🔊' : (musikMati ? '🔇' : '🎵');
-  btnMusik.title = musikState === 'play' ? 'Matikan musik'
-    : (musikState === 'tunggu' && !musikMati ? 'Ketuk untuk memutar musik' : 'Putar musik');
-  btnMusik.setAttribute('aria-label', btnMusik.title);
-  btnMusik.classList.toggle('hint', musikState === 'tunggu' && !musikMati);
+// Dipanggil saat tombol login ditekan agar browser (terutama iPhone) mengizinkan suara
+function siapkanMusik() {
+  try {
+    bgm.muted = true;
+    const p = bgm.play();
+    bgmSiap = p && p.then
+      ? p.then(() => { bgm.pause(); bgm.currentTime = 0; }).catch(() => {})
+      : Promise.resolve();
+  } catch (e) { bgmSiap = Promise.resolve(); }
 }
-
-function susunMusik() {
-  const c = audioCtx, t0 = c.currentTime + 0.12, D = MUSIK_DETIK;
-
-  const master = c.createGain();
-  master.gain.setValueAtTime(0.0001, t0);
-  master.gain.linearRampToValueAtTime(0.75, t0 + 2.2);
-  master.gain.setValueAtTime(0.75, t0 + D - 3.4);
-  master.gain.linearRampToValueAtTime(0.0001, t0 + D);
-  master.connect(c.destination);
-  musikMaster = master;
-
-  // gema ruangan buatan agar terdengar lembut
-  const n = Math.floor(c.sampleRate * 2.8), buf = c.createBuffer(2, n, c.sampleRate);
-  for (let ch = 0; ch < 2; ch++) {
-    const d = buf.getChannelData(ch);
-    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2.4);
-  }
-  const conv = c.createConvolver(); conv.buffer = buf;
-  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
-  const kering = c.createGain(); kering.gain.value = 0.75;
-  const basah = c.createGain(); basah.gain.value = 0.5;
-  lp.connect(kering); kering.connect(master);
-  lp.connect(conv); conv.connect(basah); basah.connect(master);
-
-  const nada = (f, mulai, dur, puncak, jenis, att) => {
-    const o = c.createOscillator(), g = c.createGain();
-    o.type = jenis; o.frequency.setValueAtTime(f, mulai);
-    g.gain.setValueAtTime(0.0001, mulai);
-    g.gain.linearRampToValueAtTime(puncak, mulai + att);
-    g.gain.exponentialRampToValueAtTime(0.0001, mulai + dur);
-    o.connect(g); g.connect(lp);
-    o.start(mulai); o.stop(mulai + dur + 0.1);
-  };
-
-  // alas akor yang tenang: Cmaj7 - Am7 - Fmaj7 - C
-  const akor = [
-    [130.81, 196.00, 246.94, 329.63],
-    [110.00, 164.81, 196.00, 261.63],
-    [87.31, 130.81, 220.00, 329.63],
-    [130.81, 196.00, 329.63, 523.25]
-  ];
-  akor.forEach((a, i) => {
-    const w = t0 + i * 2.55;
-    a.forEach((f, j) => {
-      nada(f, w + j * 0.07, 3.9, 0.05, 'sine', 1.1);
-      nada(f * 1.004, w + j * 0.07, 3.9, 0.03, 'triangle', 1.3);
-    });
-  });
-
-  // melodi lonceng lembut (nada pentatonik)
-  [[0.9, 659.25], [1.7, 783.99], [2.8, 880.00], [3.7, 783.99], [4.5, 659.25],
-   [5.5, 587.33], [6.4, 659.25], [7.3, 783.99], [8.2, 659.25], [9.0, 523.25]].forEach((m) => {
-    nada(m[1], t0 + m[0], 2.4, 0.11, 'sine', 0.03);
-    nada(m[1] * 2, t0 + m[0], 1.4, 0.02, 'sine', 0.03);
+function mainkanMusik() {
+  bgmSiap.then(() => {
+    bgm.muted = false;
+    bgm.currentTime = 0;
+    const p = bgm.play();
+    if (p && p.catch) p.catch(() => {});
   });
 }
-
-function pemicuMusik(e) {
-  if (e && e.target && e.target.closest && e.target.closest('#btnMusik')) return;
-  mulaiMusik();
-}
-function pasangPemicu() { ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => window.addEventListener(ev, pemicuMusik, { passive: true })); }
-function lepasPemicu() { ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => window.removeEventListener(ev, pemicuMusik)); }
-
-function mulaiMusik() {
-  if (musikMati || musikState === 'play') return;
-  const AC = window.AudioContext || window.webkitAudioContext;
-  if (!AC) { musikState = 'idle'; ikonMusik(); return; }
-  try { if (!audioCtx) audioCtx = new AC(); } catch (e) { return; }
-  const jalan = () => {
-    if (musikMati || musikState === 'play') return;
-    musikState = 'play';
-    lepasPemicu();
-    susunMusik();
-    ikonMusik();
-    clearTimeout(musikTimer);
-    musikTimer = setTimeout(() => { musikState = 'idle'; ikonMusik(); }, MUSIK_DETIK * 1000 + 300);
-  };
-  if (audioCtx.state === 'running') jalan();
-  else audioCtx.resume().then(() => { if (audioCtx.state === 'running') jalan(); }).catch(() => {});
-}
-
 function hentikanMusik() {
-  musikMati = true;
-  try { localStorage.setItem('mj_musik', 'off'); } catch (e) { /* abaikan */ }
-  clearTimeout(musikTimer);
-  if (musikMaster && audioCtx) {
-    const t = audioCtx.currentTime;
-    musikMaster.gain.cancelScheduledValues(t);
-    musikMaster.gain.setTargetAtTime(0.0001, t, 0.12);
-  }
-  musikState = 'idle';
-  ikonMusik();
+  bgm.pause();
+  bgm.currentTime = 0;
+  bgm.muted = false;
 }
-
-btnMusik.addEventListener('click', () => {
-  if (musikState === 'play') { hentikanMusik(); return; }
-  musikMati = false;
-  try { localStorage.setItem('mj_musik', 'on'); } catch (e) { /* abaikan */ }
-  musikState = 'idle';
-  mulaiMusik();
-  ikonMusik();
-});
-
-if (!musikMati) { pasangPemicu(); mulaiMusik(); }
-ikonMusik();
 
 /* ---------- Pasang aplikasi (PWA) ---------- */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
@@ -1398,6 +1329,7 @@ function resetIdle() {
   window.addEventListener(ev, resetIdle, { passive: true }));
 
 function logoutAll(pesan) {
+  hentikanMusik();
   session = null; adminState = null; adminPreview = false;
   const tokenLama = adminToken; adminToken = null;
   if (tokenLama) post({ action: 'adminLogout', token: tokenLama }).catch(() => {});
