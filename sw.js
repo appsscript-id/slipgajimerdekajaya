@@ -3,7 +3,7 @@
  * - Permintaan ke server data (Apps Script) TIDAK PERNAH disimpan: data gaji selalu diambil langsung.
  * - Halaman memakai strategi "jaringan dulu": pembaruan index.html langsung terpakai bila online.
  */
-const VERSI = 'mj-slipgaji-v2';
+const VERSI = 'mj-slipgaji-v3';
 const CANGKANG = [
   './',
   './index.html',
@@ -35,6 +35,7 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return; // jangan sentuh Apps Script / Google Fonts
+  if (req.headers.has('range') || /\.(mp3|m4a|ogg|wav)$/i.test(url.pathname)) return; // audio langsung dari jaringan
 
   // Halaman: jaringan dulu, cadangan dari cache bila offline
   if (req.mode === 'navigate') {
