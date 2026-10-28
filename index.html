@@ -614,9 +614,10 @@ let namaStatus = 'loading'; // loading | ok | error
 let comboHl = -1;
 const combo = $('#combo'), comboList = $('#comboList'), inpNama = $('#inpNama');
 
+let comboSemua = false; // true = tampilkan semua nama (setelah memilih nama)
 function comboItems() {
   const q = inpNama.value.trim().toLowerCase();
-  return namaList.filter((n) => !q || n.toLowerCase().indexOf(q) >= 0);
+  return namaList.filter((n) => comboSemua || !q || n.toLowerCase().indexOf(q) >= 0);
 }
 
 function renderCombo() {
@@ -634,7 +635,7 @@ function renderCombo() {
 }
 function bukaCombo() { renderCombo(); combo.classList.add('open'); inpNama.setAttribute('aria-expanded', 'true'); }
 function tutupCombo() { combo.classList.remove('open'); inpNama.setAttribute('aria-expanded', 'false'); comboHl = -1; }
-function pilihNama(n) { inpNama.value = n; tutupCombo(); pinBoxes[0].focus(); }
+function pilihNama(n) { inpNama.value = n; comboSemua = true; tutupCombo(); pinBoxes[0].focus(); }
 
 const loginMain = document.querySelector('.login-main');
 function sesuaikanKeyboard() {
@@ -662,8 +663,8 @@ if (window.visualViewport) {
     if (document.activeElement === inpNama) sesuaikanKeyboard();
   });
 }
-inpNama.addEventListener('click', bukaCombo);
-inpNama.addEventListener('input', () => { comboHl = -1; bukaCombo(); });
+inpNama.addEventListener('click', () => { bukaCombo(); inpNama.select(); });
+inpNama.addEventListener('input', () => { comboSemua = false; comboHl = -1; bukaCombo(); });
 inpNama.addEventListener('keydown', (e) => {
   const items = comboItems();
   if (e.key === 'ArrowDown') { e.preventDefault(); bukaCombo(); comboHl = Math.min(items.length - 1, comboHl + 1); renderCombo(); }
