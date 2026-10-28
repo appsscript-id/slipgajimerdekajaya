@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#12243D">
+<title>Merdeka Jaya · Slip Gaji</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E1A2B; --navy:#12243D; --navy-2:#1B3557; --gold:#C9A35B; --gold-deep:#A9833B;
+  --gold-soft:#F6EEDC; --bg:#F5F3EE; --card:#FFFFFF; --line:#E8E3D8; --muted:#6B7686;
+  --green:#1E7B5A; --green-soft:#E3F3EC; --red:#B4403A; --red-soft:#FBEAE8;
+  --radius:18px; --shadow:0 1px 2px rgba(14,26,43,.04),0 8px 30px rgba(14,26,43,.07);
+  --font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* ---------- Logo ---------- */
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--gold) 0%,#E6CB92 100%);color:var(--navy);
+  font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.5px;box-shadow:0 6px 16px rgba(201,163,91,.35)}
+.logo-text{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.2px;line-height:1.1}
+.logo-text small{display:block;font-family:var(--font);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.65;margin-top:3px}
+
+/* ---------- Login ---------- */
+.login{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr}
+.login-side{position:relative;overflow:hidden;color:#fff;padding:48px 56px;display:flex;flex-direction:column;justify-content:space-between;
+  background:radial-gradient(900px 500px at 85% -10%,rgba(201,163,91,.28),transparent 60%),
+             radial-gradient(700px 500px at -10% 110%,rgba(46,92,150,.55),transparent 60%),
+             linear-gradient(160deg,#0F2038 0%,#12243D 55%,#1B3557 100%)}
+.login-side::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+  background-image:linear-gradient(rgba(255,255,255,.9) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.9) 1px,transparent 1px);background-size:44px 44px}
+.login-side>*{position:relative;z-index:1}
+.hero-title{font-family:var(--serif);font-weight:600;font-size:clamp(30px,3.4vw,46px);line-height:1.12;max-width:14em}
+.hero-title em{font-style:normal;color:var(--gold)}
+.hero-sub{margin-top:16px;color:rgba(255,255,255,.72);max-width:30em;font-size:15px}
+.feat{display:grid;gap:14px;margin-top:34px}
+.feat div{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:rgba(255,255,255,.85)}
+.feat i{flex:none;width:30px;height:30px;border-radius:9px;background:rgba(201,163,91,.16);border:1px solid rgba(201,163,91,.35);display:grid;place-items:center;color:var(--gold);font-style:normal;font-size:14px}
+.login-foot{font-size:12px;color:rgba(255,255,255,.5)}
+
+.login-main{display:grid;place-items:center;padding:40px 24px}
+.login-card{width:100%;max-width:420px}
+.login-card .mobile-logo{display:none;margin-bottom:28px;color:var(--navy)}
+.login-card h2{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:-.01em}
+.login-card p.lead{color:var(--muted);margin:6px 0 28px;font-size:15px}
+label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.field{width:100%;height:54px;border-radius:14px;border:1.5px solid var(--line);background:#fff;padding:0 16px;font:inherit;font-size:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);transition:.18s}
+.field::placeholder{color:#B5B9C1;font-weight:500;letter-spacing:.04em}
+.field:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,163,91,.18)}
+.pin-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 8px}
+.pin-head .lbl{margin:0}
+.link-btn{background:none;border:0;color:var(--gold-deep);font-size:13px;font-weight:600;padding:2px 0}
+.link-btn:hover{text-decoration:underline}
+.pin-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.pin-row input{width:100%;height:58px;text-align:center;font:inherit;font-size:22px;font-weight:700;border-radius:14px;border:1.5px solid var(--line);background:#fff;color:var(--ink);transition:.18s;padding:0;min-width:0}
+.pin-row input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,163,91,.18);transform:translateY(-1px)}
+.pin-row input.filled{border-color:var(--navy-2);background:#F8F9FB}
+.pin-row.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.alert{display:none;margin-top:18px;padding:12px 14px;border-radius:12px;font-size:13.5px;font-weight:500;background:var(--red-soft);color:var(--red);border:1px solid #F1CFCB}
+.alert.show{display:block}
+.alert.info{background:var(--gold-soft);color:#7A5F23;border-color:#EADBB6}
+.btn-primary{width:100%;height:54px;margin-top:22px;border:0;border-radius:14px;color:#fff;font-weight:700;font-size:15.5px;letter-spacing:.02em;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);box-shadow:0 10px 24px rgba(18,36,61,.25);transition:.2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(18,36,61,.3)}
+.btn-primary:disabled{opacity:.7;cursor:wait;transform:none}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.help{margin-top:22px;text-align:center;font-size:12.5px;color:var(--muted)}
+
+/* ---------- Dashboard ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(245,243,238,.85);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar .logo-mark{width:38px;height:38px;font-size:16px}
+.topbar .logo-text{font-size:18px}
+.user{display:flex;align-items:center;gap:12px}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-weight:700;font-size:14px}
+.user-info{line-height:1.2;text-align:right}
+.user-info b{display:block;font-size:13.5px}
+.user-info span{font-size:12px;color:var(--muted)}
+.btn-ghost{height:38px;padding:0 14px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:13px;color:var(--ink);transition:.18s;display:inline-flex;align-items:center;gap:7px}
+.btn-ghost:hover{border-color:var(--navy);background:var(--navy);color:#fff}
+
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+.greet{margin-bottom:22px}
+.greet small{color:var(--muted);font-size:14px;font-weight:500}
+.greet h1{font-family:var(--serif);font-size:clamp(24px,3.2vw,34px);font-weight:600;letter-spacing:-.01em;margin-top:2px}
+
+.chips{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;margin:0 -2px;scrollbar-width:thin}
+.chip{flex:none;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:13.5px;color:var(--ink);transition:.18s;white-space:nowrap}
+.chip:hover{border-color:var(--gold)}
+.chip.active{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 6px 16px rgba(18,36,61,.2)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:10px 0 24px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow)}
+.stat .k{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.dot{width:8px;height:8px;border-radius:50%}
+.stat .v{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);font-weight:600;margin-top:8px;letter-spacing:-.01em}
+.stat.net{background:linear-gradient(135deg,#0F2038 0%,#1B3557 100%);border-color:transparent;color:#fff}
+.stat.net .k{color:rgba(255,255,255,.65)}
+.stat.net .v{color:var(--gold)}
+
+.grid{display:grid;grid-template-columns:1fr;gap:24px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.toolbar h3{font-size:15px;font-weight:700}
+.btn-gold{height:42px;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--gold),#DDBE80);color:var(--navy);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 16px rgba(201,163,91,.35);transition:.18s}
+.btn-gold:hover{transform:translateY(-1px)}
+
+/* ---------- Slip ---------- */
+.slip{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.slip-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:28px 34px;color:#fff;
+  background:radial-gradient(500px 220px at 100% 0%,rgba(201,163,91,.3),transparent 70%),linear-gradient(135deg,#0F2038,#1B3557)}
+.slip-head .logo-text small{opacity:.6}
+.slip-title{text-align:right}
+.slip-title .t{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:.04em;color:var(--gold)}
+.slip-title .p{font-size:13.5px;opacity:.85;margin-top:2px}
+.slip-title .n{font-size:11.5px;opacity:.55;margin-top:4px;letter-spacing:.05em}
+.slip-addr{font-size:12px;opacity:.65;margin-top:10px;max-width:26em}
+.slip-body{padding:28px 34px 34px}
+.emp{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-bottom:24px;border-bottom:1px dashed var(--line)}
+.emp div small{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.emp div b{font-size:14.5px;font-weight:600;word-break:break-word}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:26px}
+.col h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;padding-bottom:10px;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:8px}
+.col.in h4{border-color:var(--green);color:var(--green)}
+.col.out h4{border-color:var(--red);color:var(--red)}
+.row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #F0ECE3;font-size:14.5px}
+.row span:first-child{color:#3A4657}
+.row span:last-child{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .zero{color:#B5B9C1;font-weight:500}
+.row.total{border-bottom:0;margin-top:6px;padding:13px 14px;border-radius:12px;font-weight:700}
+.col.in .row.total{background:var(--green-soft);color:var(--green)}
+.col.out .row.total{background:var(--red-soft);color:var(--red)}
+.row.total span:first-child{color:inherit}
+.net-band{margin-top:28px;border-radius:18px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  background:linear-gradient(135deg,var(--gold-soft),#FBF6EA);border:1px solid #EADBB6}
+.net-band small{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--gold-deep)}
+.net-band .amt{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.terbilang{margin-top:12px;font-size:13px;color:#5A5440;font-style:italic}
+.slip-foot{margin-top:30px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.note{font-size:12px;color:var(--muted);max-width:34em}
+.sign{text-align:center;font-size:12.5px;color:var(--muted);min-width:170px}
+.sign .line{margin-top:48px;border-top:1px solid var(--ink);padding-top:6px;color:var(--ink);font-weight:600}
+
+/* ---------- Trend ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow)}
+.card h3{font-size:15px;font-weight:700}
+.card p.s{font-size:13px;color:var(--muted);margin-top:2px}
+.bars{display:flex;align-items:flex-end;gap:12px;height:170px;margin-top:18px;overflow-x:auto;padding-bottom:2px}
+.bar{flex:1 0 54px;max-width:96px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;background:none;border:0;padding:0}
+.bar .col-fill{width:100%;border-radius:10px 10px 4px 4px;background:linear-gradient(180deg,#D9BE86,var(--gold));min-height:6px;transition:.25s}
+.bar:hover .col-fill{filter:brightness(.95)}
+.bar.active .col-fill{background:linear-gradient(180deg,var(--navy-2),var(--navy))}
+.bar span{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.bar.active span{color:var(--navy)}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;transition:.3s;z-index:50;max-width:90vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .login{grid-template-columns:1fr}
+  .login-side{display:none}
+  .login-card .mobile-logo{display:flex}
+}
+@media (max-width:720px){
+  .stats{grid-template-columns:1fr}
+  .cols{grid-template-columns:1fr;gap:26px}
+  .emp{grid-template-columns:1fr 1fr}
+  .slip-head{flex-direction:column;padding:24px 22px}
+  .slip-title{text-align:left}
+  .slip-body{padding:22px}
+  .user-info{display:none}
+  .slip-foot{flex-direction:column;align-items:flex-start}
+  .pin-row{gap:8px}
+  .pin-row input{height:54px;font-size:20px}
+}
+
+/* ---------- Cetak / PDF ---------- */
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff}
+  body *{visibility:hidden}
+  #slip,#slip *{visibility:visible}
+  #slip{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none;border-radius:0}
+  .slip-head,.net-band,.col.in .row.total,.col.out .row.total{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<section class="login" id="viewLogin">
+  <aside class="login-side">
+    <div class="logo">
+      <div class="logo-mark">MJ</div>
+      <div class="logo-text">Merdeka Jaya<small>Slip Gaji Digital</small></div>
+    </div>
+    <div>
+      <h1 class="hero-title">Slip gaji Anda, <em>aman</em> dan transparan.</h1>
+      <p class="hero-sub">Lihat rincian pendapatan, potongan, dan gaji bersih setiap bulan kapan saja, langsung dari ponsel Anda.</p>
+      <div class="feat">
+        <div><i>🔒</i><span>Akses pribadi dengan ID Karyawan dan PIN 6 digit.</span></div>
+        <div><i>📄</i><span>Rincian lengkap yang mudah dipahami, siap dicetak atau disimpan sebagai PDF.</span></div>
+        <div><i>🕘</i><span>Riwayat gaji tiap periode tersimpan rapi dan mudah dibuka.</span></div>
+      </div>
+    </div>
+    <div class="login-foot">© <span class="yr"></span> Merdeka Jaya. Seluruh data bersifat rahasia.</div>
+  </aside>
+
+  <main class="login-main">
+    <form class="login-card" id="formLogin" autocomplete="off" novalidate>
+      <div class="logo mobile-logo">
+        <div class="logo-mark">MJ</div>
+        <div class="logo-text">Merdeka Jaya<small>Slip Gaji Digital</small></div>
+      </div>
+      <h2>Masuk</h2>
+      <p class="lead">Gunakan ID Karyawan dan PIN yang diberikan oleh administrasi.</p>
+
+      <label class="lbl" for="inpId">ID Karyawan</label>
+      <input class="field" id="inpId" type="text" inputmode="text" placeholder="contoh: MJ-001" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="20">
+
+      <div class="pin-head">
+        <label class="lbl" for="pin0">PIN (6 digit)</label>
+        <button type="button" class="link-btn" id="btnEye">Tampilkan</button>
+      </div>
+      <div class="pin-row" id="pinRow"></div>
+
+      <div class="alert" id="alertBox" role="alert"></div>
+
+      <button class="btn-primary" id="btnLogin" type="submit"><span id="btnText">Lihat Slip Gaji</span></button>
+      <p class="help">Lupa PIN? Hubungi bagian administrasi Merdeka Jaya.</p>
+    </form>
+  </main>
+</section>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="viewApp" class="hidden">
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="logo">
+        <div class="logo-mark">MJ</div>
+        <div class="logo-text">Merdeka Jaya</div>
+      </div>
+      <div class="user">
+        <div class="user-info"><b id="uName">-</b><span id="uMeta">-</span></div>
+        <div class="avatar" id="uAvatar">-</div>
+        <button class="btn-ghost" id="btnLogout" type="button">Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="greet">
+      <small id="greetTime">Selamat datang</small>
+      <h1 id="greetName">-</h1>
+    </div>
+
+    <div id="emptyState" class="card empty hidden">
+      <b>Belum ada slip gaji</b>
+      Data gaji Anda belum tersedia. Silakan hubungi bagian administrasi.
+    </div>
+
+    <div id="content">
+      <div class="chips" id="chips" aria-label="Pilih periode"></div>
+
+      <div class="stats">
+        <div class="stat"><div class="k"><i class="dot" style="background:var(--green)"></i>Gaji Kotor</div><div class="v" id="sKotor">-</div></div>
+        <div class="stat"><div class="k"><i class="dot" style="background:var(--red)"></i>Total Potongan</div><div class="v" id="sPot">-</div></div>
+        <div class="stat net"><div class="k"><i class="dot" style="background:var(--gold)"></i>Gaji Bersih</div><div class="v" id="sBersih">-</div></div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <div class="toolbar">
+            <h3>Rincian Slip Gaji</h3>
+            <button class="btn-gold" id="btnPrint" type="button">⬇ Cetak / Simpan PDF</button>
+          </div>
+          <article class="slip" id="slip"></article>
+        </div>
+
+        <div class="card hidden" id="trendCard">
+          <h3>Riwayat Gaji Bersih</h3>
+          <p class="s">Ketuk batang untuk membuka slip periode tersebut.</p>
+          <div class="bars" id="bars"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================
+ *  PENGATURAN — ganti dengan URL Web App Apps Script Anda
+ *  (Deploy > New deployment > Web app > salin URL berakhiran /exec)
+ * ===================================================== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbwQRL4Bf5yEyIz8h15wJ27JJa540umo8zNFQAURiXZjVuMQ9N8rLSXbcGoQYQeoWMg5/exec';
+const IDLE_MS = 5 * 60 * 1000; // logout otomatis bila tidak aktif 5 menit
+
+/* ---------- Helper ---------- */
+const $ = (s) => document.querySelector(s);
+const nf = new Intl.NumberFormat('id-ID');
+const fmt = (n) => (Number(n) || 0) === 0 ? '-' : nf.format(Math.round(n));
+const rp = (n) => 'Rp ' + nf.format(Math.round(Number(n) || 0));
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.querySelectorAll('.yr').forEach((e) => e.textContent = new Date().getFullYear());
+
+function terbilang(n) {
+  n = Math.floor(Math.abs(Number(n) || 0));
+  const s = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
+  const t = (x) => {
+    if (x < 12) return s[x];
+    if (x < 20) return t(x - 10) + ' belas';
+    if (x < 100) return t(Math.floor(x / 10)) + ' puluh' + (x % 10 ? ' ' + t(x % 10) : '');
+    if (x < 200) return 'seratus' + (x - 100 ? ' ' + t(x - 100) : '');
+    if (x < 1000) return t(Math.floor(x / 100)) + ' ratus' + (x % 100 ? ' ' + t(x % 100) : '');
+    if (x < 2000) return 'seribu' + (x - 1000 ? ' ' + t(x - 1000) : '');
+    if (x < 1e6) return t(Math.floor(x / 1e3)) + ' ribu' + (x % 1e3 ? ' ' + t(x % 1e3) : '');
+    if (x < 1e9) return t(Math.floor(x / 1e6)) + ' juta' + (x % 1e6 ? ' ' + t(x % 1e6) : '');
+    if (x < 1e12) return t(Math.floor(x / 1e9)) + ' miliar' + (x % 1e9 ? ' ' + t(x % 1e9) : '');
+    return String(x);
+  };
+  const r = n === 0 ? 'nol' : t(n);
+  return r.charAt(0).toUpperCase() + r.slice(1) + ' rupiah';
+}
+
+function toast(msg) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+/* ---------- Kotak PIN 6 digit ---------- */
+const pinRow = $('#pinRow');
+const pinBoxes = [];
+for (let i = 0; i < 6; i++) {
+  const inp = document.createElement('input');
+  inp.type = 'password';
+  inp.inputMode = 'numeric';
+  inp.maxLength = 1;
+  inp.autocomplete = 'off';
+  inp.id = 'pin' + i;
+  inp.setAttribute('aria-label', 'Digit PIN ' + (i + 1));
+  inp.addEventListener('input', () => {
+    inp.value = inp.value.replace(/\D/g, '').slice(-1);
+    inp.classList.toggle('filled', !!inp.value);
+    if (inp.value && i < 5) pinBoxes[i + 1].focus();
+  });
+  inp.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !inp.value && i > 0) { pinBoxes[i - 1].focus(); pinBoxes[i - 1].value = ''; pinBoxes[i - 1].classList.remove('filled'); }
+    if (e.key === 'ArrowLeft' && i > 0) pinBoxes[i - 1].focus();
+    if (e.key === 'ArrowRight' && i < 5) pinBoxes[i + 1].focus();
+  });
+  inp.addEventListener('paste', (e) => {
+    const t = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+    if (!t) return;
+    e.preventDefault();
+    t.split('').forEach((d, k) => { pinBoxes[k].value = d; pinBoxes[k].classList.add('filled'); });
+    pinBoxes[Math.min(t.length, 5)].focus();
+  });
+  inp.addEventListener('focus', () => inp.select());
+  pinRow.appendChild(inp);
+  pinBoxes.push(inp);
+}
+const getPin = () => pinBoxes.map((b) => b.value).join('');
+const clearPin = () => pinBoxes.forEach((b) => { b.value = ''; b.classList.remove('filled'); });
+
+let pinVisible = false;
+$('#btnEye').addEventListener('click', () => {
+  pinVisible = !pinVisible;
+  pinBoxes.forEach((b) => b.type = pinVisible ? 'text' : 'password');
+  $('#btnEye').textContent = pinVisible ? 'Sembunyikan' : 'Tampilkan';
+});
+
+/* ---------- Login ---------- */
+let session = null;
+let activeIdx = 0;
+
+function showAlert(msg, info) {
+  const a = $('#alertBox');
+  a.textContent = msg;
+  a.classList.toggle('info', !!info);
+  a.classList.add('show');
+}
+const hideAlert = () => $('#alertBox').classList.remove('show');
+
+$('#formLogin').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideAlert();
+  const id = $('#inpId').value.trim();
+  const pin = getPin();
+
+  if (!id) { showAlert('Masukkan ID Karyawan Anda.'); $('#inpId').focus(); return; }
+  if (pin.length !== 6) { showAlert('PIN harus 6 digit.'); pinBoxes[pin.length].focus(); return; }
+  if (!API_URL || API_URL.indexOf('PASTE_') === 0) { showAlert('URL Apps Script belum diatur pada file index.html (variabel API_URL).'); return; }
+
+  const btn = $('#btnLogin');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span><span>Memeriksa…</span>';
+
+  try {
+    // Content-Type text/plain agar tidak memicu preflight CORS pada Apps Script
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'login', id: id, pin: pin })
+    });
+    const data = await res.json();
+    if (!data.ok) {
+      showAlert(data.message || 'Login gagal.');
+      pinRow.classList.remove('shake'); void pinRow.offsetWidth; pinRow.classList.add('shake');
+      clearPin(); pinBoxes[0].focus();
+    } else {
+      session = data;
+      clearPin();
+      $('#inpId').value = '';
+      openApp();
+    }
+  } catch (err) {
+    showAlert('Tidak dapat terhubung ke server. Periksa koneksi internet Anda lalu coba lagi.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span id="btnText">Lihat Slip Gaji</span>';
+  }
+});
+
+/* ---------- Dashboard ---------- */
+function openApp() {
+  $('#viewLogin').classList.add('hidden');
+  $('#viewApp').classList.remove('hidden');
+  window.scrollTo(0, 0);
+
+  const k = session.karyawan;
+  const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
+  $('#uName').textContent = k.nama;
+  $('#uMeta').textContent = k.id + (k.jabatan ? ' · ' + k.jabatan : '');
+  $('#uAvatar').textContent = ini || 'MJ';
+  $('#greetName').textContent = k.nama;
+
+  const h = new Date().getHours();
+  $('#greetTime').textContent = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
+
+  const ada = session.slips && session.slips.length > 0;
+  $('#emptyState').classList.toggle('hidden', ada);
+  $('#content').classList.toggle('hidden', !ada);
+  if (ada) { activeIdx = 0; render(); }
+  resetIdle();
+}
+
+function render() {
+  const slips = session.slips;
+  const s = slips[activeIdx];
+
+  // Chip periode
+  $('#chips').innerHTML = slips.map((x, i) =>
+    `<button class="chip ${i === activeIdx ? 'active' : ''}" data-i="${i}" type="button">${esc(x.bulan)} ${x.tahun}</button>`).join('');
+  $('#chips').querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { activeIdx = +b.dataset.i; render(); }));
+
+  // Ringkasan
+  $('#sKotor').textContent = rp(s.gajiKotor);
+  $('#sPot').textContent = rp(s.totalPotongan);
+  $('#sBersih').textContent = rp(s.gajiBersih);
+
+  // Slip
+  const k = session.karyawan, p = session.perusahaan;
+  const noDok = `SG/${esc(k.id)}/${s.tahun}/${String(s.bulanKe).padStart(2, '0')}`;
+  const row = (l, v) => `<div class="row"><span>${l}</span><span class="${(Number(v) || 0) === 0 ? 'zero' : ''}">${(Number(v) || 0) === 0 ? '-' : rp(v)}</span></div>`;
+
+  $('#slip').innerHTML = `
+    <div class="slip-head">
+      <div>
+        <div class="logo"><div class="logo-mark">MJ</div><div class="logo-text">${esc(p.nama)}<small>Slip Gaji Karyawan</small></div></div>
+        ${p.alamat ? `<div class="slip-addr">${esc(p.alamat)}</div>` : ''}
+      </div>
+      <div class="slip-title">
+        <div class="t">SLIP GAJI</div>
+        <div class="p">Periode ${esc(s.bulan)} ${s.tahun}</div>
+        <div class="n">No. ${noDok}</div>
+      </div>
+    </div>
+    <div class="slip-body">
+      <div class="emp">
+        <div><small>Nama</small><b>${esc(k.nama)}</b></div>
+        <div><small>ID Karyawan</small><b>${esc(k.id)}</b></div>
+        <div><small>Jabatan</small><b>${esc(k.jabatan || '-')}</b></div>
+        <div><small>Periode</small><b>${esc(s.bulan)} ${s.tahun}</b></div>
+      </div>
+
+      <div class="cols">
+        <div class="col in">
+          <h4>Pendapatan</h4>
+          ${row('Gaji Pokok', s.pendapatan.gajiPokok)}
+          ${row('Premi', s.pendapatan.premi)}
+          ${row('Pendapatan Lembur Biasa', s.pendapatan.lembur)}
+          ${row('Uang Makan', s.pendapatan.uangMakan)}
+          ${row('BPJS', s.pendapatan.bpjs)}
+          <div class="row total"><span>Gaji Kotor</span><span>${rp(s.gajiKotor)}</span></div>
+        </div>
+        <div class="col out">
+          <h4>Potongan</h4>
+          ${row('Potongan 50%', s.potongan.potongan50)}
+          ${row('Ijin', s.potongan.ijin)}
+          ${row('Hutang', s.potongan.hutang)}
+          ${row('Lain-lain', s.potongan.lain)}
+          <div class="row total"><span>Total Potongan</span><span>${rp(s.totalPotongan)}</span></div>
+        </div>
+      </div>
+
+      <div class="net-band">
+        <div>
+          <small>Gaji Bersih (diterima)</small>
+          <div class="amt">${rp(s.gajiBersih)}</div>
+        </div>
+      </div>
+      <div class="terbilang">Terbilang: ${esc(terbilang(s.gajiBersih))}</div>
+
+      <div class="slip-foot">
+        <div class="note">${esc(p.catatan || '')}</div>
+        <div class="sign">${esc(p.penandatangan || 'Bagian Keuangan')}<div class="line">${esc(p.nama)}</div></div>
+      </div>
+    </div>`;
+
+  // Grafik riwayat (maks 12 periode terakhir, urut lama → baru)
+  const trend = $('#trendCard');
+  if (slips.length > 1) {
+    const list = slips.map((x, i) => ({ x, i })).slice(0, 12).reverse();
+    const max = Math.max.apply(null, list.map((o) => o.x.gajiBersih), 1);
+    $('#bars').innerHTML = list.map((o) => {
+      const h = Math.max(4, Math.round((o.x.gajiBersih / max) * 100));
+      return `<button class="bar ${o.i === activeIdx ? 'active' : ''}" data-i="${o.i}" type="button" title="${esc(o.x.bulan)} ${o.x.tahun}: ${rp(o.x.gajiBersih)}">
+        <div class="col-fill" style="height:${h}%"></div><span>${esc(o.x.bulan.slice(0, 3))} ${String(o.x.tahun).slice(2)}</span></button>`;
+    }).join('');
+    $('#bars').querySelectorAll('.bar').forEach((b) => b.addEventListener('click', () => { activeIdx = +b.dataset.i; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+    trend.classList.remove('hidden');
+  } else {
+    trend.classList.add('hidden');
+  }
+}
+
+$('#btnPrint').addEventListener('click', () => window.print());
+
+/* ---------- Logout & sesi ---------- */
+let idleTimer;
+function resetIdle() {
+  clearTimeout(idleTimer);
+  if (!session) return;
+  idleTimer = setTimeout(() => logout('Sesi berakhir karena tidak ada aktivitas. Silakan masuk kembali.'), IDLE_MS);
+}
+['click', 'keydown', 'touchstart', 'scroll', 'mousemove'].forEach((ev) =>
+  window.addEventListener(ev, resetIdle, { passive: true }));
+
+function logout(pesan) {
+  session = null;
+  clearTimeout(idleTimer);
+  $('#slip').innerHTML = '';
+  $('#viewApp').classList.add('hidden');
+  $('#viewLogin').classList.remove('hidden');
+  hideAlert();
+  if (pesan) showAlert(pesan, true);
+  $('#inpId').focus();
+}
+$('#btnLogout').addEventListener('click', () => { logout(); toast('Anda telah keluar.'); });
+</script>
+</body>
+</html>
