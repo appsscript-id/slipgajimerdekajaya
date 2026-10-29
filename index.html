@@ -467,6 +467,11 @@ html,body{max-width:100%;overflow-x:hidden}
 .dm-baris{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .dock-menu button:disabled{opacity:.5}
 .dm-cat{font-size:11px;color:var(--muted);text-align:center;padding:6px 0 0}
+
+/* ---------- Foto karyawan di beranda admin ---------- */
+.nm-box{display:flex;align-items:center;gap:10px;min-width:0}
+.a-foto{flex:none;width:38px;height:38px;border-radius:50%;background:var(--gold-soft) center/cover no-repeat;
+  border:2px solid var(--gold);display:grid;place-items:center;font-family:var(--serif);font-size:13px;font-weight:700;color:var(--gold-deep)}
 </style>
 </head>
 <body>
@@ -572,7 +577,7 @@ html,body{max-width:100%;overflow-x:hidden}
         <div id="panelSet" class="hidden">
       <div class="card set-card">
         <h3>Foto Profil</h3>
-        <p class="s">Foto tersimpan di perangkat ini.</p>
+        <p class="s">Foto tersimpan di perangkat ini dan dikirim ke server agar tampil di data admin.</p>
         <div class="foto" id="fotoBox"></div>
         <input type="file" id="fotoFile" accept="image/*" hidden>
         <div class="seg" style="justify-content:center">
@@ -1649,7 +1654,7 @@ function renderAdmin() {
   list.forEach((k, i) => {
     if (q && k.nama.toLowerCase().indexOf(q) < 0) return;
     rows.push(`<tr>
-      <td class="nm">${esc(k.nama)}</td>
+      <td class="nm"><div class="nm-box">${fotoMini(k)}<span>${esc(k.nama)}</span></div></td>
       <td class="muted">${esc(k.jabatan || '-')}</td>
       <td><button class="pin-chip" type="button" data-act="pin" data-i="${i}" title="Ketuk untuk melihat PIN">••••••</button></td>
       <td><span class="badge ${k.status === 'Aktif' ? 'on' : 'off'}">${k.status}</span></td>
@@ -1669,6 +1674,12 @@ function renderAdmin() {
     : '<tr><td colspan="5" class="muted">Belum ada data gaji.</td></tr>';
 }
 
+// Foto karyawan di daftar admin (inisial bila belum ada foto)
+function fotoMini(k) {
+  if (k.foto && FOTO_AMAN.test(k.foto)) return `<span class="a-foto" style="background-image:url(${k.foto})"></span>`;
+  const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
+  return `<span class="a-foto">${esc(ini)}</span>`;
+}
 $('#aSearch').addEventListener('input', () => { if (adminState) renderAdmin(); });
 
 // Aksi pada baris tabel
@@ -1957,7 +1968,44 @@ $('#swMusik').addEventListener('change', (e) => { setPref('mj_musik', e.target.c
 /* ---------- Foto profil & tata letak ---------- */
 let foto = null;
 const kFoto = () => 'mj_foto_' + session.karyawan.nama.toLowerCase().replace(/\s+/g, '_');
-function simpanFoto() { try { localStorage.setItem(kFoto(), JSON.stringify(foto)); } catch (e) { toast('Foto tidak dapat disimpan di perangkat ini.'); } }
+const FOTO_AMAN = /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/; // hanya JPEG base64 yang dipakai sebagai gambar
+function simpanFoto() {
+  try { localStorage.setItem(kFoto(), JSON.stringify(foto)); } catch (e) { toast('Foto tidak dapat disimpan di perangkat ini.'); }
+  kirimFotoServer();
+}
+
+// Foto mini (160 px, sesuai zoom & posisi) dikirim ke server supaya admin bisa melihatnya
+function buatThumbFoto() {
+  return new Promise((res) => {
+    if (!foto || !foto.src) return res('');
+    const img = new Image();
+    img.onload = () => {
+      const T = 160, cv = document.createElement('canvas');
+      cv.width = cv.height = T;
+      const c = cv.getContext('2d');
+      c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, T, T);
+      const sz = T * ((foto.z || 100) / 100);
+      c.drawImage(img, (T - sz) * (foto.x ?? 50) / 100, (T - sz) * (foto.y ?? 50) / 100, sz, sz);
+      res(cv.toDataURL('image/jpeg', 0.8));
+    };
+    img.onerror = () => res('');
+    img.src = foto.src;
+  });
+}
+let fotoTimer = null;
+function kirimFotoServer() {
+  if (adminPreview || !session || !sesiPin) return;
+  const nama = session.karyawan.nama, pin = sesiPin, sesiIni = session;
+  clearTimeout(fotoTimer);
+  fotoTimer = setTimeout(async () => {
+    try {
+      const thumb = await buatThumbFoto();
+      const r = await post({ action: 'simpanFoto', nama: nama, pin: pin, foto: thumb });
+      if (r && r.ok) sesiIni.karyawan.foto = thumb;
+      else toast((r && r.message) || 'Foto belum terkirim ke server.');
+    } catch (err) { toast('Foto belum terkirim ke server.'); }
+  }, 800);
+}
 function gayaFoto(el, f) {
   if (!f || !f.src) { el.style.backgroundImage = el.style.backgroundSize = el.style.backgroundPosition = el.style.borderRadius = ''; return false; }
   el.style.backgroundImage = 'url(' + f.src + ')'; el.style.backgroundRepeat = 'no-repeat';
@@ -1975,6 +2023,8 @@ function terapkanFoto() {
 }
 function muatFoto() {
   try { foto = JSON.parse(localStorage.getItem(kFoto()) || 'null'); } catch (e) { foto = null; }
+  const sv = session.karyawan.foto;
+  if (!foto && sv && FOTO_AMAN.test(sv)) foto = { src: sv, z: 100, x: 50, y: 50, b: 'bulat' }; // foto dari server
   $('#fZoom').value = foto ? foto.z : 100; $('#fX').value = foto ? foto.x : 50; $('#fY').value = foto ? foto.y : 50;
   terapkanFoto();
 }
@@ -2004,6 +2054,8 @@ document.querySelectorAll('[data-bentuk]').forEach((b) => b.addEventListener('cl
 }));
 $('#fotoHapus').addEventListener('click', () => {
   foto = null; try { localStorage.removeItem(kFoto()); } catch (e) {}
+  session.karyawan.foto = '';
+  kirimFotoServer();
   $('#fZoom').value = 100; $('#fX').value = 50; $('#fY').value = 50;
   terapkanFoto();
 });
