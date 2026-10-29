@@ -1111,7 +1111,7 @@ function render() {
   const noDok = `SG/${s.tahun}/${String(s.bulanKe).padStart(2, '0')}/${esc(ini)}`;
   const row = (l, v) => {
     const z = (Number(v) || 0) === 0;
-    return `<div class="row"><span>${l}</span><span class="${z ? 'zero' : ''}">${z ? '-' : rp(v)}</span></div>`;
+    return `<div class="row"><span>${l}</span><span class="${z ? 'zero' : ''}">${rp(v)}</span></div>`;
   };
 
   $('#slip').innerHTML = `
@@ -1289,7 +1289,7 @@ function lukisSlipBaru(c, s, k, p, E) {
       const nol = (Number(b[1]) || 0) === 0;
       c.textAlign = 'left'; c.font = `500 19px ${FS}`; c.fillText(b[0], x, ry + 34 + rowD / 2);
       c.textAlign = 'right'; c.font = `${nol ? 500 : 700} 19px ${FS}`;
-      c.fillText(nol ? '-' : rp2(b[1]), x + CW, ry + 34 + rowD / 2);
+      c.fillText(rp2(b[1]), x + CW, ry + 34 + rowD / 2);
       c.fillStyle = tipis; c.fillRect(x, ry + 51 + rowD, CW, 1.5); c.fillStyle = ink;
       ry += 52 + rowD;
     });
@@ -1388,7 +1388,7 @@ function lukisSlipLama(c, s, k, p, E) {
       c.font = `400 30px ${FT}`;
       c.textAlign = 'left'; c.fillText(String(i + 1), M, y); c.fillText(b[0], M + 70, y);
       const nol = !(Number(b[1]) || 0);
-      c.textAlign = 'right'; c.fillText(nol ? '-' : fmt(b[1]), AR, y);
+      c.textAlign = 'right'; c.fillText(fmt(b[1]), AR, y);
       if (i === daftar.length - 1) { c.textAlign = 'left'; c.fillText('(+)', AR + 24, y); }
       y += RH;
     });
