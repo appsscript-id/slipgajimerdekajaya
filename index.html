@@ -420,6 +420,21 @@ html,body{max-width:100%;overflow-x:hidden}
 .slip-head>*,.emp>*,.row>*{min-width:0}
 .row span:first-child{min-width:0;overflow-wrap:anywhere}
 .stat{min-width:0}
+
+/* ---------- Beranda: foto profil + dock 4 menu ---------- */
+.greet.home{display:flex;align-items:center;gap:14px}
+.home-txt{min-width:0}
+.home-txt h1{overflow-wrap:anywhere;line-height:1.15}
+.home-jab{margin-top:3px;font-size:12.5px;font-weight:600;color:var(--gold-deep)}
+.home-foto{flex:none;width:84px;height:84px;padding:0;border-radius:50%;cursor:pointer;
+  background:var(--gold-soft);border:3px solid var(--gold);box-shadow:0 8px 20px rgba(201,163,91,.3);
+  display:grid;place-items:center;font-family:var(--serif);font-size:28px;font-weight:600;color:var(--gold-deep);
+  background-origin:border-box}
+.home-foto:active{transform:scale(.97)}
+.dock>button{min-width:0}
+.dock>button i{display:grid;place-items:center;height:24px;font-size:0}
+.dock>button svg{width:22px;height:22px}
+.dock>button span{font-size:11px;line-height:1.2;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -512,9 +527,13 @@ html,body{max-width:100%;overflow-x:hidden}
   </header>
 
   <main class="wrap">
-    <div class="greet">
-      <small id="greetTime">Selamat datang</small>
-      <h1 id="greetName">-</h1>
+    <div class="greet home">
+      <button class="home-foto" id="homeFoto" type="button" aria-label="Foto profil"></button>
+      <div class="home-txt">
+        <small id="greetTime">Selamat datang</small>
+        <h1 id="greetName">-</h1>
+        <div class="home-jab hidden" id="greetJab"></div>
+      </div>
     </div>
 
     <div id="emptyState" class="card empty hidden">
@@ -587,12 +606,13 @@ html,body{max-width:100%;overflow-x:hidden}
   </main>
     <nav class="dock" id="dock">
     <div class="dock-menu hidden" id="menuSlip">
-      <button id="btnGambar" type="button">🖼 Simpan Gambar</button>
-      <button id="btnPrint" type="button">📄 Simpan PDF</button>
+      <button id="btnGambar" type="button">🖼 Simpan Gambar (A5)</button>
+      <button id="btnPrint" type="button">📄 Simpan PDF (A5)</button>
     </div>
-    <button id="navSlip" class="on" type="button"><i>📄</i><span>Slip Gaji</span></button>
-    <button id="navSet" type="button"><i>⚙️</i><span>Pengaturan</span></button>
-    <button id="btnLogout" type="button"><i>🚪</i><span>Exit</span></button>
+    <button id="navHome" class="on" type="button"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg></i><span>Beranda</span></button>
+    <button id="navSlip" type="button"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 11 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></i><span>Simpan</span></button>
+    <button id="navSet" type="button"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></i><span>Pengaturan</span></button>
+    <button id="btnLogout" type="button"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></i><span>Keluar</span></button>
   </nav>
 </section>
 
@@ -1007,6 +1027,9 @@ function openApp() {
   $('#uMeta').textContent = k.jabatan || 'Karyawan';
   $('#uAvatar').textContent = ini || 'MJ';
   $('#greetName').textContent = k.nama;
+  const jb = String(k.jabatan || '').trim();
+  $('#greetJab').textContent = jb;
+  $('#greetJab').classList.toggle('hidden', !jb || jb === '-');
   siapkanBeranda();
 
   const h = new Date().getHours();
@@ -1121,7 +1144,6 @@ function mulaiCetak(kelas) {
   setTimeout(bersih, 60000);
   window.print();
 }
-$('#btnPrint').addEventListener('click', () => mulaiCetak('print-slip'));
 
 /* ---------- Perangkat ---------- */
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -1282,53 +1304,109 @@ function lukisSlip(c, s, k, p) {
   return y + 44;
 }
 
-async function simpanGambar() {
+/* ---------- Simpan slip: Gambar & PDF langsung, ukuran kertas A5 ---------- */
+const A5_W = 1240, A5_H = Math.round(1240 * 210 / 148); // A5 potret 148 × 210 mm (±215 dpi)
+
+async function siapkanFont() {
+  try {
+    await Promise.all(['500 18px', '600 18px', '700 18px'].map((f) => document.fonts.load(f + ' "Plus Jakarta Sans"'))
+      .concat(['600 30px', '700 30px'].map((f) => document.fonts.load(f + ' Fraunces'))));
+  } catch (e) { /* lanjut dengan font cadangan */ }
+}
+
+// Slip digambar ke selembar kanvas A5 (latar putih), diperkecil seperlunya agar muat satu halaman
+function kanvasA5(s, k, p) {
+  const ukur = document.createElement('canvas');
+  ukur.width = 1080; ukur.height = 10;
+  const H0 = lukisSlip(ukur.getContext('2d'), s, k, p);
+  const cv = document.createElement('canvas');
+  cv.width = A5_W; cv.height = A5_H;
+  const c = cv.getContext('2d');
+  c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, A5_W, A5_H);
+  const M = 36;
+  const sk = Math.min((A5_W - 2 * M) / 1080, (A5_H - 2 * M) / H0);
+  c.save();
+  c.translate((A5_W - 1080 * sk) / 2, Math.max(M, (A5_H - H0 * sk) / 2));
+  c.scale(sk, sk);
+  lukisSlip(c, s, k, p);
+  c.restore();
+  return cv;
+}
+
+const namaBerkas = (k, s, ext) =>
+  ('Slip-Gaji_' + k.nama + '_' + s.bulan + '-' + s.tahun).replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+/g, '-') + '.' + ext;
+
+// Simpan berkas: iPhone/iPad lewat lembar bagikan, perangkat lain langsung diunduh. true = berhasil
+async function simpanBerkas(blob, nama, tipe, judul) {
+  if (isIOS && navigator.canShare) {
+    const berkas = new File([blob], nama, { type: tipe });
+    if (navigator.canShare({ files: [berkas] })) {
+      try { await navigator.share({ files: [berkas], title: judul }); return true; }
+      catch (e) { if (e && e.name === 'AbortError') return false; }
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = nama;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  return true;
+}
+
+// PDF 1 halaman A5 (419,53 × 595,28 pt) berisi gambar JPEG slip, dibuat tanpa pustaka tambahan
+function bangunPdf(jpeg, w, h) {
+  const enc = new TextEncoder(), PW = 419.53, PH = 595.28;
+  const bagian = [], ofs = [];
+  let len = 0;
+  const tulis = (d) => { const b = typeof d === 'string' ? enc.encode(d) : d; bagian.push(b); len += b.length; };
+  const objek = (n, isi) => { ofs[n] = len; tulis(n + ' 0 obj\n'); isi(); tulis('\nendobj\n'); };
+  const isiHal = 'q ' + PW + ' 0 0 ' + PH + ' 0 0 cm /Im0 Do Q';
+  tulis('%PDF-1.4\n');
+  objek(1, () => tulis('<< /Type /Catalog /Pages 2 0 R >>'));
+  objek(2, () => tulis('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'));
+  objek(3, () => tulis('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>'));
+  objek(4, () => {
+    tulis('<< /Type /XObject /Subtype /Image /Width ' + w + ' /Height ' + h +
+      ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + jpeg.length + ' >>\nstream\n');
+    tulis(jpeg); tulis('\nendstream');
+  });
+  objek(5, () => tulis('<< /Length ' + isiHal.length + ' >>\nstream\n' + isiHal + '\nendstream'));
+  const xref = len;
+  let x = 'xref\n0 6\n0000000000 65535 f \n';
+  for (let n = 1; n <= 5; n++) x += String(ofs[n]).padStart(10, '0') + ' 00000 n \n';
+  tulis(x + 'trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF');
+  return new Blob(bagian, { type: 'application/pdf' });
+}
+
+async function simpanSlip(format) {
   if (!session || !session.slips || !session.slips.length) return;
-  const btn = $('#btnGambar');
+  const btn = format === 'pdf' ? $('#btnPrint') : $('#btnGambar');
   btn.disabled = true;
   try {
-    try {
-      await Promise.all(['500 18px', '600 18px', '700 18px'].map((f) => document.fonts.load(f + ' "Plus Jakarta Sans"'))
-        .concat(['600 30px', '700 30px'].map((f) => document.fonts.load(f + ' Fraunces'))));
-    } catch (e) { /* lanjut dengan font cadangan */ }
-
+    await siapkanFont();
     const s = session.slips[activeIdx], k = session.karyawan, p = session.perusahaan;
-    const W = 1080, SK = 2; // 2x agar tajam di layar HP
-    const ukur = document.createElement('canvas');
-    ukur.width = W; ukur.height = 10;
-    const H = lukisSlip(ukur.getContext('2d'), s, k, p);
-
-    const cv = document.createElement('canvas');
-    cv.width = W * SK; cv.height = Math.ceil(H * SK);
-    const c = cv.getContext('2d');
-    c.scale(SK, SK);
-    lukisSlip(c, s, k, p);
-
-    const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
-    if (!blob) throw new Error('gagal-gambar');
-    const nama = ('Slip-Gaji_' + k.nama + '_' + s.bulan + '-' + s.tahun).replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+/g, '-') + '.png';
-
-    // iPhone/iPad: lembar bagikan agar bisa "Simpan Gambar" ke Foto
-    if (isIOS && navigator.canShare) {
-      const berkas = new File([blob], nama, { type: 'image/png' });
-      if (navigator.canShare({ files: [berkas] })) {
-        try { await navigator.share({ files: [berkas], title: 'Slip Gaji ' + s.bulan + ' ' + s.tahun }); return; }
-        catch (e) { if (e && e.name === 'AbortError') return; }
-      }
+    const cv = kanvasA5(s, k, p);
+    const judul = 'Slip Gaji ' + s.bulan + ' ' + s.tahun;
+    let ok;
+    if (format === 'pdf') {
+      const jb = await new Promise((res) => cv.toBlob(res, 'image/jpeg', 0.92));
+      if (!jb) throw new Error('gagal-gambar');
+      const pdf = bangunPdf(new Uint8Array(await jb.arrayBuffer()), cv.width, cv.height);
+      ok = await simpanBerkas(pdf, namaBerkas(k, s, 'pdf'), 'application/pdf', judul);
+    } else {
+      const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
+      if (!blob) throw new Error('gagal-gambar');
+      ok = await simpanBerkas(blob, namaBerkas(k, s, 'png'), 'image/png', judul);
     }
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = nama;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
-    toast('Gambar slip gaji tersimpan.');
+    if (ok) toast((format === 'pdf' ? 'PDF' : 'Gambar') + ' slip gaji (A5) tersimpan.');
   } catch (err) {
-    toast('Gagal membuat gambar. Silakan coba lagi.');
+    toast('Gagal menyimpan slip. Silakan coba lagi.');
   } finally {
     btn.disabled = false;
   }
 }
-$('#btnGambar').addEventListener('click', simpanGambar);
+$('#btnGambar').addEventListener('click', () => simpanSlip('png'));
+$('#btnPrint').addEventListener('click', () => simpanSlip('pdf'));
 
 /* ---------- Musik mp3 setelah login berhasil ---------- */
 const bgm = $('#bgm');
@@ -1581,28 +1659,35 @@ function bunyiLucu() {
 }
 
 /* ---------- Sidebar bawah & Pengaturan ---------- */
-function siapkanBeranda() {
+function setNav(id) {
+  ['navHome', 'navSet'].forEach((x) => $('#' + x).classList.toggle('on', x === id));
+}
+function tampilBeranda() {
   $('#panelSet').classList.add('hidden');
   $('#menuSlip').classList.add('hidden');
-  $('#navSlip').classList.add('on'); $('#navSet').classList.remove('on');
+  const ada = session && session.slips && session.slips.length > 0;
+  $('#emptyState').classList.toggle('hidden', !!ada);
+  $('#content').classList.toggle('hidden', !ada);
+  setNav('navHome');
+}
+function siapkanBeranda() {
+  tampilBeranda();
   $('#swBunyi').checked = pref('mj_bunyi'); $('#swMusik').checked = pref('mj_musik');
   muatFoto();
 }
-$('#navSlip').addEventListener('click', () => {
-  $('#panelSet').classList.add('hidden');
-  const ada = session && session.slips && session.slips.length > 0;
-  $('#emptyState').classList.toggle('hidden', ada); $('#content').classList.toggle('hidden', !ada);
-  $('#navSlip').classList.add('on'); $('#navSet').classList.remove('on');
-  $('#menuSlip').classList.toggle('hidden');
-});
-$('#navSet').addEventListener('click', () => {
+function bukaPengaturan() {
   if (adminPreview) { toast('Pengaturan tidak tersedia pada pratinjau admin.'); return; }
   $('#menuSlip').classList.add('hidden');
   $('#emptyState').classList.add('hidden'); $('#content').classList.add('hidden');
   $('#panelSet').classList.remove('hidden');
-  $('#navSet').classList.add('on'); $('#navSlip').classList.remove('on');
+  setNav('navSet');
   window.scrollTo(0, 0);
-});
+}
+$('#navHome').addEventListener('click', () => { tampilBeranda(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+$('#navSlip').addEventListener('click', () => $('#menuSlip').classList.toggle('hidden')); // Simpan: pilih Gambar / PDF
+$('#navSet').addEventListener('click', bukaPengaturan);
+$('#homeFoto').addEventListener('click', bukaPengaturan);
+document.addEventListener('click', (e) => { if (!e.target.closest('#dock')) $('#menuSlip').classList.add('hidden'); });
 $('#menuSlip').addEventListener('click', () => $('#menuSlip').classList.add('hidden'));
 $('#swBunyi').addEventListener('change', (e) => setPref('mj_bunyi', e.target.checked));
 $('#swMusik').addEventListener('change', (e) => { setPref('mj_musik', e.target.checked); e.target.checked ? mainkanMusik() : hentikanMusik(); });
@@ -1621,6 +1706,8 @@ function gayaFoto(el, f) {
 function terapkanFoto() {
   const ada = gayaFoto($('#uAvatar'), foto);
   gayaFoto($('#fotoBox'), foto);
+  gayaFoto($('#homeFoto'), foto);
+  $('#homeFoto').textContent = ada ? '' : $('#uAvatar').textContent;
   $('#uAvatar').style.color = ada ? 'transparent' : '';
   $('#fotoBox').textContent = ada ? '' : $('#uAvatar').textContent;
 }
