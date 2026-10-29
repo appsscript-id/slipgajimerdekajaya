@@ -408,6 +408,18 @@ body{background:#E4DFD3}
   .slip-foot{flex-direction:row;align-items:flex-end;justify-content:space-between}
   #viewApp{box-shadow:none;max-width:none}
 }
+
+/* ---------- Perbaikan lebar: pas 1 layar HP, tanpa geser samping ---------- */
+html,body{max-width:100%;overflow-x:hidden}
+#viewLogin,#viewApp{overflow-x:clip}
+#viewApp .wrap,#content,.grid,.grid>*,.slip,.card{min-width:0;max-width:100%}
+.grid{grid-template-columns:minmax(0,1fr)}
+.bars{max-width:100%;width:100%}
+.bar{flex:0 0 56px}
+.chips{max-width:none}
+.slip-head>*,.emp>*,.row>*{min-width:0}
+.row span:first-child{min-width:0;overflow-wrap:anywhere}
+.stat{min-width:0}
 </style>
 </head>
 <body>
@@ -1320,7 +1332,9 @@ $('#btnGambar').addEventListener('click', simpanGambar);
 
 /* ---------- Musik mp3 setelah login berhasil ---------- */
 const bgm = $('#bgm');
-bgm.volume = 0.8;
+const BGM_VOL = 0.2; // kerasnya musik setelah login (0 - 1), ubah angka ini bila perlu
+bgm.volume = BGM_VOL;
+let bgmFade = null;
 let bgmSiap = Promise.resolve();
 
 // Dipanggil saat tombol login ditekan agar browser (terutama iPhone) mengizinkan suara
@@ -1338,11 +1352,22 @@ function mainkanMusik() {
   bgmSiap.then(() => {
     bgm.muted = false;
     bgm.currentTime = 0;
+    bgm.volume = 0;
     const p = bgm.play();
     if (p && p.catch) p.catch(() => {});
+    // naik pelan-pelan agar tidak mengagetkan
+    clearInterval(bgmFade);
+    const t0 = Date.now(), dur = 2000;
+    bgmFade = setInterval(() => {
+      const r = Math.min(1, (Date.now() - t0) / dur);
+      try { bgm.volume = BGM_VOL * r; } catch (e) {}
+      if (r >= 1) clearInterval(bgmFade);
+    }, 80);
   });
 }
 function hentikanMusik() {
+  clearInterval(bgmFade);
+  try { bgm.volume = BGM_VOL; } catch (e) {}
   bgm.pause();
   bgm.currentTime = 0;
   bgm.muted = false;
@@ -1549,7 +1574,7 @@ function bunyiLucu() {
     else if (m === 1) { fr.setValueAtTime(f, t); fr.setValueAtTime(f * 1.5, t + .08); fr.setValueAtTime(f * 2, t + .16); }                          // toet-toet
     else if (m === 2) { fr.setValueAtTime(f * 2, t); fr.exponentialRampToValueAtTime(f * .4, t + .2); }                                              // plung jatuh
     else { fr.setValueAtTime(f, t); fr.linearRampToValueAtTime(f * .5, t + .1); fr.linearRampToValueAtTime(f * 1.3, t + .26); }                      // wuaa
-    const vol = (m === 1 || m === 3) ? 0.45 : 0.9; // ubah angka ini untuk mengatur kerasnya bunyi (maks 1)
+    const vol = (m === 1 || m === 3) ? 0.15 : 0.3; // ubah angka ini untuk mengatur kerasnya bunyi (maks 1)
     g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .34);
     o.connect(g); g.connect(_ac.destination); o.start(t); o.stop(t + .36);
   } catch (e) {}
