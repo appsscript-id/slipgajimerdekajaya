@@ -1213,125 +1213,102 @@ function muatTeks(c, teks, maks, berat, mulai, minim, fam) {
   return sz;
 }
 
-// Menggambar slip pada kanvas (lebar logis 1080). Mengembalikan tinggi total.
+// Menggambar slip hasil simpan (lebar logis 1080): gaya slip klasik, latar putih, tulisan hitam, tanpa logo.
+// E = tinggi tambahan (px) yang dipakai untuk melonggarkan ruang tanda tangan. Mengembalikan tinggi total.
 function lukisSlip(c, s, k, p, E) {
-  E = Math.max(0, Number(E) || 0); // tinggi tambahan (px) agar slip memenuhi halaman A5
-  const W = 1080, M = 56, CW = 460, GAP = 48;
-  const ink = '#0E1A2B', navy = '#12243D', gold = '#C9A35B', goldDeep = '#A9833B', muted = '#6B7686';
-  const green = '#1E7B5A', red = '#B4403A';
-  const rp2 = (v) => 'Rp ' + nf.format(Math.round(Number(v) || 0));
-  c.textBaseline = 'alphabetic';
-  c.textAlign = 'left';
-  spasi(c, 0);
+  E = Math.max(0, Number(E) || 0);
+  const W = 1080, M = 72, RH = 46, ink = '#000000';
+  const FT = '"Times New Roman", Times, "Liberation Serif", "Nimbus Roman", "Noto Serif", serif';
+  const AR = W - M - 84;                                   // tepi kanan kolom Jumlah
+  const fmt = (v) => nf.format(Math.round(Number(v) || 0));
+  const tcase = (t) => String(t).replace(/\S+/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+  const garis = (x1, x2, yy, t) => c.fillRect(x1, yy, x2 - x1, t);
+  c.textBaseline = 'alphabetic'; c.textAlign = 'left'; spasi(c, 0);
+  c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, W, 6000);
+  c.fillStyle = ink;
 
-  c.fillStyle = '#FFFFFF';
-  c.fillRect(0, 0, W, 6000);
+  // ---- Kepala perusahaan ----
+  let y = 88;
+  c.textAlign = 'center';
+  muatTeks(c, p.nama, W - 2 * M, 400, 38, 22, FT);
+  c.fillText(p.nama, W / 2, y);
+  y += 44;
+  c.font = `400 30px ${FT}`;
+  (p.alamat ? bungkus(c, p.alamat, W - 2 * M - 40).slice(0, 3) : []).forEach((l) => { c.fillText(l, W / 2, y); y += 38; });
 
-  // ---- Kepala ----
-  c.font = `500 15px ${FS}`;
-  const alamat = p.alamat ? bungkus(c, p.alamat, 560).slice(0, 3) : [];
-  const hH = Math.max(176, alamat.length ? 138 + alamat.length * 21 + 26 : 0);
-  let g = c.createLinearGradient(0, 0, W, hH);
-  g.addColorStop(0, '#0F2038'); g.addColorStop(1, '#1B3557');
-  c.fillStyle = g; c.fillRect(0, 0, W, hH);
-  g = c.createRadialGradient(W, 0, 0, W, 0, 460);
-  g.addColorStop(0, 'rgba(201,163,91,0.32)'); g.addColorStop(1, 'rgba(201,163,91,0)');
-  c.fillStyle = g; c.fillRect(0, 0, W, hH);
-
-  g = c.createLinearGradient(M, 44, M + 68, 112);
-  g.addColorStop(0, gold); g.addColorStop(1, '#E6CB92');
-  jalurKotak(c, M, 44, 68, 68, 18); c.fillStyle = g; c.fill();
-  c.fillStyle = navy; c.font = `700 28px ${FF}`; c.textAlign = 'center'; c.fillText('MJ', M + 34, 90);
-  c.textAlign = 'left';
-
-  c.fillStyle = '#FFFFFF';
-  muatTeks(c, p.nama, 380, 600, 34, 20, FF);
-  c.fillText(p.nama, M + 88, 80);
-  c.fillStyle = 'rgba(255,255,255,0.65)'; c.font = `600 12px ${FS}`; spasi(c, 2);
-  c.fillText('SLIP GAJI KARYAWAN', M + 88, 104); spasi(c, 0);
-  c.fillStyle = 'rgba(255,255,255,0.68)'; c.font = `500 15px ${FS}`;
-  alamat.forEach((l, i) => c.fillText(l, M, 142 + i * 21));
-
-  c.textAlign = 'right';
-  c.fillStyle = gold; c.font = `600 36px ${FF}`; c.fillText('SLIP GAJI', W - M, 84);
-  c.fillStyle = 'rgba(255,255,255,0.88)'; c.font = `500 18px ${FS}`; c.fillText('Periode ' + s.bulan + ' ' + s.tahun, W - M, 116);
-  const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 3).map((w) => w[0].toUpperCase()).join('');
-  c.fillStyle = 'rgba(255,255,255,0.58)'; c.font = `500 13px ${FS}`;
-  c.fillText('No. SG/' + s.tahun + '/' + String(s.bulanKe).padStart(2, '0') + '/' + ini, W - M, 142);
-  c.textAlign = 'left';
+  // ---- Judul ----
+  y += 6;
+  garis(M, W - M, y, 3);
+  y += 46; c.font = `400 34px ${FT}`; c.fillText('SLIP GAJI', W / 2, y);
+  y += 44; c.fillText('BULAN ' + String(s.bulan).toUpperCase() + ' ' + s.tahun, W / 2, y);
+  y += 16; garis(M, W - M, y, 3); garis(M, W - M, y + 8, 1.5);
+  y += 8 + 56;
 
   // ---- Data karyawan ----
-  const nB = 6; // jumlah baris terpanjang (kolom Pendapatan)
-  const u = E / (2 + 2 + nB * 0.75 + 3 + 3 + 2 + 3); // satuan pembagian tinggi tambahan
-  const rowD = 0.75 * u;
-  let y = hH + 56 + 2 * u;
-  [[M, 380, 'NAMA', k.nama], [M + 420, 250, 'JABATAN', k.jabatan || '-'], [M + 690, 240, 'PERIODE', s.bulan + ' ' + s.tahun]]
-    .forEach((it) => {
-      c.fillStyle = muted; c.font = `600 12px ${FS}`; spasi(c, 1.5); c.fillText(it[2], it[0], y); spasi(c, 0);
-      c.fillStyle = ink; muatTeks(c, it[3], it[1], 600, 21, 13, FS); c.fillText(it[3], it[0], y + 30);
-    });
-  y += 62;
-  c.strokeStyle = '#E8E3D8'; c.lineWidth = 2; c.setLineDash([8, 8]);
-  c.beginPath(); c.moveTo(M, y); c.lineTo(W - M, y); c.stroke(); c.setLineDash([]);
-  y += 44 + 2 * u;
-
-  // ---- Pendapatan & potongan ----
-  const pd = s.pendapatan, pt = s.potongan;
-  const kiri = [['Gaji Pokok', pd.gajiPokok], ['Premi', pd.premi], ['Pendapatan Lembur Biasa', pd.lembur],
-    ['Pendapatan Lembur Minggu', pd.lemburMinggu], ['Uang Makan', pd.uangMakan], ['BPJS', pd.bpjs]];
-  const kanan = [['Potongan 50%', pt.potongan50], ['Ijin', pt.ijin], ['Hutang', pt.hutang], ['Lain-lain', pt.lain]];
-  const nBaris = Math.max(kiri.length, kanan.length);
-  const totY = y + 17 + nBaris * (52 + rowD) + 14;
-
-  const kolomGambar = (x, judul, warna, lembut, baris, totalLabel, totalNilai) => {
-    c.fillStyle = warna; c.font = `700 14px ${FS}`; spasi(c, 2); c.fillText(judul, x, y); spasi(c, 0);
-    c.fillRect(x, y + 14, CW, 3);
-    let ry = y + 17;
-    baris.forEach((b) => {
-      const nol = (Number(b[1]) || 0) === 0;
-      c.textAlign = 'left'; c.fillStyle = '#3A4657'; c.font = `500 19px ${FS}`; c.fillText(b[0], x, ry + 34 + rowD / 2);
-      c.textAlign = 'right'; c.fillStyle = nol ? '#B5B9C1' : ink; c.font = `${nol ? 500 : 700} 19px ${FS}`;
-      c.fillText(nol ? '-' : rp2(b[1]), x + CW, ry + 34 + rowD / 2);
-      c.fillStyle = '#F0ECE3'; c.fillRect(x, ry + 51 + rowD, CW, 1.5);
-      ry += 52 + rowD;
-    });
-    jalurKotak(c, x, totY, CW, 60, 14); c.fillStyle = lembut; c.fill();
-    c.fillStyle = warna; c.font = `700 19px ${FS}`;
-    c.textAlign = 'left'; c.fillText(totalLabel, x + 18, totY + 38);
-    c.textAlign = 'right'; c.fillText(rp2(totalNilai), x + CW - 18, totY + 38);
-    c.textAlign = 'left';
-  };
-  kolomGambar(M, 'PENDAPATAN', green, '#E3F3EC', kiri, 'Gaji Kotor', s.gajiKotor);
-  kolomGambar(M + CW + GAP, 'POTONGAN', red, '#FBEAE8', kanan, 'Total Potongan', s.totalPotongan);
-  y = totY + 60 + 44 + 3 * u;
-
-  // ---- Gaji bersih ----
-  g = c.createLinearGradient(M, y, W - M, y + 150);
-  g.addColorStop(0, '#F6EEDC'); g.addColorStop(1, '#FBF6EA');
-  jalurKotak(c, M, y, W - 2 * M, 150, 22); c.fillStyle = g; c.fill();
-  c.strokeStyle = '#EADBB6'; c.lineWidth = 2; c.stroke();
-  c.fillStyle = goldDeep; c.font = `700 14px ${FS}`; spasi(c, 2);
-  c.fillText('GAJI BERSIH (DITERIMA)', M + 36, y + 46); spasi(c, 0);
-  c.fillStyle = navy; muatTeks(c, rp2(s.gajiBersih), W - 2 * M - 72, 700, 64, 30, FF);
-  c.fillText(rp2(s.gajiBersih), M + 36, y + 114);
-  y += 150 + 42 + 3 * u;
-
-  c.fillStyle = '#5A5440'; c.font = `italic 500 18px ${FS}`;
-  const tb = bungkus(c, 'Terbilang: ' + terbilang(s.gajiBersih), W - 2 * M);
-  tb.forEach((l, i) => c.fillText(l, M, y + i * 28));
-  y += tb.length * 28 + 30 + 2 * u;
-
-  // ---- Catatan & tanda tangan ----
-  c.font = `400 14px ${FS}`; c.fillStyle = muted;
-  const cat = p.catatan ? bungkus(c, p.catatan, 560) : [];
-  cat.forEach((l, i) => c.fillText(l, M, y + 14 + i * 22));
-  const sx = W - M - 240;
-  c.textAlign = 'center';
-  c.fillStyle = muted; c.font = `500 15px ${FS}`; c.fillText(p.penandatangan || 'Bagian Keuangan', sx + 120, y + 14);
-  c.fillStyle = ink; c.fillRect(sx, y + 102 + 3 * u, 240, 1.5);
-  c.font = `700 16px ${FS}`; muatTeks(c, p.nama, 240, 700, 16, 11, FS); c.fillText(p.nama, sx + 120, y + 128 + 3 * u);
   c.textAlign = 'left';
-  return y + Math.max(cat.length * 22 + 14, 140 + 3 * u) + 40;
+  const jab = String(k.jabatan || '').trim();
+  const info = [['Nama Karyawan', k.nama]];
+  if (jab && jab !== '-') info.push(['Jabatan', jab]);
+  info.forEach((it) => {
+    c.font = `400 30px ${FT}`;
+    c.fillText(it[0], M, y); c.fillText(':', M + 262, y);
+    muatTeks(c, it[1], W - 2 * M - 292, 400, 30, 20, FT);
+    c.fillText(it[1], M + 292, y);
+    y += 44;
+  });
+
+  // ---- Kepala tabel ----
+  y += 26; c.font = `400 30px ${FT}`;
+  c.fillText('No', M, y);
+  c.textAlign = 'center'; c.fillText('Keterangan', M + (AR - M) / 2 - 50, y);
+  c.textAlign = 'right'; c.fillText('Jumlah', AR, y);
+  c.textAlign = 'left';
+
+  // ---- Isi tabel ----
+  const pd = s.pendapatan, pt = s.potongan;
+  const bagian = (daftar, jumlah) => {
+    y += 48;
+    daftar.forEach((b, i) => {
+      c.font = `400 30px ${FT}`;
+      c.textAlign = 'left'; c.fillText(String(i + 1), M, y); c.fillText(b[0], M + 70, y);
+      const nol = !(Number(b[1]) || 0);
+      c.textAlign = 'right'; c.fillText(nol ? '-' : fmt(b[1]), AR, y);
+      if (i === daftar.length - 1) { c.textAlign = 'left'; c.fillText('(+)', AR + 24, y); }
+      y += RH;
+    });
+    garis(AR - 190, AR, y - RH + 14, 2);                   // garis jumlah
+    c.textAlign = 'right'; c.fillText(fmt(jumlah), AR, y + 2);
+    c.textAlign = 'left';
+    y += 14;
+  };
+  bagian([['Gaji Pokok', pd.gajiPokok], ['Premi', pd.premi], ['Lembur Biasa', pd.lembur],
+    ['Lembur Minggu', pd.lemburMinggu], ['Uang Makan', pd.uangMakan], ['BPJS', pd.bpjs]], s.gajiKotor);
+  bagian([['Ijin', pt.ijin], ['Hutang', pt.hutang], ['Potongan 50%', pt.potongan50], ['Lain-lain', pt.lain]], s.totalPotongan);
+
+  // ---- Total diterima ----
+  y += 56;
+  c.font = `700 32px ${FT}`;
+  c.textAlign = 'right'; c.fillText('Total Diterima', AR - 290, y);
+  c.textAlign = 'center'; c.fillText(':', AR - 262, y);
+  c.textAlign = 'right'; c.fillText(fmt(s.gajiBersih), AR, y);
+  garis(AR - 210, AR, y + 12, 2.5); garis(AR - 210, AR, y + 19, 1.5);
+  c.textAlign = 'left';
+
+  // ---- Terbilang ----
+  y += 78; c.font = `400 30px ${FT}`;
+  bungkus(c, tcase(terbilang(s.gajiBersih)), W - 2 * M).forEach((l) => { c.fillText(l, M, y); y += 42; });
+
+  // ---- Tanda tangan ----
+  y += 38;
+  const cx1 = M + 170, cx2 = W - M - 190;
+  c.textAlign = 'center'; c.font = `400 30px ${FT}`;
+  c.fillText('Mengetahui,', cx1, y); c.fillText('Penerima,', cx2, y);
+  y += 150 + Math.min(E, 140);
+  const ttd = p.penandatangan || 'Bagian Keuangan';
+  muatTeks(c, ttd, 330, 400, 30, 20, FT); c.fillText(ttd, cx1, y);
+  muatTeks(c, k.nama, 330, 400, 30, 20, FT); c.fillText(k.nama, cx2, y);
+  c.textAlign = 'left';
+  return y + 76;
 }
 
 /* ---------- Simpan slip: Gambar & PDF langsung, ukuran kertas A5 ---------- */
