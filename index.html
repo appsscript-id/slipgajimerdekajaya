@@ -460,6 +460,13 @@ html,body{max-width:100%;overflow-x:hidden}
 .slip.masuk-kanan{animation:masukKanan .24s ease}
 .slip.masuk-kiri{animation:masukKiri .24s ease}
 @media print{.swipe-hint{display:none}}
+
+/* ---------- Menu Simpan: dua versi ---------- */
+.dock-menu{gap:4px;padding:10px 10px 8px}
+.dm-judul{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 4px 2px}
+.dm-baris{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dock-menu button:disabled{opacity:.5}
+.dm-cat{font-size:11px;color:var(--muted);text-align:center;padding:6px 0 0}
 </style>
 </head>
 <body>
@@ -628,8 +635,17 @@ html,body{max-width:100%;overflow-x:hidden}
   </main>
     <nav class="dock" id="dock">
     <div class="dock-menu hidden" id="menuSlip">
-      <button id="btnGambar" type="button">🖼 Simpan Gambar (A5)</button>
-      <button id="btnPrint" type="button">📄 Simpan PDF (A5)</button>
+      <div class="dm-judul">Versi Baru</div>
+      <div class="dm-baris">
+        <button id="btnGambarBaru" type="button">🖼 Gambar</button>
+        <button id="btnPdfBaru" type="button">📄 PDF</button>
+      </div>
+      <div class="dm-judul">Versi Lama (klasik)</div>
+      <div class="dm-baris">
+        <button id="btnGambarLama" type="button">🖼 Gambar</button>
+        <button id="btnPdfLama" type="button">📄 PDF</button>
+      </div>
+      <div class="dm-cat">Disimpan langsung, ukuran kertas A5</div>
     </div>
     <button id="navHome" class="on" type="button"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg></i><span>Beranda</span></button>
     <button id="navSlip" type="button"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 11 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></i><span>Simpan</span></button>
@@ -1002,7 +1018,7 @@ $('#formLogin').addEventListener('submit', async (e) => {
   } catch (err) {
     showAlert('#alertBox', errMsg(err));
   } finally {
-    btn.disabled = false;
+    tombol.forEach((t) => { t.disabled = false; });
     btn.innerHTML = '<span>Lihat Slip Gaji</span>';
   }
 });
@@ -1213,9 +1229,109 @@ function muatTeks(c, teks, maks, berat, mulai, minim, fam) {
   return sz;
 }
 
-// Menggambar slip hasil simpan (lebar logis 1080): gaya slip klasik, latar putih, tulisan hitam, tanpa logo.
-// E = tinggi tambahan (px) yang dipakai untuk melonggarkan ruang tanda tangan. Mengembalikan tinggi total.
-function lukisSlip(c, s, k, p, E) {
+// VERSI BARU — tata letak modern (dua kolom), tanpa logo, latar putih, semua tulisan hitam.
+// Menggambar pada kanvas (lebar logis 1080). E = tinggi tambahan agar memenuhi halaman. Mengembalikan tinggi total.
+function lukisSlipBaru(c, s, k, p, E) {
+  E = Math.max(0, Number(E) || 0);
+  const W = 1080, M = 56, CW = 460, GAP = 48, ink = '#000000', tipis = '#D2D2D2';
+  const rp2 = (v) => 'Rp ' + nf.format(Math.round(Number(v) || 0));
+  c.textBaseline = 'alphabetic'; c.textAlign = 'left'; spasi(c, 0);
+  c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, W, 6000);
+  c.fillStyle = ink; c.strokeStyle = ink;
+
+  // ---- Kepala (tanpa logo) ----
+  c.font = `500 15px ${FS}`;
+  const alamat = p.alamat ? bungkus(c, p.alamat, 560).slice(0, 3) : [];
+  const hH = Math.max(150, alamat.length ? 112 + alamat.length * 21 + 26 : 0);
+  muatTeks(c, p.nama, 460, 600, 36, 20, FF);
+  c.fillText(p.nama, M, 84);
+  c.font = `600 12px ${FS}`; spasi(c, 2); c.fillText('SLIP GAJI KARYAWAN', M, 110); spasi(c, 0);
+  c.font = `500 15px ${FS}`;
+  alamat.forEach((l, i) => c.fillText(l, M, 142 + i * 21));
+
+  c.textAlign = 'right';
+  c.font = `700 36px ${FF}`; c.fillText('SLIP GAJI', W - M, 84);
+  c.font = `500 18px ${FS}`; c.fillText('Periode ' + s.bulan + ' ' + s.tahun, W - M, 116);
+  const ini = k.nama.split(/\s+/).filter(Boolean).slice(0, 3).map((w) => w[0].toUpperCase()).join('');
+  c.font = `500 13px ${FS}`;
+  c.fillText('No. SG/' + s.tahun + '/' + String(s.bulanKe).padStart(2, '0') + '/' + ini, W - M, 142);
+  c.textAlign = 'left';
+  c.fillRect(M, hH + 6, W - 2 * M, 3); // garis bawah kepala
+
+  // ---- Data karyawan ----
+  const nB = 6;
+  const u = E / (2 + 2 + nB * 0.75 + 3 + 3 + 2 + 3);
+  const rowD = 0.75 * u;
+  let y = hH + 62 + 2 * u;
+  [[M, 380, 'NAMA', k.nama], [M + 420, 250, 'JABATAN', k.jabatan || '-'], [M + 690, 240, 'PERIODE', s.bulan + ' ' + s.tahun]]
+    .forEach((it) => {
+      c.font = `600 12px ${FS}`; spasi(c, 1.5); c.fillText(it[2], it[0], y); spasi(c, 0);
+      muatTeks(c, it[3], it[1], 600, 21, 13, FS); c.fillText(it[3], it[0], y + 30);
+    });
+  y += 62;
+  c.lineWidth = 2; c.setLineDash([8, 8]);
+  c.beginPath(); c.moveTo(M, y); c.lineTo(W - M, y); c.stroke(); c.setLineDash([]);
+  y += 44 + 2 * u;
+
+  // ---- Pendapatan & potongan ----
+  const pd = s.pendapatan, pt = s.potongan;
+  const kiri = [['Gaji Pokok', pd.gajiPokok], ['Premi', pd.premi], ['Pendapatan Lembur Biasa', pd.lembur],
+    ['Pendapatan Lembur Minggu', pd.lemburMinggu], ['Uang Makan', pd.uangMakan], ['BPJS', pd.bpjs]];
+  const kanan = [['Potongan 50%', pt.potongan50], ['Ijin', pt.ijin], ['Hutang', pt.hutang], ['Lain-lain', pt.lain]];
+  const nBaris = Math.max(kiri.length, kanan.length);
+  const totY = y + 17 + nBaris * (52 + rowD) + 14;
+
+  const kolomGambar = (x, judul, baris, totalLabel, totalNilai) => {
+    c.font = `700 14px ${FS}`; spasi(c, 2); c.fillText(judul, x, y); spasi(c, 0);
+    c.fillRect(x, y + 14, CW, 3);
+    let ry = y + 17;
+    baris.forEach((b) => {
+      const nol = (Number(b[1]) || 0) === 0;
+      c.textAlign = 'left'; c.font = `500 19px ${FS}`; c.fillText(b[0], x, ry + 34 + rowD / 2);
+      c.textAlign = 'right'; c.font = `${nol ? 500 : 700} 19px ${FS}`;
+      c.fillText(nol ? '-' : rp2(b[1]), x + CW, ry + 34 + rowD / 2);
+      c.fillStyle = tipis; c.fillRect(x, ry + 51 + rowD, CW, 1.5); c.fillStyle = ink;
+      ry += 52 + rowD;
+    });
+    jalurKotak(c, x, totY, CW, 60, 14); c.lineWidth = 2; c.stroke();
+    c.font = `700 19px ${FS}`;
+    c.textAlign = 'left'; c.fillText(totalLabel, x + 18, totY + 38);
+    c.textAlign = 'right'; c.fillText(rp2(totalNilai), x + CW - 18, totY + 38);
+    c.textAlign = 'left';
+  };
+  kolomGambar(M, 'PENDAPATAN', kiri, 'Gaji Kotor', s.gajiKotor);
+  kolomGambar(M + CW + GAP, 'POTONGAN', kanan, 'Total Potongan', s.totalPotongan);
+  y = totY + 60 + 44 + 3 * u;
+
+  // ---- Gaji bersih ----
+  jalurKotak(c, M, y, W - 2 * M, 150, 22); c.lineWidth = 3; c.stroke();
+  c.font = `700 14px ${FS}`; spasi(c, 2);
+  c.fillText('GAJI BERSIH (DITERIMA)', M + 36, y + 46); spasi(c, 0);
+  muatTeks(c, rp2(s.gajiBersih), W - 2 * M - 72, 700, 64, 30, FF);
+  c.fillText(rp2(s.gajiBersih), M + 36, y + 114);
+  y += 150 + 42 + 3 * u;
+
+  c.font = `italic 500 18px ${FS}`;
+  const tb = bungkus(c, 'Terbilang: ' + terbilang(s.gajiBersih), W - 2 * M);
+  tb.forEach((l, i) => c.fillText(l, M, y + i * 28));
+  y += tb.length * 28 + 30 + 2 * u;
+
+  // ---- Catatan & tanda tangan ----
+  c.font = `400 14px ${FS}`;
+  const cat = p.catatan ? bungkus(c, p.catatan, 560) : [];
+  cat.forEach((l, i) => c.fillText(l, M, y + 14 + i * 22));
+  const sx = W - M - 240;
+  c.textAlign = 'center';
+  c.font = `500 15px ${FS}`; c.fillText(p.penandatangan || 'Bagian Keuangan', sx + 120, y + 14);
+  c.fillRect(sx, y + 102 + 3 * u, 240, 1.5);
+  c.font = `700 16px ${FS}`; muatTeks(c, k.nama, 240, 700, 16, 11, FS); c.fillText(k.nama, sx + 120, y + 128 + 3 * u);
+  c.textAlign = 'left';
+  return y + Math.max(cat.length * 22 + 14, 140 + 3 * u) + 40;
+}
+
+// VERSI LAMA — gaya slip klasik (hitam putih, huruf serif, tanpa logo), mengikuti slip lama perusahaan.
+// E = tinggi tambahan (px) untuk melonggarkan ruang tanda tangan. Mengembalikan tinggi total.
+function lukisSlipLama(c, s, k, p, E) {
   E = Math.max(0, Number(E) || 0);
   const W = 1080, M = 72, RH = 46, ink = '#000000';
   const FT = '"Times New Roman", Times, "Liberation Serif", "Nimbus Roman", "Noto Serif", serif';
@@ -1322,10 +1438,11 @@ async function siapkanFont() {
 }
 
 // Slip digambar ke selembar kanvas A5 (latar putih), diperkecil seperlunya agar muat satu halaman
-function kanvasA5(s, k, p) {
+function kanvasA5(s, k, p, versi) {
+  const lukis = versi === 'lama' ? lukisSlipLama : lukisSlipBaru;
   const ukur = document.createElement('canvas');
   ukur.width = 1080; ukur.height = 10;
-  const H0 = lukisSlip(ukur.getContext('2d'), s, k, p, 0);
+  const H0 = lukis(ukur.getContext('2d'), s, k, p, 0);
   const Ht = A5_H * 1080 / A5_W;           // tinggi halaman A5 dalam satuan slip
   const E = Math.max(0, Ht - H0);          // sisa tinggi dibagi rata ke jarak antar bagian
   const cv = document.createElement('canvas');
@@ -1336,13 +1453,13 @@ function kanvasA5(s, k, p) {
   c.save();
   c.translate((A5_W - 1080 * sk) / 2, 0);
   c.scale(sk, sk);
-  lukisSlip(c, s, k, p, E);
+  lukis(c, s, k, p, E);
   c.restore();
   return cv;
 }
 
-const namaBerkas = (k, s, ext) =>
-  ('Slip-Gaji_' + k.nama + '_' + s.bulan + '-' + s.tahun).replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+/g, '-') + '.' + ext;
+const namaBerkas = (k, s, ext, versi) =>
+  ('Slip-Gaji_' + k.nama + '_' + s.bulan + '-' + s.tahun + (versi === 'lama' ? '_Lama' : '')).replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+/g, '-') + '.' + ext;
 
 // Simpan berkas: iPhone/iPad lewat lembar bagikan, perangkat lain langsung diunduh. true = berhasil
 async function simpanBerkas(blob, nama, tipe, judul) {
@@ -1386,25 +1503,25 @@ function bangunPdf(jpeg, w, h) {
   return new Blob(bagian, { type: 'application/pdf' });
 }
 
-async function simpanSlip(format) {
+async function simpanSlip(format, versi) {
   if (!session || !session.slips || !session.slips.length) return;
-  const btn = format === 'pdf' ? $('#btnPrint') : $('#btnGambar');
-  btn.disabled = true;
+  const tombol = document.querySelectorAll('#menuSlip button');
+  tombol.forEach((t) => { t.disabled = true; });
   try {
     await siapkanFont();
     const s = session.slips[activeIdx], k = session.karyawan, p = session.perusahaan;
-    const cv = kanvasA5(s, k, p);
-    const judul = 'Slip Gaji ' + s.bulan + ' ' + s.tahun;
+    const cv = kanvasA5(s, k, p, versi);
+    const judul = 'Slip Gaji ' + s.bulan + ' ' + s.tahun + (versi === 'lama' ? ' (Versi Lama)' : '');
     let ok;
     if (format === 'pdf') {
       const jb = await new Promise((res) => cv.toBlob(res, 'image/jpeg', 0.92));
       if (!jb) throw new Error('gagal-gambar');
       const pdf = bangunPdf(new Uint8Array(await jb.arrayBuffer()), cv.width, cv.height);
-      ok = await simpanBerkas(pdf, namaBerkas(k, s, 'pdf'), 'application/pdf', judul);
+      ok = await simpanBerkas(pdf, namaBerkas(k, s, 'pdf', versi), 'application/pdf', judul);
     } else {
       const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
       if (!blob) throw new Error('gagal-gambar');
-      ok = await simpanBerkas(blob, namaBerkas(k, s, 'png'), 'image/png', judul);
+      ok = await simpanBerkas(blob, namaBerkas(k, s, 'png', versi), 'image/png', judul);
     }
     if (ok) toast((format === 'pdf' ? 'PDF' : 'Gambar') + ' slip gaji (A5) tersimpan.');
   } catch (err) {
@@ -1413,8 +1530,10 @@ async function simpanSlip(format) {
     btn.disabled = false;
   }
 }
-$('#btnGambar').addEventListener('click', () => simpanSlip('png'));
-$('#btnPrint').addEventListener('click', () => simpanSlip('pdf'));
+$('#btnGambarBaru').addEventListener('click', () => simpanSlip('png', 'baru'));
+$('#btnPdfBaru').addEventListener('click', () => simpanSlip('pdf', 'baru'));
+$('#btnGambarLama').addEventListener('click', () => simpanSlip('png', 'lama'));
+$('#btnPdfLama').addEventListener('click', () => simpanSlip('pdf', 'lama'));
 
 /* ---------- Musik mp3 setelah login berhasil ---------- */
 const bgm = $('#bgm');
