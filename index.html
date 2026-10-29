@@ -1018,7 +1018,7 @@ $('#formLogin').addEventListener('submit', async (e) => {
   } catch (err) {
     showAlert('#alertBox', errMsg(err));
   } finally {
-    tombol.forEach((t) => { t.disabled = false; });
+    btn.disabled = false;
     btn.innerHTML = '<span>Lihat Slip Gaji</span>';
   }
 });
@@ -1527,7 +1527,7 @@ async function simpanSlip(format, versi) {
   } catch (err) {
     toast('Gagal menyimpan slip. Silakan coba lagi.');
   } finally {
-    btn.disabled = false;
+    tombol.forEach((t) => { t.disabled = false; });
   }
 }
 $('#btnGambarBaru').addEventListener('click', () => simpanSlip('png', 'baru'));
