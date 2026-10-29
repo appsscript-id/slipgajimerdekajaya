@@ -1324,7 +1324,7 @@ function lukisSlipBaru(c, s, k, p, E) {
   c.textAlign = 'center';
   c.font = `500 15px ${FS}`; c.fillText(p.penandatangan || 'Bagian Keuangan', sx + 120, y + 14);
   c.fillRect(sx, y + 102 + 3 * u, 240, 1.5);
-  c.font = `700 16px ${FS}`; muatTeks(c, k.nama, 240, 700, 16, 11, FS); c.fillText(k.nama, sx + 120, y + 128 + 3 * u);
+  c.font = `700 16px ${FS}`; muatTeks(c, p.nama, 240, 700, 16, 11, FS); c.fillText(p.nama, sx + 120, y + 128 + 3 * u);
   c.textAlign = 'left';
   return y + Math.max(cat.length * 22 + 14, 140 + 3 * u) + 40;
 }
