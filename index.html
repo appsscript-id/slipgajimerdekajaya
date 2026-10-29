@@ -435,6 +435,11 @@ html,body{max-width:100%;overflow-x:hidden}
 .dock>button i{display:grid;place-items:center;height:24px;font-size:0}
 .dock>button svg{width:22px;height:22px}
 .dock>button span{font-size:11px;line-height:1.2;white-space:nowrap}
+
+/* ---------- Beranda tanpa bilah atas/logo ---------- */
+#viewApp .topbar-in{justify-content:flex-start}
+#viewApp .avatar{display:none}
+#viewApp .wrap{padding-top:calc(26px + env(safe-area-inset-top,0px))}
 </style>
 </head>
 <body>
@@ -514,10 +519,6 @@ html,body{max-width:100%;overflow-x:hidden}
 <section id="viewApp" class="hidden">
   <header class="topbar">
     <div class="topbar-in">
-      <div class="logo">
-        <div class="logo-mark">MJ</div>
-        <div class="logo-text">Merdeka Jaya</div>
-      </div>
       <div class="user">
         <div class="user-info"><b id="uName">-</b><span id="uMeta">-</span></div>
         <div class="avatar" id="uAvatar">-</div>
@@ -1019,6 +1020,7 @@ function openApp() {
   $('#viewAdmin').classList.add('hidden');
   $('#viewApp').classList.remove('hidden');
   $('#btnBack').classList.toggle('hidden', !adminPreview);
+  document.querySelector('#viewApp .topbar').classList.toggle('hidden', !adminPreview); // bilah atas hanya untuk pratinjau admin
   window.scrollTo(0, 0);
 
   const k = session.karyawan;
@@ -1182,7 +1184,8 @@ function muatTeks(c, teks, maks, berat, mulai, minim, fam) {
 }
 
 // Menggambar slip pada kanvas (lebar logis 1080). Mengembalikan tinggi total.
-function lukisSlip(c, s, k, p) {
+function lukisSlip(c, s, k, p, E) {
+  E = Math.max(0, Number(E) || 0); // tinggi tambahan (px) agar slip memenuhi halaman A5
   const W = 1080, M = 56, CW = 460, GAP = 48;
   const ink = '#0E1A2B', navy = '#12243D', gold = '#C9A35B', goldDeep = '#A9833B', muted = '#6B7686';
   const green = '#1E7B5A', red = '#B4403A';
@@ -1228,7 +1231,10 @@ function lukisSlip(c, s, k, p) {
   c.textAlign = 'left';
 
   // ---- Data karyawan ----
-  let y = hH + 56;
+  const nB = 6; // jumlah baris terpanjang (kolom Pendapatan)
+  const u = E / (2 + 2 + nB * 0.75 + 3 + 3 + 2 + 3); // satuan pembagian tinggi tambahan
+  const rowD = 0.75 * u;
+  let y = hH + 56 + 2 * u;
   [[M, 380, 'NAMA', k.nama], [M + 420, 250, 'JABATAN', k.jabatan || '-'], [M + 690, 240, 'PERIODE', s.bulan + ' ' + s.tahun]]
     .forEach((it) => {
       c.fillStyle = muted; c.font = `600 12px ${FS}`; spasi(c, 1.5); c.fillText(it[2], it[0], y); spasi(c, 0);
@@ -1237,7 +1243,7 @@ function lukisSlip(c, s, k, p) {
   y += 62;
   c.strokeStyle = '#E8E3D8'; c.lineWidth = 2; c.setLineDash([8, 8]);
   c.beginPath(); c.moveTo(M, y); c.lineTo(W - M, y); c.stroke(); c.setLineDash([]);
-  y += 44;
+  y += 44 + 2 * u;
 
   // ---- Pendapatan & potongan ----
   const pd = s.pendapatan, pt = s.potongan;
@@ -1245,7 +1251,7 @@ function lukisSlip(c, s, k, p) {
     ['Pendapatan Lembur Minggu', pd.lemburMinggu], ['Uang Makan', pd.uangMakan], ['BPJS', pd.bpjs]];
   const kanan = [['Potongan 50%', pt.potongan50], ['Ijin', pt.ijin], ['Hutang', pt.hutang], ['Lain-lain', pt.lain]];
   const nBaris = Math.max(kiri.length, kanan.length);
-  const totY = y + 17 + nBaris * 52 + 14;
+  const totY = y + 17 + nBaris * (52 + rowD) + 14;
 
   const kolomGambar = (x, judul, warna, lembut, baris, totalLabel, totalNilai) => {
     c.fillStyle = warna; c.font = `700 14px ${FS}`; spasi(c, 2); c.fillText(judul, x, y); spasi(c, 0);
@@ -1253,11 +1259,11 @@ function lukisSlip(c, s, k, p) {
     let ry = y + 17;
     baris.forEach((b) => {
       const nol = (Number(b[1]) || 0) === 0;
-      c.textAlign = 'left'; c.fillStyle = '#3A4657'; c.font = `500 19px ${FS}`; c.fillText(b[0], x, ry + 34);
+      c.textAlign = 'left'; c.fillStyle = '#3A4657'; c.font = `500 19px ${FS}`; c.fillText(b[0], x, ry + 34 + rowD / 2);
       c.textAlign = 'right'; c.fillStyle = nol ? '#B5B9C1' : ink; c.font = `${nol ? 500 : 700} 19px ${FS}`;
-      c.fillText(nol ? '-' : rp2(b[1]), x + CW, ry + 34);
-      c.fillStyle = '#F0ECE3'; c.fillRect(x, ry + 51, CW, 1.5);
-      ry += 52;
+      c.fillText(nol ? '-' : rp2(b[1]), x + CW, ry + 34 + rowD / 2);
+      c.fillStyle = '#F0ECE3'; c.fillRect(x, ry + 51 + rowD, CW, 1.5);
+      ry += 52 + rowD;
     });
     jalurKotak(c, x, totY, CW, 60, 14); c.fillStyle = lembut; c.fill();
     c.fillStyle = warna; c.font = `700 19px ${FS}`;
@@ -1267,7 +1273,7 @@ function lukisSlip(c, s, k, p) {
   };
   kolomGambar(M, 'PENDAPATAN', green, '#E3F3EC', kiri, 'Gaji Kotor', s.gajiKotor);
   kolomGambar(M + CW + GAP, 'POTONGAN', red, '#FBEAE8', kanan, 'Total Potongan', s.totalPotongan);
-  y = totY + 60 + 44;
+  y = totY + 60 + 44 + 3 * u;
 
   // ---- Gaji bersih ----
   g = c.createLinearGradient(M, y, W - M, y + 150);
@@ -1278,12 +1284,12 @@ function lukisSlip(c, s, k, p) {
   c.fillText('GAJI BERSIH (DITERIMA)', M + 36, y + 46); spasi(c, 0);
   c.fillStyle = navy; muatTeks(c, rp2(s.gajiBersih), W - 2 * M - 72, 700, 64, 30, FF);
   c.fillText(rp2(s.gajiBersih), M + 36, y + 114);
-  y += 150 + 42;
+  y += 150 + 42 + 3 * u;
 
   c.fillStyle = '#5A5440'; c.font = `italic 500 18px ${FS}`;
   const tb = bungkus(c, 'Terbilang: ' + terbilang(s.gajiBersih), W - 2 * M);
   tb.forEach((l, i) => c.fillText(l, M, y + i * 28));
-  y += tb.length * 28 + 30;
+  y += tb.length * 28 + 30 + 2 * u;
 
   // ---- Catatan & tanda tangan ----
   c.font = `400 14px ${FS}`; c.fillStyle = muted;
@@ -1292,16 +1298,10 @@ function lukisSlip(c, s, k, p) {
   const sx = W - M - 240;
   c.textAlign = 'center';
   c.fillStyle = muted; c.font = `500 15px ${FS}`; c.fillText(p.penandatangan || 'Bagian Keuangan', sx + 120, y + 14);
-  c.fillStyle = ink; c.fillRect(sx, y + 102, 240, 1.5);
-  c.font = `700 16px ${FS}`; muatTeks(c, p.nama, 240, 700, 16, 11, FS); c.fillText(p.nama, sx + 120, y + 128);
+  c.fillStyle = ink; c.fillRect(sx, y + 102 + 3 * u, 240, 1.5);
+  c.font = `700 16px ${FS}`; muatTeks(c, p.nama, 240, 700, 16, 11, FS); c.fillText(p.nama, sx + 120, y + 128 + 3 * u);
   c.textAlign = 'left';
-  y += Math.max(cat.length * 22 + 14, 140) + 40;
-
-  const tgl = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-  c.textAlign = 'center'; c.fillStyle = '#9AA0AA'; c.font = `400 12px ${FS}`;
-  c.fillText('Dokumen digital ' + p.nama + ' · dibuat ' + tgl, W / 2, y);
-  c.textAlign = 'left';
-  return y + 44;
+  return y + Math.max(cat.length * 22 + 14, 140 + 3 * u) + 40;
 }
 
 /* ---------- Simpan slip: Gambar & PDF langsung, ukuran kertas A5 ---------- */
@@ -1318,17 +1318,18 @@ async function siapkanFont() {
 function kanvasA5(s, k, p) {
   const ukur = document.createElement('canvas');
   ukur.width = 1080; ukur.height = 10;
-  const H0 = lukisSlip(ukur.getContext('2d'), s, k, p);
+  const H0 = lukisSlip(ukur.getContext('2d'), s, k, p, 0);
+  const Ht = A5_H * 1080 / A5_W;           // tinggi halaman A5 dalam satuan slip
+  const E = Math.max(0, Ht - H0);          // sisa tinggi dibagi rata ke jarak antar bagian
   const cv = document.createElement('canvas');
   cv.width = A5_W; cv.height = A5_H;
   const c = cv.getContext('2d');
   c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, A5_W, A5_H);
-  const M = 36;
-  const sk = Math.min((A5_W - 2 * M) / 1080, (A5_H - 2 * M) / H0);
+  const sk = Math.min(A5_W / 1080, A5_H / (H0 + E)); // lebar penuh; bila isi sangat panjang, diperkecil
   c.save();
-  c.translate((A5_W - 1080 * sk) / 2, Math.max(M, (A5_H - H0 * sk) / 2));
+  c.translate((A5_W - 1080 * sk) / 2, 0);
   c.scale(sk, sk);
-  lukisSlip(c, s, k, p);
+  lukisSlip(c, s, k, p, E);
   c.restore();
   return cv;
 }
