@@ -472,6 +472,18 @@ html,body{max-width:100%;overflow-x:hidden}
 .nm-box{display:flex;align-items:center;gap:10px;min-width:0}
 .a-foto{flex:none;width:38px;height:38px;border-radius:50%;background:var(--gold-soft) center/cover no-repeat;
   border:2px solid var(--gold);display:grid;place-items:center;font-family:var(--serif);font-size:13px;font-weight:700;color:var(--gold-deep)}
+/* ---------- Admin: 3 kartu ringkasan 1 baris (komputer) ---------- */
+@media (min-width:721px){
+  #viewAdmin .stats{grid-template-columns:repeat(3,1fr);gap:16px}
+  #viewAdmin .stat{padding:18px 20px}
+  #viewAdmin .stat.net{grid-column:auto;order:0}
+  #viewAdmin .stat .v{font-size:24px}
+}
+/* ---------- Admin: pengaturan gaji terakhir ---------- */
+.gt-grid{display:grid;grid-template-columns:1.2fr .7fr 1.2fr auto;gap:12px;align-items:end;margin-top:14px}
+.gt-grid .lbl{margin-bottom:6px;font-size:12.5px}
+.gt-info{margin-top:12px;font-size:13px;color:var(--muted)}
+@media (max-width:720px){.gt-grid{grid-template-columns:1fr 1fr}.gt-act{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -691,6 +703,17 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="stat net"><div class="k"><i class="dot" style="background:var(--gold)"></i><span id="aGajiLabel">Gaji Bersih</span></div><div class="v" id="aGaji">-</div></div>
     </div>
 
+        <div class="card" style="margin-bottom:24px">
+      <h3>Pengaturan Gaji Terakhir</h3>
+      <p class="s">Tentukan periode gaji terakhir dan tanggal mulai tampil di aplikasi karyawan. Sebelum tanggal itu, karyawan hanya melihat periode sebelumnya. Admin tetap melihat semuanya.</p>
+      <div class="gt-grid">
+        <div><label class="lbl" for="gBulan">Bulan gaji terakhir</label><select class="field sm" id="gBulan"></select></div>
+        <div><label class="lbl" for="gTahun">Tahun</label><input class="field sm" id="gTahun" type="number" min="2000" max="2100" placeholder="2026"></div>
+        <div><label class="lbl" for="gTanggal">Tampil untuk karyawan mulai</label><input class="field sm" id="gTanggal" type="date"></div>
+        <div class="gt-act"><button class="btn-gold" id="gSimpan" type="button">Simpan</button></div>
+      </div>
+      <div class="gt-info" id="gInfo"></div>
+    </div>
     <div class="card">
       <div class="tools">
         <input class="field sm" id="aSearch" type="search" placeholder="Cari nama karyawan…" autocomplete="off">
@@ -1641,6 +1664,7 @@ function renderAdmin() {
   const aktif = list.filter((k) => k.status === 'Aktif').length;
   $('#aTotal').textContent = list.length;
   $('#aAktif').textContent = aktif;
+    isiGajiTerakhir(d.pengGaji);
   if (d.ringkasan.length) {
     $('#aGajiLabel').textContent = 'Gaji Bersih ' + d.ringkasan[0].bulan + ' ' + d.ringkasan[0].tahun;
     $('#aGaji').textContent = rp(d.ringkasan[0].bersih);
@@ -1774,6 +1798,40 @@ $('#aCetak').addEventListener('click', () => {
   mulaiCetak('print-pin');
 });
 
+  /* ---------- Admin: pengaturan gaji terakhir ---------- */
+const NAMA_BLN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+$('#gBulan').innerHTML = '<option value="">— Tampilkan semua —</option>' +
+  NAMA_BLN.map((n, i) => `<option value="${i + 1}">${n}</option>`).join('');
+
+function isiGajiTerakhir(g) {
+  if (!g) return;
+  $('#gBulan').value = g.aktif ? String(g.bulan) : '';
+  $('#gTahun').value = g.aktif ? g.tahun : '';
+  $('#gTanggal').value = g.aktif ? (g.tanggal || '') : '';
+  let t;
+  if (!g.aktif) {
+    t = 'Pembatasan tidak aktif: karyawan melihat semua periode yang ada di sheet Gaji.';
+  } else {
+    const per = NAMA_BLN[g.bulan - 1] + ' ' + g.tahun;
+    if (g.tanggal) {
+      const tg = new Date(g.tanggal + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      t = 'Gaji terakhir: ' + per + '. ' + (g.sudahTampil ? 'Sudah tampil untuk karyawan sejak ' : 'Akan tampil untuk karyawan pada ') + tg + '.';
+    } else {
+      t = 'Gaji terakhir: ' + per + '. Langsung tampil untuk karyawan.';
+    }
+  }
+  $('#gInfo').textContent = t;
+}
+$('#gSimpan').addEventListener('click', async () => {
+  const bulan = $('#gBulan').value, tahun = $('#gTahun').value, tanggal = $('#gTanggal').value;
+  if (bulan && !tahun) { toast('Isi tahun gaji terakhir.'); return; }
+  try {
+    const r = await adminCall('adminSimpanGaji', { bulan: bulan, tahun: tahun, tanggal: tanggal });
+    if (!r.ok) { toast(r.message || 'Gagal menyimpan.'); return; }
+    toast('Pengaturan gaji terakhir tersimpan.');
+    await muatAdmin();
+  } catch (err) { if (err.message !== 'expired') toast(errMsg(err)); }
+});
 /* ---------- Bunyi lucu saat mengetik PIN ---------- */
 const pref = (k) => { try { return localStorage.getItem(k) !== '0'; } catch (e) { return true; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {} };
