@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#12243D">
+<meta name="theme-color" content="#EFEFEF">
 <meta name="application-name" content="Slip Gaji">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -491,6 +491,134 @@ html,body{max-width:100%;overflow-x:hidden}
 .bar span{font-size:10.5px;letter-spacing:-.01em}
 .bar .col-fill{border-radius:7px 7px 3px 3px}
 .bar-info{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--navy);text-align:center}
+
+/* =====================================================
+   TEMA REXORA - abu muda, kartu putih membulat, aksen hijau lemon
+   ===================================================== */
+:root{
+  --ink:#111111; --navy:#111111; --navy-2:#2B2B2B;
+  --gold:#B8F24B; --gold-deep:#3F6A00; --gold-soft:#F1FBD9;
+  --bg:#EFEFEF; --card:#FFFFFF; --line:#E8E8E8; --muted:#767676;
+  --green:#1E9B52; --green-soft:#E6F9C6; --red:#E5484D; --red-soft:#FDECEC;
+  --radius:22px; --lime:#B8F24B; --orange:#FF7A1A;
+  --shadow:0 1px 2px rgba(0,0,0,.03),0 6px 22px rgba(0,0,0,.05);
+  --serif:var(--font);
+}
+body{background:#E6E6E6}
+@media (max-width:430px){body{background:#EFEFEF}}
+#viewLogin,#viewApp{background:#EFEFEF;box-shadow:0 0 0 1px rgba(0,0,0,.05),0 20px 60px rgba(0,0,0,.12)}
+@media (max-width:430px){#viewLogin,#viewApp{box-shadow:none}}
+.logo-text,.greet h1,.login-card h2,.stat .v,.net-band .amt,.slip-title .t,.dlg-in h3,.bigpin,.home-foto,.hero-title{font-weight:700;letter-spacing:-.02em}
+.logo-text{color:#111}
+.slip-head .logo-text{color:#fff}
+
+/* Logo */
+.logo-mark{background:#111;color:var(--lime);box-shadow:none;border-radius:12px}
+.slip-head .logo-mark{background:var(--lime);color:#111}
+
+/* Login: kartu putih */
+.login-main{background:#EFEFEF}
+.login-card{background:#fff;border-radius:28px;padding:26px 22px 22px;box-shadow:var(--shadow)}
+.login-card .mobile-logo{color:#111}
+.login-card h2{font-size:28px}
+.field{border:1.5px solid #E6E6E6;border-radius:16px;background:#fff}
+.field:focus,.pin-row input:focus{border-color:#111;box-shadow:0 0 0 4px rgba(184,242,75,.5)}
+.pin-row input{border:1.5px solid #E6E6E6;border-radius:16px}
+.pin-row input.filled{border-color:#111;background:#F5FCE4;color:#111}
+.combo-list{border:1px solid #EAEAEA;border-radius:18px;box-shadow:0 18px 44px rgba(0,0,0,.14)}
+.combo-list li:hover,.combo-list li.hl{background:#F1FBD9}
+.link-btn{color:#111;text-decoration:underline;text-underline-offset:3px}
+.alert{border-radius:14px}
+.alert.info{background:#F1FBD9;color:#3F6A00;border-color:#D8F29A}
+.install-box{background:#F1FBD9;border-color:#D8F29A}
+.install-box span{color:#3F6A00}
+
+/* Tombol: bentuk pil */
+.btn-primary{background:#111;color:#fff;border-radius:999px;box-shadow:none}
+.btn-primary:hover{background:#2B2B2B;box-shadow:none;transform:none}
+.btn-gold{background:var(--lime);color:#111;border-radius:999px;box-shadow:none}
+.btn-gold:hover{filter:brightness(.96);transform:none}
+.btn-outline{background:#fff;border:1.5px solid #E2E2E2;color:#111;border-radius:999px}
+.btn-outline:hover{background:#111;border-color:#111;color:#fff}
+.btn-ghost{background:#fff;border:1.5px solid #E5E5E5;color:#111;border-radius:999px}
+.btn-ghost:hover{background:#111;border-color:#111;color:#fff}
+.btn-ghost.danger:hover{background:var(--red);border-color:var(--red);color:#fff}
+.badge-admin{background:#111;color:var(--lime)}
+.avatar{background:#111;color:var(--lime)}
+
+/* Bilah atas (admin & pratinjau): pil putih */
+.topbar{background:rgba(239,239,239,.92);border-bottom:0}
+.topbar-in{background:#fff;border-radius:999px;margin:10px auto;padding:8px 10px 8px 14px;box-shadow:var(--shadow);width:calc(100% - 24px)}
+#viewApp .topbar-in{width:calc(100% - 24px)}
+
+/* Chip periode (seperti tab "Reports") */
+.chip{background:#fff;border:0;color:#111;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.chip:hover{background:#F1FBD9}
+.chip.active{background:var(--lime);color:#111;box-shadow:none}
+
+/* Kartu ringkasan */
+.stat,.card,.slip{border:0;border-radius:22px;box-shadow:var(--shadow)}
+.stat .k{color:#6F6F6F;text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:600}
+.stat .v{color:#111}
+.stat.net{background:var(--lime);box-shadow:none}
+.stat.net .k{color:rgba(0,0,0,.62)}
+.stat.net .v{color:#111}
+.stat.net .dot{background:#111!important}
+.card h3{font-weight:700}
+
+/* Slip */
+.slip-head{background:#111;border-radius:0}
+.slip-title .t{color:var(--lime)}
+.emp{border-bottom:1px dashed #E3E3E3}
+.col h4{font-weight:700}
+.col.in h4{border-color:var(--green);color:var(--green)}
+.col.out h4{border-color:var(--red);color:var(--red)}
+.row{border-bottom-color:#F0F0F0}
+.row span:first-child{color:#4A4A4A}
+.col.in .row.total{background:var(--green-soft);color:#2B5A00;border-radius:14px}
+.col.out .row.total{background:var(--red-soft);color:#C23A3F;border-radius:14px}
+.net-band{background:var(--lime);border:0;border-radius:22px}
+.net-band small{color:rgba(0,0,0,.62)}
+.net-band .amt{color:#111}
+.terbilang{color:#555}
+.sign .line{border-top-color:#111}
+
+/* Riwayat gaji: batang berarsir, bulan aktif oranye */
+.bar .col-fill{background:repeating-linear-gradient(135deg,#E0E0E0 0 2px,#EFEFEF 2px 5px);border-radius:9px 9px 4px 4px}
+.bar:hover .col-fill{filter:none;background:repeating-linear-gradient(135deg,#D6D6D6 0 2px,#E9E9E9 2px 5px)}
+.bar.active .col-fill{background:var(--orange)}
+.bar span{color:#8A8A8A}
+.bar.active span{color:#111}
+.bar-info{border-top:1px solid #EFEFEF;color:#111}
+
+/* Foto */
+.home-foto,.foto{background:#fff;border-color:var(--lime);color:#111;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.a-foto{border-color:var(--lime);background-color:#F1FBD9;color:#111}
+.home-jab{color:#3F6A00}
+
+/* Dock bawah: pil putih, menu aktif hijau lemon */
+.dock{background:#fff;border:0;border-radius:999px;box-shadow:0 10px 34px rgba(0,0,0,.16);backdrop-filter:none;padding:6px}
+.dock>button{color:#7A7A7A;border-radius:999px}
+.dock>button.on{background:var(--lime);color:#111}
+.dock>#btnLogout:hover{background:var(--red);color:#fff}
+.dock-menu{background:#fff;border-radius:24px;box-shadow:0 14px 40px rgba(0,0,0,.18)}
+.dock-menu button{background:#F3F3F3;color:#111;border-radius:999px}
+.dock-menu button:hover{background:var(--lime)}
+
+/* Admin & dialog */
+.tbl th{color:#8A8A8A}
+.tbl tr:hover td{background:#FAFAFA}
+.tbl td{border-bottom-color:#F0F0F0}
+.pin-chip{background:#F3F3F3;border:1px dashed #D5D5D5;color:#111}
+.badge.on{background:#E6F9C6;color:#2B5A00}
+.badge.off{background:var(--red-soft);color:#C23A3F}
+.bigpin{background:var(--lime);border:0;color:#111}
+dialog{border-radius:26px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.toast{background:#111;color:#fff;border-radius:999px}
+.ptr{border:0;box-shadow:var(--shadow)}
+input[type=range]{accent-color:#111}
+.sw input[type=checkbox]{accent-color:#111}
 </style>
 </head>
 <body>
