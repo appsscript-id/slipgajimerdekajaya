@@ -493,131 +493,135 @@ html,body{max-width:100%;overflow-x:hidden}
 .bar-info{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--navy);text-align:center}
 
 /* =====================================================
-   TEMA REXORA - abu muda, kartu putih membulat, aksen hijau lemon
+   TEMA DASHBOARD - abu muda, kartu putih, tombol hitam, aksen kuning amber
    ===================================================== */
 :root{
   --ink:#111111; --navy:#111111; --navy-2:#2B2B2B;
-  --gold:#B8F24B; --gold-deep:#3F6A00; --gold-soft:#F1FBD9;
-  --bg:#EFEFEF; --card:#FFFFFF; --line:#E8E8E8; --muted:#767676;
-  --green:#1E9B52; --green-soft:#E6F9C6; --red:#E5484D; --red-soft:#FDECEC;
-  --radius:22px; --lime:#B8F24B; --orange:#FF7A1A;
-  --shadow:0 1px 2px rgba(0,0,0,.03),0 6px 22px rgba(0,0,0,.05);
+  --gold:#F5A524; --gold-deep:#8A5A00; --gold-soft:#FFF3D6;
+  --bg:#EFEFEF; --card:#FFFFFF; --line:#EBEBEB; --muted:#777777;
+  --green:#2E9E57; --green-soft:#E5F4E6; --red:#E5484D; --red-soft:#FDECEC;
+  --amber:#F5B731; --radius:26px; --chip:#EAEAEA;
+  --shadow:0 1px 2px rgba(0,0,0,.03),0 8px 26px rgba(0,0,0,.05);
   --serif:var(--font);
 }
-body{background:#E6E6E6}
+body{background:#E4E4E4}
 @media (max-width:430px){body{background:#EFEFEF}}
 #viewLogin,#viewApp{background:#EFEFEF;box-shadow:0 0 0 1px rgba(0,0,0,.05),0 20px 60px rgba(0,0,0,.12)}
 @media (max-width:430px){#viewLogin,#viewApp{box-shadow:none}}
 .logo-text,.greet h1,.login-card h2,.stat .v,.net-band .amt,.slip-title .t,.dlg-in h3,.bigpin,.home-foto,.hero-title{font-weight:700;letter-spacing:-.02em}
 .logo-text{color:#111}
-.slip-head .logo-text{color:#fff}
+.slip-head .logo-text{color:#111}
 
 /* Logo */
-.logo-mark{background:#111;color:var(--lime);box-shadow:none;border-radius:12px}
-.slip-head .logo-mark{background:var(--lime);color:#111}
+.logo-mark{background:#111;color:#fff;box-shadow:none;border-radius:13px}
 
-/* Login: kartu putih */
+/* Login */
 .login-main{background:#EFEFEF}
-.login-card{background:#fff;border-radius:28px;padding:26px 22px 22px;box-shadow:var(--shadow)}
+.login-card{background:#fff;border-radius:30px;padding:26px 22px 22px;box-shadow:var(--shadow)}
 .login-card .mobile-logo{color:#111}
-.login-card h2{font-size:28px}
-.field{border:1.5px solid #E6E6E6;border-radius:16px;background:#fff}
-.field:focus,.pin-row input:focus{border-color:#111;box-shadow:0 0 0 4px rgba(184,242,75,.5)}
-.pin-row input{border:1.5px solid #E6E6E6;border-radius:16px}
-.pin-row input.filled{border-color:#111;background:#F5FCE4;color:#111}
-.combo-list{border:1px solid #EAEAEA;border-radius:18px;box-shadow:0 18px 44px rgba(0,0,0,.14)}
-.combo-list li:hover,.combo-list li.hl{background:#F1FBD9}
+.field{border:1.5px solid transparent;border-radius:16px;background:#F2F2F2}
+.field:focus,.pin-row input:focus{border-color:#111;background:#fff;box-shadow:0 0 0 4px rgba(245,165,36,.25)}
+.pin-row input{border:1.5px solid transparent;border-radius:16px;background:#F2F2F2}
+.pin-row input.filled{border-color:#111;background:#fff;color:#111}
+.combo .field{background:#F2F2F2}
+.combo-list{border:0;border-radius:20px;box-shadow:0 18px 44px rgba(0,0,0,.16)}
+.combo-list li:hover,.combo-list li.hl{background:#FFF3D6}
 .link-btn{color:#111;text-decoration:underline;text-underline-offset:3px}
 .alert{border-radius:14px}
-.alert.info{background:#F1FBD9;color:#3F6A00;border-color:#D8F29A}
-.install-box{background:#F1FBD9;border-color:#D8F29A}
-.install-box span{color:#3F6A00}
+.alert.info{background:#FFF3D6;color:#7A4F00;border-color:#F6DDA0}
+.install-box{background:#FFF3D6;border-color:#F6DDA0;border-radius:18px}
+.install-box span{color:#7A4F00}
 
-/* Tombol: bentuk pil */
+/* Tombol: utama hitam, sekunder abu */
 .btn-primary{background:#111;color:#fff;border-radius:999px;box-shadow:none}
 .btn-primary:hover{background:#2B2B2B;box-shadow:none;transform:none}
-.btn-gold{background:var(--lime);color:#111;border-radius:999px;box-shadow:none}
-.btn-gold:hover{filter:brightness(.96);transform:none}
-.btn-outline{background:#fff;border:1.5px solid #E2E2E2;color:#111;border-radius:999px}
-.btn-outline:hover{background:#111;border-color:#111;color:#fff}
-.btn-ghost{background:#fff;border:1.5px solid #E5E5E5;color:#111;border-radius:999px}
-.btn-ghost:hover{background:#111;border-color:#111;color:#fff}
-.btn-ghost.danger:hover{background:var(--red);border-color:var(--red);color:#fff}
-.badge-admin{background:#111;color:var(--lime)}
-.avatar{background:#111;color:var(--lime)}
+.btn-gold{background:#111;color:#fff;border-radius:999px;box-shadow:none}
+.btn-gold:hover{background:#2B2B2B;transform:none}
+.btn-outline{background:var(--chip);border:0;color:#111;border-radius:999px}
+.btn-outline:hover{background:#111;color:#fff}
+.btn-ghost{background:var(--chip);border:0;color:#111;border-radius:999px}
+.btn-ghost:hover{background:#111;color:#fff}
+.btn-ghost.danger:hover{background:var(--red);color:#fff}
+.badge-admin{background:#111;color:#fff}
+.avatar{background:#111;color:#fff}
 
-/* Bilah atas (admin & pratinjau): pil putih */
+/* Bilah atas: pil putih */
 .topbar{background:rgba(239,239,239,.92);border-bottom:0}
 .topbar-in{background:#fff;border-radius:999px;margin:10px auto;padding:8px 10px 8px 14px;box-shadow:var(--shadow);width:calc(100% - 24px)}
-#viewApp .topbar-in{width:calc(100% - 24px)}
 
-/* Chip periode (seperti tab "Reports") */
-.chip{background:#fff;border:0;color:#111;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-.chip:hover{background:#F1FBD9}
-.chip.active{background:var(--lime);color:#111;box-shadow:none}
+/* Chip periode: abu, aktif hitam */
+.chip{background:var(--chip);border:0;color:#111;box-shadow:none}
+.chip:hover{background:#E0E0E0}
+.chip.active{background:#111;color:#fff;box-shadow:none}
 
-/* Kartu ringkasan */
-.stat,.card,.slip{border:0;border-radius:22px;box-shadow:var(--shadow)}
+/* Kartu */
+.stat,.card,.slip{border:0;border-radius:26px;box-shadow:var(--shadow)}
 .stat .k{color:#6F6F6F;text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:600}
 .stat .v{color:#111}
-.stat.net{background:var(--lime);box-shadow:none}
+.stat.net{background:linear-gradient(155deg,#DCE9FB 0%,#F3EEE6 52%,#FCE2AE 100%);box-shadow:var(--shadow)}
 .stat.net .k{color:rgba(0,0,0,.62)}
 .stat.net .v{color:#111}
-.stat.net .dot{background:#111!important}
 .card h3{font-weight:700}
 
 /* Slip */
-.slip-head{background:#111;border-radius:0}
-.slip-title .t{color:var(--lime)}
+.slip-head{background:linear-gradient(155deg,#DCE9FB 0%,#F3EEE6 55%,#FCE2AE 100%);color:#111}
+.slip-head .logo-text small{opacity:.55}
+.slip-head .logo-mark{background:#111;color:#fff}
+.slip-addr{opacity:.65}
+.slip-title .t{color:#111}
+.slip-title .n{opacity:.55}
 .emp{border-bottom:1px dashed #E3E3E3}
 .col h4{font-weight:700}
 .col.in h4{border-color:var(--green);color:var(--green)}
 .col.out h4{border-color:var(--red);color:var(--red)}
 .row{border-bottom-color:#F0F0F0}
 .row span:first-child{color:#4A4A4A}
-.col.in .row.total{background:var(--green-soft);color:#2B5A00;border-radius:14px}
+.col.in .row.total{background:var(--green-soft);color:#237A44;border-radius:14px}
 .col.out .row.total{background:var(--red-soft);color:#C23A3F;border-radius:14px}
-.net-band{background:var(--lime);border:0;border-radius:22px}
-.net-band small{color:rgba(0,0,0,.62)}
+.net-band{background:linear-gradient(135deg,#FFF3D6,#FCE2AE);border:0;border-radius:24px}
+.net-band small{color:rgba(0,0,0,.6)}
 .net-band .amt{color:#111}
 .terbilang{color:#555}
 .sign .line{border-top-color:#111}
 
-/* Riwayat gaji: batang berarsir, bulan aktif oranye */
-.bar .col-fill{background:repeating-linear-gradient(135deg,#E0E0E0 0 2px,#EFEFEF 2px 5px);border-radius:9px 9px 4px 4px}
-.bar:hover .col-fill{filter:none;background:repeating-linear-gradient(135deg,#D6D6D6 0 2px,#E9E9E9 2px 5px)}
-.bar.active .col-fill{background:var(--orange)}
+/* Riwayat gaji: batang abu, bulan aktif berarsir amber */
+.bar .col-fill{background:#E7E7E7;border-radius:9px 9px 4px 4px}
+.bar:hover .col-fill{filter:none;background:#DCDCDC}
+.bar.active .col-fill{background:repeating-linear-gradient(135deg,#F2B02E 0 3px,#FBD777 3px 7px)}
 .bar span{color:#8A8A8A}
 .bar.active span{color:#111}
-.bar-info{border-top:1px solid #EFEFEF;color:#111}
+.bar-info{border-top:0;margin-top:14px;padding-top:0;text-align:center}
+.bar-info{display:block}
+.bar-info::before{content:"";}
+#barInfo{display:table;margin:14px auto 0;background:var(--amber);color:#111;padding:7px 14px;border-radius:12px;font-size:13px;font-weight:700}
 
 /* Foto */
-.home-foto,.foto{background:#fff;border-color:var(--lime);color:#111;box-shadow:0 4px 14px rgba(0,0,0,.08)}
-.a-foto{border-color:var(--lime);background-color:#F1FBD9;color:#111}
-.home-jab{color:#3F6A00}
+.home-foto,.foto{background:#fff;border-color:var(--amber);color:#111;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.a-foto{border-color:var(--amber);background-color:#FFF3D6;color:#111}
+.home-jab{color:#8A5A00}
 
-/* Dock bawah: pil putih, menu aktif hijau lemon */
+/* Dock: pil putih, menu aktif lingkaran hitam */
 .dock{background:#fff;border:0;border-radius:999px;box-shadow:0 10px 34px rgba(0,0,0,.16);backdrop-filter:none;padding:6px}
 .dock>button{color:#7A7A7A;border-radius:999px}
-.dock>button.on{background:var(--lime);color:#111}
+.dock>button.on{background:#111;color:#fff}
 .dock>#btnLogout:hover{background:var(--red);color:#fff}
-.dock-menu{background:#fff;border-radius:24px;box-shadow:0 14px 40px rgba(0,0,0,.18)}
-.dock-menu button{background:#F3F3F3;color:#111;border-radius:999px}
-.dock-menu button:hover{background:var(--lime)}
+.dock-menu{background:#fff;border-radius:26px;box-shadow:0 14px 40px rgba(0,0,0,.18)}
+.dock-menu button{background:var(--chip);color:#111;border-radius:999px}
+.dock-menu button:hover{background:var(--amber)}
 
 /* Admin & dialog */
 .tbl th{color:#8A8A8A}
 .tbl tr:hover td{background:#FAFAFA}
 .tbl td{border-bottom-color:#F0F0F0}
-.pin-chip{background:#F3F3F3;border:1px dashed #D5D5D5;color:#111}
-.badge.on{background:#E6F9C6;color:#2B5A00}
+.pin-chip{background:#F2F2F2;border:1px dashed #D5D5D5;color:#111}
+.badge.on{background:var(--green-soft);color:#237A44}
 .badge.off{background:var(--red-soft);color:#C23A3F}
-.bigpin{background:var(--lime);border:0;color:#111}
-dialog{border-radius:26px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.bigpin{background:linear-gradient(135deg,#FFF3D6,#FCE2AE);border:0;color:#111}
+dialog{border-radius:28px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
 dialog::backdrop{background:rgba(0,0,0,.45)}
 .toast{background:#111;color:#fff;border-radius:999px}
 .ptr{border:0;box-shadow:var(--shadow)}
-input[type=range]{accent-color:#111}
+input[type=range]{accent-color:#F5A524}
 .sw input[type=checkbox]{accent-color:#111}
 </style>
 </head>
